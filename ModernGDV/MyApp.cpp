@@ -3,11 +3,10 @@
 MyApp::MyApp( std::vector<std::string> commandline )
 	: vertexArray(0U), vertexBuffer(0U), vertexBufferData(nullptr)
 {
-
 	vertexBufferData = new GLfloat[9] { 
 		-1.0f, -1.0f, 0.0f,
-			1.0f, -1.0f, 0.0f,
-			0.0f, 1.0f, 0.0f
+		1.0f, -1.0f, 0.0f,
+		0.0f, 1.0f, 0.0f
 	};
 
 	createVertexArray();
@@ -16,11 +15,11 @@ MyApp::MyApp( std::vector<std::string> commandline )
 
 MyApp::~MyApp()
 {
-
+	delete[] vertexBufferData;
 }
 
 void MyApp::Render () {
-	glClear( GL_COLOR_BUFFER_BIT );
+	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 	glEnableVertexAttribArray( 0 );
 	glBindBuffer( GL_ARRAY_BUFFER, vertexBuffer );
@@ -48,5 +47,5 @@ void MyApp::createVertexBuffer()
 {
 	glGenBuffers( 1, &vertexBuffer );
 	glBindBuffer( GL_ARRAY_BUFFER, vertexBuffer );
-	glBufferData( GL_ARRAY_BUFFER, sizeof( vertexBufferData ), vertexBufferData, GL_STATIC_DRAW );
+	glBufferData( GL_ARRAY_BUFFER, 9 * sizeof( GLfloat ), vertexBufferData, GL_STATIC_DRAW );
 }

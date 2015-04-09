@@ -8,5 +8,5 @@ out vec4 color;		//Farbe
 
 //diese Funktion wird für jeden Pixel, der in einem durch die Vertices definierten Dreieck liegt einzeln aufgerufen - auf der Grafikkarte
 void main(void) {
-	color = vec4(inColor, 1.0f); //Die Farbe wird einfach übernommen, der Alpha-Wert auf 1 gesetzt
+	color = vec4(1,0,0,1);//vec4(inColor, 1.0f); //Die Farbe wird einfach übernommen, der Alpha-Wert auf 1 gesetzt
 }
