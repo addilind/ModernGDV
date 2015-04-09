@@ -82,7 +82,7 @@ std::vector<char> ModernGDV::ModernGDV::readShaderFile( const char* filename )
 	shaderFile.seekg( 0, shaderFile.beg );
 
 	std::vector<char> shaderGLSL(shaderLength + 1);
-	memset( &shaderGLSL[0], 0, shaderLength + 1 );
+	memset( &shaderGLSL[0], 0, shaderLength + 1 ); //Speicher mit nullen füllen, damit nach einlesen der Datei der String durch ein 0-byte terminiert wird
 	shaderFile.read( &shaderGLSL[0], shaderLength );
 
 	shaderFile.close();
@@ -95,7 +95,7 @@ void ModernGDV::ModernGDV::createShaders( )
 	//GLSL-Dateien einlesen
 	auto vertexShaderGLSL = readShaderFile( "VertexShader.glsl" );
 	auto fragmentShaderGLSL = readShaderFile( "FragmentShader.glsl" );
-	char* vertexShaderGLSLptr = &vertexShaderGLSL[0];
+	char* vertexShaderGLSLptr = &vertexShaderGLSL[0]; //glShaderSource erwartet die Adresse eines Pointers auf die Zeichen (doppelte Dereferenzierung)
 	char* fragmentShaderGLSLptr = &fragmentShaderGLSL[0];
 
 	//Shader laden
@@ -109,6 +109,7 @@ void ModernGDV::ModernGDV::createShaders( )
 
 	GLint result = GL_FALSE;
 
+	//auf Fehler überprüfen, falls Fehler: Exception werfen
 	glGetShaderiv( vertexShader, GL_COMPILE_STATUS, &result );
 	if (result != GL_TRUE) {
 		int infoLogLength = -1;
@@ -137,6 +138,7 @@ void ModernGDV::ModernGDV::createShaderProgram()
 
 	GLint result = GL_FALSE;
 
+	//auf Fehler überprüfen, falls Fehler: Exception werfen
 	glGetProgramiv( shaderProgram, GL_LINK_STATUS, &result );
 	if (result != GL_TRUE) {
 		int infoLogLength = -1;

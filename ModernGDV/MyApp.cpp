@@ -5,7 +5,7 @@ using ModernGDV::MyVertex;
 MyApp::MyApp( std::vector<std::string> commandline )
 	: vertexArray(0U), vertexBuffer(0U), vertexBufferData()
 {
-	vertexBufferData.push_back( MyVertex( -0.5f, -0.5f, -0.5f, 1, 1, 0 ) );
+	vertexBufferData.push_back( MyVertex( -0.5f, -0.5f, -0.5f, 1, 1, 0 ) ); // 3x Koordinaten, 3xRGB-Farbcode
 	vertexBufferData.push_back( MyVertex( +0.5f, -0.5f, -0.5f, 1, 0, 0 ) );
 	vertexBufferData.push_back( MyVertex( -0.5f, +0.5f, -0.5f, 1, 0, 0 ) );
 	vertexBufferData.push_back( MyVertex( +0.5f, +0.5f, -0.5f, 1, 0, 0 ) );
@@ -44,13 +44,13 @@ void MyApp::Render () {
 }
 
 void MyApp::createVertexArray()
-{
+{	//Speichert im Hintergrund die Eigenschaften der VertexBuffer
 	glGenVertexArrays( 1, &vertexArray );
 	glBindVertexArray( vertexArray );
 }
 
 void MyApp::createVertexBuffer()
-{
+{	//Vertices aus dem CPU-Hauptspeicher in den Grafik-RAM kopieren
 	glGenBuffers( 1, &vertexBuffer );
 	glBindBuffer( GL_ARRAY_BUFFER, vertexBuffer );
 	glBufferData( GL_ARRAY_BUFFER, vertexBufferData.size() * sizeof( MyVertex ), &vertexBufferData[0], GL_STATIC_DRAW );
