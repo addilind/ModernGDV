@@ -70,7 +70,7 @@ void ModernGDV::ModernGDV::createWindow()
 	glfwMakeContextCurrent( window ); //Fenster für alle zukünftigen OpenGL-Aufrufe als Ziel setzen
 }
 
-char* ModernGDV::ModernGDV::readShaderFile( const char* filename )
+std::vector<char> ModernGDV::ModernGDV::readShaderFile( const char* filename )
 {
 	std::ifstream shaderFile( filename );
 	if (!shaderFile)
@@ -81,9 +81,9 @@ char* ModernGDV::ModernGDV::readShaderFile( const char* filename )
 	int shaderLength = static_cast<int>(shaderFile.tellg());
 	shaderFile.seekg( 0, shaderFile.beg );
 
-	char* shaderGLSL = new char[shaderLength + 1];
-	memset( shaderGLSL, 0, shaderLength + 1 );
-	shaderFile.read( shaderGLSL, shaderLength );
+	std::vector<char> shaderGLSL(shaderLength + 1);
+	memset( &shaderGLSL[0], 0, shaderLength + 1 );
+	shaderFile.read( &shaderGLSL[0], shaderLength );
 
 	shaderFile.close();
 
@@ -93,16 +93,18 @@ char* ModernGDV::ModernGDV::readShaderFile( const char* filename )
 void ModernGDV::ModernGDV::createShaders( )
 {
 	//GLSL-Dateien einlesen
-	char* vertexShaderGLSL = readShaderFile( "VertexShader.glsl" );
-	char* fragmentShaderGLSL = readShaderFile( "FragmentShader.glsl" );
+	auto vertexShaderGLSL = readShaderFile( "VertexShader.glsl" );
+	auto fragmentShaderGLSL = readShaderFile( "FragmentShader.glsl" );
+	char* vertexShaderGLSLptr = &vertexShaderGLSL[0];
+	char* fragmentShaderGLSLptr = &fragmentShaderGLSL[0];
 
 	//Shader laden
 	vertexShader = glCreateShader( GL_VERTEX_SHADER );
-	glShaderSource( vertexShader, 1, &vertexShaderGLSL, NULL );
+	glShaderSource( vertexShader, 1, &vertexShaderGLSLptr, NULL );
 	glCompileShader( vertexShader );
 
 	fragmentShader = glCreateShader( GL_FRAGMENT_SHADER );
-	glShaderSource( fragmentShader, 1, &fragmentShaderGLSL, NULL );
+	glShaderSource( fragmentShader, 1, &fragmentShaderGLSLptr, NULL );
 	glCompileShader( fragmentShader );
 
 	GLint result = GL_FALSE;
@@ -124,10 +126,6 @@ void ModernGDV::ModernGDV::createShaders( )
 		glGetShaderInfoLog( fragmentShader, infoLogLength, NULL, &fragmentShaderErrorMessage[0] );
 		throw std::runtime_error( &fragmentShaderErrorMessage[0] );
 	}
-
-
-	delete[] vertexShaderGLSL;
-	delete[] fragmentShaderGLSL;
 }
 
 void ModernGDV::ModernGDV::createShaderProgram()

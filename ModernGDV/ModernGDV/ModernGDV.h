@@ -5,6 +5,7 @@
 #include <epoxy/wgl.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
+#include <vector>
 
 #include "MGDVVertex.h"
 #include "MGDVApp.h"
@@ -29,7 +30,7 @@ namespace ModernGDV {
 
 	private:
 		void createWindow();
-		char* readShaderFile( const char* filename );
+		std::vector<char> readShaderFile( const char* filename );
 		void createShaders( );
 		void createShaderProgram( );
 	};
