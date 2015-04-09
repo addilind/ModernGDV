@@ -7,12 +7,19 @@
 
 class MyApp : public ModernGDV::App
 {
+private:
+	GLuint vertexArray;
+	GLuint vertexBuffer;
+	GLfloat* vertexBufferData;
+
 public:
 	MyApp( std::vector<std::string> commandline );
 	virtual ~MyApp();
 
 	virtual void Render();
-	virtual const char* GetWindowTitle();
+private:
+	GLuint createVertexArray();
+	void createVertexBuffer();
 };
 
 #endif

@@ -1,3 +1,4 @@
 *.opensdf
 *.sdf
 *.filters
+Debug/build/

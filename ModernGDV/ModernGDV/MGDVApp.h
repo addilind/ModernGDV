@@ -14,7 +14,6 @@ namespace ModernGDV {
 		virtual ~App() {};
 
 		virtual void Render() = 0;
-		virtual const char* GetWindowTitle() = 0;
 	};
 }
 

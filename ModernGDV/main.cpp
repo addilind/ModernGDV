@@ -16,8 +16,10 @@ int main( int argc, char** argv ) {
 		for (int i = 0; i < argc; ++i)
 			commandline.push_back( std::string( argv[i] ) );
 
+		ModernGDV::ModernGDV mgdv;
+
 		MyApp myApp( commandline );
-		ModernGDV::ModernGDV mgdv( &myApp );
+		mgdv.SetApp( &myApp );
 
 		mgdv.Run();
 		

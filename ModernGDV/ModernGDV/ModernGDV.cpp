@@ -4,12 +4,9 @@
 #include <iostream>
 #include <fstream>
 
-ModernGDV::ModernGDV::ModernGDV( App* application )
-	: glfwInitialized(false), window(nullptr), vertexShader(0U), fragmentShader(0U), shaderProgram(0U), app(application)
+ModernGDV::ModernGDV::ModernGDV( )
+	: glfwInitialized(false), window(nullptr), vertexShader(0U), fragmentShader(0U), shaderProgram(0U), app(nullptr)
 {
-	if (application == nullptr)
-		throw std::logic_error( "Passed invalid app pointer" );
-
 	if (!glfwInit()) //GLFW Initialisieren
 		throw std::runtime_error( "Cannot initialize GLFW" );
 
@@ -39,7 +36,9 @@ ModernGDV::ModernGDV::~ModernGDV()
 
 void ModernGDV::ModernGDV::Run()
 {
-	glUseProgram( shaderProgram );
+	if (app == nullptr)
+		throw std::logic_error( "Must call SetApp before running" );
+	//glUseProgram( shaderProgram );
 	while (!glfwWindowShouldClose( window )) { //Dauerschleife, solange das Fenster offen ist
 		app->Render();
 
@@ -48,13 +47,20 @@ void ModernGDV::ModernGDV::Run()
 	}
 }
 
+void ModernGDV::ModernGDV::SetApp( App* application )
+{
+	if (application == nullptr)
+		throw std::logic_error( "Passed invalid app pointer" );
+	app = application;
+}
+
 void ModernGDV::ModernGDV::createWindow()
 {
 	glfwWindowHint( GLFW_SAMPLES, 4 ); // 4x Antialiasing
 	glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, 4 ); //OpenGL-Version 4.0 verwenden
 	glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 0 );
 	glfwWindowHint( GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE );
-	window = glfwCreateWindow( 1024, 768, app->GetWindowTitle(), nullptr, nullptr ); //Fenster erstellen
+	window = glfwCreateWindow( 1024, 768, "ModernGDV App", nullptr, nullptr ); //Fenster erstellen
 
 	if (!window)
 		throw std::runtime_error( "Cannot create window" );
@@ -99,8 +105,8 @@ void ModernGDV::ModernGDV::createShaders( )
 	glShaderSource( fragmentShader, 1, &fragmentShaderGLSL, NULL );
 	glCompileShader( fragmentShader );
 
-	delete vertexShaderGLSL;
-	delete fragmentShaderGLSL;
+	delete[] vertexShaderGLSL;
+	delete[] fragmentShaderGLSL;
 }
 
 void ModernGDV::ModernGDV::createShaderProgram()

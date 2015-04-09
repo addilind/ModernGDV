@@ -20,10 +20,11 @@ namespace ModernGDV {
 
 		App* app;
 	public:
-		ModernGDV(App* app);
+		ModernGDV();
 		virtual ~ModernGDV();
 
 		void Run();
+		void SetApp( App* application );
 
 	private:
 		void createWindow();
