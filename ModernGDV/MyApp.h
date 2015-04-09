@@ -10,7 +10,7 @@ class MyApp : public ModernGDV::App
 private:
 	GLuint vertexArray;
 	GLuint vertexBuffer;
-	GLfloat* vertexBufferData;
+	std::vector<ModernGDV::MyVertex> vertexBufferData;
 
 public:
 	MyApp( std::vector<std::string> commandline );
