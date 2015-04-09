@@ -4,7 +4,7 @@ MyApp::MyApp( std::vector<std::string> commandline )
 	: vertexArray(0U), vertexBuffer(0U), vertexBufferData(nullptr)
 {
 
-	vertexBufferData = new GLfloat[] {
+	vertexBufferData = new GLfloat[9] { 
 		-1.0f, -1.0f, 0.0f,
 			1.0f, -1.0f, 0.0f,
 			0.0f, 1.0f, 0.0f
@@ -38,21 +38,15 @@ void MyApp::Render () {
 	glDisableVertexAttribArray( 0 );
 }
 
-GLuint MyApp::createVertexArray()
+void MyApp::createVertexArray()
 {
-	GLuint* VertexArrayID  = new GLuint[1];
-	glGenVertexArrays( 1, VertexArrayID );
-	glBindVertexArray( VertexArrayID[0] );
-	//vertexArray = GLuint(VertexArrayID);
-	//return VertexArrayID;
-	return 0;
+	glGenVertexArrays( 1, &vertexArray );
+	glBindVertexArray( vertexArray );
 }
 
 void MyApp::createVertexBuffer()
 {
-	GLuint id;
-	glGenBuffers( 1, &id );
-	vertexBuffer = id;
+	glGenBuffers( 1, &vertexBuffer );
 	glBindBuffer( GL_ARRAY_BUFFER, vertexBuffer );
 	glBufferData( GL_ARRAY_BUFFER, sizeof( vertexBufferData ), vertexBufferData, GL_STATIC_DRAW );
 }

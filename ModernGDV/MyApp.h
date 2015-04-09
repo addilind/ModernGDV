@@ -18,7 +18,7 @@ public:
 
 	virtual void Render();
 private:
-	GLuint createVertexArray();
+	void createVertexArray();
 	void createVertexBuffer();
 };
 

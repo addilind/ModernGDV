@@ -1,7 +1,8 @@
 #ifndef MODERNGDV_H
 #define MODERNGDV_H
 
-#include <GL/glew.h>
+#include <epoxy/gl.h>
+#include <epoxy/wgl.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 

@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <iostream>
 #include <fstream>
+#include <vector>
 
 ModernGDV::ModernGDV::ModernGDV( )
 	: glfwInitialized(false), window(nullptr), vertexShader(0U), fragmentShader(0U), shaderProgram(0U), app(nullptr)
@@ -38,8 +39,9 @@ void ModernGDV::ModernGDV::Run()
 {
 	if (app == nullptr)
 		throw std::logic_error( "Must call SetApp before running" );
-	//glUseProgram( shaderProgram );
+
 	while (!glfwWindowShouldClose( window )) { //Dauerschleife, solange das Fenster offen ist
+		glUseProgram( shaderProgram );
 		app->Render();
 
 		glfwSwapBuffers( window ); //Gezeichnetes auf den Monitor bringen
@@ -66,10 +68,6 @@ void ModernGDV::ModernGDV::createWindow()
 		throw std::runtime_error( "Cannot create window" );
 
 	glfwMakeContextCurrent( window ); //Fenster für alle zukünftigen OpenGL-Aufrufe als Ziel setzen
-
-	glewExperimental = GL_TRUE;
-	if (glewInit() != GLEW_OK) //Verfügbare OpenGL-Funktionen laden (don't ask, it's complicated...)
-		throw std::runtime_error( "Cannot initialize GLEW" );
 }
 
 char* ModernGDV::ModernGDV::readShaderFile( const char* filename )
@@ -83,7 +81,8 @@ char* ModernGDV::ModernGDV::readShaderFile( const char* filename )
 	int shaderLength = static_cast<int>(shaderFile.tellg());
 	shaderFile.seekg( 0, shaderFile.beg );
 
-	char* shaderGLSL = new char[shaderLength];
+	char* shaderGLSL = new char[shaderLength + 1];
+	memset( shaderGLSL, 0, shaderLength + 1 );
 	shaderFile.read( shaderGLSL, shaderLength );
 
 	shaderFile.close();
@@ -101,9 +100,31 @@ void ModernGDV::ModernGDV::createShaders( )
 	vertexShader = glCreateShader( GL_VERTEX_SHADER );
 	glShaderSource( vertexShader, 1, &vertexShaderGLSL, NULL );
 	glCompileShader( vertexShader );
+
 	fragmentShader = glCreateShader( GL_FRAGMENT_SHADER );
 	glShaderSource( fragmentShader, 1, &fragmentShaderGLSL, NULL );
 	glCompileShader( fragmentShader );
+
+	GLint result = GL_FALSE;
+
+	glGetShaderiv( vertexShader, GL_COMPILE_STATUS, &result );
+	if (result != GL_TRUE) {
+		int infoLogLength = -1;
+		glGetShaderiv( vertexShader, GL_INFO_LOG_LENGTH, &infoLogLength );
+		std::vector<char> vertexShaderErrorMessage( infoLogLength );
+		glGetShaderInfoLog( vertexShader, infoLogLength, NULL, &vertexShaderErrorMessage[0] );
+		throw std::runtime_error( &vertexShaderErrorMessage[0] );
+	}
+
+	glGetShaderiv( fragmentShader, GL_COMPILE_STATUS, &result );
+	if (result != GL_TRUE) {
+		int infoLogLength = -1;
+		glGetShaderiv( fragmentShader, GL_INFO_LOG_LENGTH, &infoLogLength );
+		std::vector<char> fragmentShaderErrorMessage( infoLogLength );
+		glGetShaderInfoLog( fragmentShader, infoLogLength, NULL, &fragmentShaderErrorMessage[0] );
+		throw std::runtime_error( &fragmentShaderErrorMessage[0] );
+	}
+
 
 	delete[] vertexShaderGLSL;
 	delete[] fragmentShaderGLSL;
@@ -115,4 +136,17 @@ void ModernGDV::ModernGDV::createShaderProgram()
 	glAttachShader( shaderProgram, fragmentShader );
 	glAttachShader( shaderProgram, vertexShader );
 	glLinkProgram( shaderProgram );
+
+	GLint result = GL_FALSE;
+
+	glGetProgramiv( shaderProgram, GL_LINK_STATUS, &result );
+	if (result != GL_TRUE) {
+		int infoLogLength = -1;
+		glGetProgramiv( shaderProgram, GL_INFO_LOG_LENGTH, &infoLogLength );
+		if (infoLogLength < 1)
+			throw std::runtime_error( "Unable to link program, no error message" );
+		std::vector<char> shaderProgramErrorMessage( infoLogLength );
+		glGetProgramInfoLog( shaderProgram, infoLogLength, NULL, &shaderProgramErrorMessage[0] );
+		throw std::runtime_error( &shaderProgramErrorMessage[0] );
+	}
 }
