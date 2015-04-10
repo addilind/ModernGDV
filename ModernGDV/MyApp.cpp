@@ -5,7 +5,7 @@ using ModernGDV::MyVertex;
 MyApp::MyApp( std::vector<std::string> commandline )
 	: vertexArray(0U), vertexBuffer(0U), vertexBufferData()
 {
-	vertexBufferData.push_back( MyVertex( -0.5f, -0.5f, -0.5f, 1, 1, 0 ) ); // 3x Koordinaten, 3xRGB-Farbcode
+	vertexBufferData.push_back( MyVertex( -0.5f, -0.5f, -0.5f, 1, 1, 0 ) ); // 3xKoordinaten, 3xRGB-Farbcode
 	vertexBufferData.push_back( MyVertex( +0.5f, -0.5f, -0.5f, 1, 0, 0 ) );
 	vertexBufferData.push_back( MyVertex( -0.5f, +0.5f, -0.5f, 1, 0, 0 ) );
 	vertexBufferData.push_back( MyVertex( +0.5f, +0.5f, -0.5f, 1, 0, 0 ) );
