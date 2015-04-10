@@ -19,23 +19,31 @@ MyApp::MyApp( std::vector<std::string> commandline, ModernGDV::ModernGDV* mgdv )
 	viewMatrix = glm::lookAt( glm::vec3( 0, 1, 3 ), glm::vec3( 0, 0, 0 ), glm::vec3( 0, 1, 0 ) );
 
 	mgdv->SetApp( this );
+
+	glDepthFunc( GL_LESS );
 }
 
 MyApp::~MyApp()
 {
 }
 
-void MyApp::Render () {
+void MyApp::Render ()
+{
+	glEnable( GL_DEPTH_TEST ); //Z-Buffer aktivieren
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 	//glm::mat4 transform = glm::mat4();
 	glm::mat4 transform = projectionMatrix * viewMatrix * glm::rotate( glm::mat4(), static_cast<float>(glfwGetTime()), glm::vec3( 0, 1, 0 ) );
-
 	glUniformMatrix4fv( shaderTransform, 1, GL_FALSE, &transform[0][0] );
 
 	glBindBuffer( GL_ARRAY_BUFFER, vertexBuffer );
 	
 	ColorVertex::SetLayout();
+
+	glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+	transform = projectionMatrix * viewMatrix * glm::rotate( glm::mat4(), static_cast<float>(glfwGetTime()) + 45.0f, glm::vec3( 1, 0, 0 ) );
+	glUniformMatrix4fv( shaderTransform, 1, GL_FALSE, &transform[0][0] );
 
 	glDrawArrays( GL_TRIANGLE_STRIP, 0, 4  );
 
