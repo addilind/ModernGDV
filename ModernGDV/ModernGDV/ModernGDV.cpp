@@ -58,6 +58,11 @@ void ModernGDV::ModernGDV::SetApp( App* application )
 	app = application;
 }
 
+GLuint ModernGDV::ModernGDV::GetShaderProgram()
+{
+	return shaderProgram;
+}
+
 void ModernGDV::ModernGDV::createWindow()
 {
 	glfwWindowHint( GLFW_SAMPLES, 4 ); // 4x Antialiasing

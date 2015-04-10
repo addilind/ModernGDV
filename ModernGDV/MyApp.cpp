@@ -2,16 +2,23 @@
 
 using ModernGDV::ColorVertex;
 
-MyApp::MyApp( std::vector<std::string> commandline )
-	: vertexBuffer(0U)
+MyApp::MyApp( std::vector<std::string> commandline, ModernGDV::ModernGDV* mgdv )
+	: mgdv(mgdv), shaderTransform(0U), vertexBuffer(0U)
 {
+	shaderTransform = glGetUniformLocation( mgdv->GetShaderProgram(), "transformation" );
+
 	std::vector<ColorVertex> vertexBufferData;
-	vertexBufferData.push_back( ColorVertex( -0.5f, -0.5f, -0.5f, 1, 1, 0 ) ); // 3xKoordinaten, 3xRGB-Farbcode
-	vertexBufferData.push_back( ColorVertex( +0.5f, -0.5f, -0.5f, 1, 0, 0 ) );
-	vertexBufferData.push_back( ColorVertex( -0.5f, +0.5f, -0.5f, 1, 0, 0 ) );
-	vertexBufferData.push_back( ColorVertex( +0.5f, +0.5f, -0.5f, 1, 0, 0 ) );
+	vertexBufferData.push_back( ColorVertex( -0.5f, -0.5f, 0.0f, 1, 1, 0 ) ); // 3xKoordinaten, 3xRGB-Farbcode
+	vertexBufferData.push_back( ColorVertex( +0.5f, -0.5f, 0.0f, 1, 0, 0 ) );
+	vertexBufferData.push_back( ColorVertex( -0.5f, +0.5f, 0.0f, 1, 0, 0 ) );
+	vertexBufferData.push_back( ColorVertex( +0.5f, +0.5f, 0.0f, 0, 1, 1 ) );
 
 	createVertexBuffer( vertexBufferData );
+
+	projectionMatrix = glm::perspective( 45.0f, 4.0f / 3.0f, 0.1f, 100.0f );
+	viewMatrix = glm::lookAt( glm::vec3( 0, 1, 3 ), glm::vec3( 0, 0, 0 ), glm::vec3( 0, 1, 0 ) );
+
+	mgdv->SetApp( this );
 }
 
 MyApp::~MyApp()
@@ -21,27 +28,18 @@ MyApp::~MyApp()
 void MyApp::Render () {
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
+	//glm::mat4 transform = glm::mat4();
+	glm::mat4 transform = projectionMatrix * viewMatrix * glm::rotate( glm::mat4(), static_cast<float>(glfwGetTime()), glm::vec3( 0, 1, 0 ) );
+
+	glUniformMatrix4fv( shaderTransform, 1, GL_FALSE, &transform[0][0] );
+
 	glBindBuffer( GL_ARRAY_BUFFER, vertexBuffer );
-	glEnableVertexAttribArray( 0 ); //Der VertexShader hat 2 Inputs, die aktiviert 
-	glEnableVertexAttribArray( 1 );
-	glVertexAttribPointer(			//und beschrieben werden müssen
-		0,                  // Attribut 0 ist in unserem Shader die Position
-		3,                  // Positionen im MyVertex bestehen aus 3 Koordinaten
-		GL_FLOAT,           // und sind als Floats gespeichert
-		GL_FALSE,           // die float-werte sind nicht normalisiert
-		sizeof( ColorVertex ), // zwischen zwei vertices liegen sizeof( MyVertex ) = 6 * sizeof( Float ) = 6 * 4 = 24 byte
-		(void*)0            // Positionsinfos liegen an erster Stelle im Vertex
-		);
-	glVertexAttribPointer(
-		1,                  // Attribut 1 ist in unserem Shader die Farbe
-		3, GL_FLOAT, GL_FALSE, sizeof( ColorVertex ), // auch hier 3 nicht normalisierte floats mit dem Abstand von 24 byte
-		(void*)(3 * sizeof(float)) //vor den Farbinfos müssen die Positionsdaten übersprungen werden, die 3 * sizeof( float ) = 12 byte groß sind
-		);
+	
+	ColorVertex::SetLayout();
 
 	glDrawArrays( GL_TRIANGLE_STRIP, 0, 4  );
 
-	glDisableVertexAttribArray( 0 );
-	glDisableVertexAttribArray( 1 );
+	ColorVertex::ResetLayout();
 }
 
 void MyApp::createVertexBuffer( const std::vector<ModernGDV::ColorVertex>& vertexBufferData )

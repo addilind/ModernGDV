@@ -104,10 +104,10 @@
     <None Include="VertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ModernGDV\MGDVVertex.h" />
     <ClInclude Include="ModernGDV\MGDVApp.h" />
     <ClInclude Include="ModernGDV\ModernGDV.h" />
     <ClInclude Include="MyApp.h" />
-    <ClInclude Include="ModernGDV\MGDVVertex.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

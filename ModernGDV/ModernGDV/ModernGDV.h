@@ -29,6 +29,8 @@ namespace ModernGDV {
 		void Run();
 		void SetApp( App* application );
 
+		GLuint GetShaderProgram();
+
 	private:
 		void createWindow();
 		std::vector<char> readShaderFile( const char* filename );
