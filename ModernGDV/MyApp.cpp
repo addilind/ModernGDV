@@ -1,17 +1,17 @@
 #include "MyApp.h"
 
-using ModernGDV::MyVertex;
+using ModernGDV::ColorVertex;
 
 MyApp::MyApp( std::vector<std::string> commandline )
-	: vertexArray(0U), vertexBuffer(0U), vertexBufferData()
+	: vertexBuffer(0U)
 {
-	vertexBufferData.push_back( MyVertex( -0.5f, -0.5f, -0.5f, 1, 1, 0 ) ); // 3xKoordinaten, 3xRGB-Farbcode
-	vertexBufferData.push_back( MyVertex( +0.5f, -0.5f, -0.5f, 1, 0, 0 ) );
-	vertexBufferData.push_back( MyVertex( -0.5f, +0.5f, -0.5f, 1, 0, 0 ) );
-	vertexBufferData.push_back( MyVertex( +0.5f, +0.5f, -0.5f, 1, 0, 0 ) );
+	std::vector<ColorVertex> vertexBufferData;
+	vertexBufferData.push_back( ColorVertex( -0.5f, -0.5f, -0.5f, 1, 1, 0 ) ); // 3xKoordinaten, 3xRGB-Farbcode
+	vertexBufferData.push_back( ColorVertex( +0.5f, -0.5f, -0.5f, 1, 0, 0 ) );
+	vertexBufferData.push_back( ColorVertex( -0.5f, +0.5f, -0.5f, 1, 0, 0 ) );
+	vertexBufferData.push_back( ColorVertex( +0.5f, +0.5f, -0.5f, 1, 0, 0 ) );
 
-	createVertexArray();
-	createVertexBuffer();
+	createVertexBuffer( vertexBufferData );
 }
 
 MyApp::~MyApp()
@@ -29,29 +29,24 @@ void MyApp::Render () {
 		3,                  // Positionen im MyVertex bestehen aus 3 Koordinaten
 		GL_FLOAT,           // und sind als Floats gespeichert
 		GL_FALSE,           // die float-werte sind nicht normalisiert
-		sizeof( MyVertex ), // zwischen zwei vertices liegen sizeof( MyVertex ) = 6 * sizeof( Float ) = 6 * 4 = 24 byte
+		sizeof( ColorVertex ), // zwischen zwei vertices liegen sizeof( MyVertex ) = 6 * sizeof( Float ) = 6 * 4 = 24 byte
 		(void*)0            // Positionsinfos liegen an erster Stelle im Vertex
 		);
 	glVertexAttribPointer(
 		1,                  // Attribut 1 ist in unserem Shader die Farbe
-		3, GL_FLOAT, GL_FALSE, sizeof( MyVertex ), // auch hier 3 nicht normalisierte floats mit dem Abstand von 24 byte
+		3, GL_FLOAT, GL_FALSE, sizeof( ColorVertex ), // auch hier 3 nicht normalisierte floats mit dem Abstand von 24 byte
 		(void*)(3 * sizeof(float)) //vor den Farbinfos müssen die Positionsdaten übersprungen werden, die 3 * sizeof( float ) = 12 byte groß sind
 		);
 
 	glDrawArrays( GL_TRIANGLE_STRIP, 0, 4  );
 
 	glDisableVertexAttribArray( 0 );
+	glDisableVertexAttribArray( 1 );
 }
 
-void MyApp::createVertexArray()
-{	//Speichert im Hintergrund die Eigenschaften der VertexBuffer
-	glGenVertexArrays( 1, &vertexArray );
-	glBindVertexArray( vertexArray );
-}
-
-void MyApp::createVertexBuffer()
+void MyApp::createVertexBuffer( const std::vector<ModernGDV::ColorVertex>& vertexBufferData )
 {	//Vertices aus dem CPU-Hauptspeicher in den Grafik-RAM kopieren
 	glGenBuffers( 1, &vertexBuffer );
 	glBindBuffer( GL_ARRAY_BUFFER, vertexBuffer );
-	glBufferData( GL_ARRAY_BUFFER, vertexBufferData.size() * sizeof( MyVertex ), &vertexBufferData[0], GL_STATIC_DRAW );
+	glBufferData( GL_ARRAY_BUFFER, vertexBufferData.size() * sizeof( ColorVertex ), &vertexBufferData[0], GL_STATIC_DRAW );
 }

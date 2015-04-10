@@ -19,6 +19,7 @@ namespace ModernGDV {
 		GLuint vertexShader;
 		GLuint fragmentShader;
 		GLuint shaderProgram;
+		GLuint vertexArray;
 
 		App* app;
 	public:
@@ -33,6 +34,7 @@ namespace ModernGDV {
 		std::vector<char> readShaderFile( const char* filename );
 		void createShaders( );
 		void createShaderProgram( );
+		void createVertexArray( );
 	};
 }
 

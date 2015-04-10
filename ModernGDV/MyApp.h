@@ -8,9 +8,7 @@
 class MyApp : public ModernGDV::App
 {
 private:
-	GLuint vertexArray;
 	GLuint vertexBuffer;
-	std::vector<ModernGDV::MyVertex> vertexBufferData;
 
 public:
 	MyApp( std::vector<std::string> commandline );
@@ -18,8 +16,7 @@ public:
 
 	virtual void Render();
 private:
-	void createVertexArray();
-	void createVertexBuffer();
+	void createVertexBuffer(const std::vector<ModernGDV::ColorVertex>& vertexBufferData);
 };
 
 #endif

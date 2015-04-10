@@ -6,7 +6,7 @@
 #include <vector>
 
 ModernGDV::ModernGDV::ModernGDV( )
-	: glfwInitialized(false), window(nullptr), vertexShader(0U), fragmentShader(0U), shaderProgram(0U), app(nullptr)
+	: glfwInitialized( false ), window( nullptr ), vertexShader( 0U ), fragmentShader( 0U ), shaderProgram( 0U ), vertexArray( 0U ), app( nullptr )
 {
 	if (!glfwInit()) //GLFW Initialisieren
 		throw std::runtime_error( "Cannot initialize GLFW" );
@@ -19,6 +19,8 @@ ModernGDV::ModernGDV::ModernGDV( )
 
 	createShaders();
 	createShaderProgram();
+
+	createVertexArray();
 }
 
 ModernGDV::ModernGDV::~ModernGDV()
@@ -149,4 +151,10 @@ void ModernGDV::ModernGDV::createShaderProgram()
 		glGetProgramInfoLog( shaderProgram, infoLogLength, NULL, &shaderProgramErrorMessage[0] );
 		throw std::runtime_error( &shaderProgramErrorMessage[0] );
 	}
+}
+
+void ModernGDV::ModernGDV::createVertexArray()
+{	//Speichert im Hintergrund die Eigenschaften der VertexBuffer
+	glGenVertexArrays( 1, &vertexArray );
+	glBindVertexArray( vertexArray );
 }
