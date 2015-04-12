@@ -1,3 +1,7 @@
 *.opensdf
 *.sdf
 Debug/build/
+*.suo
+Debug/ModernGDV.pdb
+*.ilk
+ModernGDV/ModernGDV.vcxproj.user

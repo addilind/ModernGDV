@@ -1,12 +1,12 @@
-#ifndef MYAPP_H
-#define MYAPP_H
+#ifndef TEIL3_H
+#define TEIL3_H
 
 #include "ModernGDV/MGDVApp.h"
 #include "ModernGDV/ModernGDV.h"
 
 #include <vector>
 
-class MyApp : public ModernGDV::App
+class Teil3 : public ModernGDV::App
 {
 private:
 	ModernGDV::ModernGDV* mgdv;
@@ -19,13 +19,14 @@ private:
 	glm::mat4 viewMatrix;
 
 public:
-	MyApp( std::vector<std::string> commandline, ModernGDV::ModernGDV* mgdv );
-	virtual ~MyApp();
+	Teil3( std::vector<std::string> commandline, ModernGDV::ModernGDV* mgdv );
+	virtual ~Teil3();
 
 	virtual void Render() override;
 private:
-	void createVertexBuffer(const std::vector<ModernGDV::ColorVertex>& vertexBufferData);
 	void transform(const glm::mat4& transform);
+	void drawCube();
+	void createVertexBuffer(const std::vector<ModernGDV::ColorVertex>& vertexBufferData);
 };
 
 #endif

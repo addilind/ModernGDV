@@ -35,21 +35,24 @@ void MyApp::Render ()
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 	//glm::mat4 transform = glm::mat4();
-	glm::mat4 transform = projectionMatrix * viewMatrix * glm::rotate( glm::mat4(), static_cast<float>(glfwGetTime()), glm::vec3( 0, 1, 0 ) );
-	glUniformMatrix4fv( shaderTransform, 1, GL_FALSE, &transform[0][0] );
 
 	glBindBuffer( GL_ARRAY_BUFFER, vertexBuffer );
 	
 	ColorVertex::SetLayout();
 
+	transform(glm::translate(glm::mat4(), glm::vec3(1, 0, 0)));
 	glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
-	transform = projectionMatrix * viewMatrix * glm::rotate( glm::mat4(), static_cast<float>(glfwGetTime()) + 45.0f, glm::vec3( 1, 0, 0 ) );
-	glUniformMatrix4fv( shaderTransform, 1, GL_FALSE, &transform[0][0] );
-
+	transform(glm::mat4());
 	glDrawArrays( GL_TRIANGLE_STRIP, 0, 4  );
 
 	ColorVertex::ResetLayout();
+}
+
+void MyApp::transform(const glm::mat4& tran)
+{
+	glm::mat4 transform = projectionMatrix * viewMatrix * tran;
+	glUniformMatrix4fv(shaderTransform, 1, GL_FALSE, &transform[0][0]);
 }
 
 void MyApp::createVertexBuffer( const std::vector<ModernGDV::ColorVertex>& vertexBufferData )
