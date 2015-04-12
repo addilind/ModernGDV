@@ -20,7 +20,9 @@ MyApp::MyApp( std::vector<std::string> commandline, ModernGDV::ModernGDV* mgdv )
 
 	mgdv->SetApp( this );
 
+
 	glDepthFunc( GL_LESS );
+	glClearDepth( 1.0f );
 }
 
 MyApp::~MyApp()

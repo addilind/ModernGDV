@@ -6,6 +6,8 @@
 
 #include "ModernGDV/ModernGDV.h"
 #include "MyApp.h"
+#include "Teil1.h"
+#include "Teil2.h"
 
 int main( int argc, char** argv ) {
 	try {
@@ -16,9 +18,26 @@ int main( int argc, char** argv ) {
 		for (int i = 0; i < argc; ++i)
 			commandline.push_back( std::string( argv[i] ) );
 
+		std::cout << "Aufgabe: ";
+		char input = 0;
+		std::cin >> input;
+
 		ModernGDV::ModernGDV mgdv;
-		MyApp myApp( commandline, &mgdv );
-		mgdv.Run();
+		switch (input)
+		{
+		case '1': {
+			Teil1 t1( commandline, &mgdv );
+			mgdv.Run();
+			break; }
+		case '2': {
+			Teil2 t2( commandline, &mgdv );
+			mgdv.Run();
+			break; }
+		default: {
+			MyApp myApp( commandline, &mgdv );
+			mgdv.Run();
+			break; }
+		}
 		
 		return 0;
 	}

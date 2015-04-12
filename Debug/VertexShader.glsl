@@ -20,4 +20,5 @@ void main() {
 	//Dies hat mathematische Hintergründe (sonst könnte man keine Translationen aka Verschiebungen machen)
 
 	color = inColor; //Die Farbe wird einfach übernommen
+	//color = vec3(inPosition.z,0,-inPosition.z); //Tiefe als Farbe anzeigen, rot=positiv, blau=negativ
 }

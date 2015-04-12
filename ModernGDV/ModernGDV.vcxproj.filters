@@ -30,6 +30,12 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Teil1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Teil2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="FragmentShader.glsl">
@@ -51,6 +57,12 @@
     </ClInclude>
     <ClInclude Include="ModernGDV\MGDVVertex.h">
       <Filter>Header Files\ModernGDV</Filter>
+    </ClInclude>
+    <ClInclude Include="Teil1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Teil2.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

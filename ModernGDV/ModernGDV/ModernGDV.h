@@ -20,6 +20,7 @@ namespace ModernGDV {
 		GLuint fragmentShader;
 		GLuint shaderProgram;
 		GLuint vertexArray;
+		GLuint shaderTransform;
 
 		App* app;
 	public:
@@ -30,6 +31,7 @@ namespace ModernGDV {
 		void SetApp( App* application );
 
 		GLuint GetShaderProgram();
+		GLFWwindow* GetWindow();
 
 	private:
 		void createWindow();

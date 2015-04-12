@@ -21,6 +21,10 @@ ModernGDV::ModernGDV::ModernGDV( )
 	createShaderProgram();
 
 	createVertexArray();
+
+	shaderTransform = glGetUniformLocation( shaderProgram, "transformation" );
+
+	std::cout << "ModernGDV Initialization finished" << std::endl;
 }
 
 ModernGDV::ModernGDV::~ModernGDV()
@@ -42,8 +46,11 @@ void ModernGDV::ModernGDV::Run()
 	if (app == nullptr)
 		throw std::logic_error( "Must call SetApp before running" );
 
+
 	while (!glfwWindowShouldClose( window )) { //Dauerschleife, solange das Fenster offen ist
 		glUseProgram( shaderProgram );
+		glm::mat4 transform;
+		glUniformMatrix4fv( shaderTransform, 1, GL_FALSE, &transform[0][0] ); //Einheitsmatrix als Standard-Transformation setzen
 		app->Render();
 
 		glfwSwapBuffers( window ); //Gezeichnetes auf den Monitor bringen
@@ -61,6 +68,11 @@ void ModernGDV::ModernGDV::SetApp( App* application )
 GLuint ModernGDV::ModernGDV::GetShaderProgram()
 {
 	return shaderProgram;
+}
+
+GLFWwindow* ModernGDV::ModernGDV::GetWindow()
+{
+	return window;
 }
 
 void ModernGDV::ModernGDV::createWindow()

@@ -22,7 +22,7 @@ public:
 	MyApp( std::vector<std::string> commandline, ModernGDV::ModernGDV* mgdv );
 	virtual ~MyApp();
 
-	virtual void Render();
+	virtual void Render() override;
 private:
 	void createVertexBuffer(const std::vector<ModernGDV::ColorVertex>& vertexBufferData);
 };

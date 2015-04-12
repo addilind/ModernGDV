@@ -90,6 +90,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModernGDV\ModernGDV.cpp" />
     <ClCompile Include="MyApp.cpp" />
+    <ClCompile Include="Teil1.cpp" />
+    <ClCompile Include="Teil2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="FragmentShader.glsl">
@@ -108,6 +110,8 @@
     <ClInclude Include="ModernGDV\MGDVApp.h" />
     <ClInclude Include="ModernGDV\ModernGDV.h" />
     <ClInclude Include="MyApp.h" />
+    <ClInclude Include="Teil1.h" />
+    <ClInclude Include="Teil2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
