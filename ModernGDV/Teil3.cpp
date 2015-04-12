@@ -1,4 +1,5 @@
 #include "Teil3.h"
+#include <stack>
 
 using ModernGDV::ColorVertex;
 
@@ -45,24 +46,25 @@ void Teil3::Render ()
 
 	float pi = glm::pi<float>();
 	
-	glm::mat4 armtrans = glm::mat4();
-	//armtrans = glm::rotate(armtrans, -0.25f*pi, glm::vec3(0, 0, 1));
-	glm::mat4 trans = armtrans;
+	std::stack<glm::mat4> transstack;
+	glm::mat4 trans = glm::mat4();
+	trans = glm::rotate(trans, static_cast<float>(glfwGetTime()) / 2.f, glm::vec3(0, 0, 1));
 		
-	trans = glm::rotate(trans, -0.25f*pi, glm::vec3(0, 0, 1));
+	transstack.push(trans); //Gruppe beginnen
+
 	trans = glm::translate(trans, glm::vec3(0.5f, 0, 0));
 	trans = glm::scale(trans, glm::vec3(2.5f, 1.f, 1.f));
 	transform(trans);//transformation zur Grafikkarte schicken
 	drawCube();
 
-	trans = armtrans;
-	trans = glm::rotate(trans, -0.25f*pi, glm::vec3(0, 0, 1));
+	trans = transstack.top(); //Neuen Ast in Gruppe
 	trans = glm::translate(trans, glm::vec3(1.6f, 0, 0));
 	trans = glm::scale(trans, glm::vec3(3.0f, 0.5f, 0.5f));
+
 	transform(trans);//transformation zur Grafikkarte schicken
 	drawCube();
 	
-		
+	transstack.pop(); //Gruppe beenden
 	
 }
 
