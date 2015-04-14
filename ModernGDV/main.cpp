@@ -9,6 +9,7 @@
 #include "Teil1.h"
 #include "Teil2.h"
 #include "Teil3.h"
+#include "Teil4.h"
 
 int main( int argc, char** argv ) {
 	try {
@@ -36,6 +37,10 @@ int main( int argc, char** argv ) {
 			break; }
 		case '3': {
 			Teil3 t3(commandline, &mgdv);
+			mgdv.Run();
+			break; }
+		case '4': {
+			Teil4 t4(commandline, &mgdv);
 			mgdv.Run();
 			break; }
 		default: {
