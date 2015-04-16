@@ -90,10 +90,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModernGDV\ModernGDV.cpp" />
     <ClCompile Include="MyApp.cpp" />
-    <ClCompile Include="Teil1.cpp" />
-    <ClCompile Include="Teil2.cpp" />
-    <ClCompile Include="Teil3.cpp" />
-    <ClCompile Include="Teil4.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="FragmentShader.glsl">
@@ -108,14 +104,11 @@
     <None Include="VertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Geometries\Terrain.h" />
     <ClInclude Include="ModernGDV\MGDVVertex.h" />
     <ClInclude Include="ModernGDV\MGDVApp.h" />
     <ClInclude Include="ModernGDV\ModernGDV.h" />
     <ClInclude Include="MyApp.h" />
-    <ClInclude Include="Teil1.h" />
-    <ClInclude Include="Teil2.h" />
-    <ClInclude Include="Teil3.h" />
-    <ClInclude Include="Teil4.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

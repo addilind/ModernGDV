@@ -6,10 +6,6 @@
 
 #include "ModernGDV/ModernGDV.h"
 #include "MyApp.h"
-#include "Teil1.h"
-#include "Teil2.h"
-#include "Teil3.h"
-#include "Teil4.h"
 
 int main( int argc, char** argv ) {
 	try {
@@ -25,29 +21,8 @@ int main( int argc, char** argv ) {
 		std::cin >> input;
 
 		ModernGDV::ModernGDV mgdv;
-		switch (input)
-		{
-		case '1': {
-			Teil1 t1( commandline, &mgdv );
-			mgdv.Run();
-			break; }
-		case '2': {
-			Teil2 t2(commandline, &mgdv);
-			mgdv.Run();
-			break; }
-		case '3': {
-			Teil3 t3(commandline, &mgdv);
-			mgdv.Run();
-			break; }
-		case '4': {
-			Teil4 t4(commandline, &mgdv);
-			mgdv.Run();
-			break; }
-		default: {
-			MyApp myApp( commandline, &mgdv );
-			mgdv.Run();
-			break; }
-		}
+		MyApp myApp( commandline, &mgdv );
+		mgdv.Run();
 		
 		return 0;
 	}

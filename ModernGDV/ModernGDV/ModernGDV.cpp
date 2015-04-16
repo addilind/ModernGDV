@@ -81,7 +81,7 @@ void ModernGDV::ModernGDV::createWindow()
 	glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, 4 ); //OpenGL-Version 4.0 verwenden
 	glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 0 );
 	glfwWindowHint( GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE );
-	window = glfwCreateWindow( 1024, 768, "ModernGDV App", nullptr, nullptr ); //Fenster erstellen
+	window = glfwCreateWindow( 1024, 768, "GDV: Bastian Kreuzer (734877), Adrian Müller (734922)", nullptr, nullptr ); //Fenster erstellen
 
 	if (!window)
 		throw std::runtime_error( "Cannot create window" );
