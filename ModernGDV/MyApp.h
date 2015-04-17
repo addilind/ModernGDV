@@ -5,6 +5,8 @@
 #include "ModernGDV/ModernGDV.h"
 
 #include <vector>
+#include "Geometries\Primitives\Primitive.h"
+#include "Geometries\Primitives\Cube.h"
 
 class MyApp : public ModernGDV::App
 {
@@ -18,13 +20,13 @@ private:
 	glm::mat4 projectionMatrix;
 	glm::mat4 viewMatrix;
 
+	std::vector<Primitive> primitives;
 public:
 	MyApp( std::vector<std::string> commandline, ModernGDV::ModernGDV* mgdv );
 	virtual ~MyApp();
 
 	virtual void Render() override;
 private:
-	void createVertexBuffer(const std::vector<ModernGDV::ColorVertex>& vertexBufferData);
 	void transform(const glm::mat4& transform);
 };
 

@@ -16,9 +16,6 @@ int main( int argc, char** argv ) {
 		for (int i = 0; i < argc; ++i)
 			commandline.push_back( std::string( argv[i] ) );
 
-		std::cout << "Aufgabe: ";
-		char input = 0;
-		std::cin >> input;
 
 		ModernGDV::ModernGDV mgdv;
 		MyApp myApp( commandline, &mgdv );
