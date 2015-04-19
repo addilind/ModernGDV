@@ -7,6 +7,7 @@
 #include <vector>
 #include "Geometries\Primitives\Primitive.h"
 #include "Geometries\Primitives\Cube.h"
+#include "Geometries\Torso.h"
 
 class MyApp : public ModernGDV::App
 {
@@ -20,7 +21,8 @@ private:
 	glm::mat4 projectionMatrix;
 	glm::mat4 viewMatrix;
 
-	std::vector<Primitive> primitives;
+	//std::vector<Primitive> primitives;
+	Torso testtorso;
 public:
 	MyApp( std::vector<std::string> commandline, ModernGDV::ModernGDV* mgdv );
 	virtual ~MyApp();

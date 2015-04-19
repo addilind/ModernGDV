@@ -4,7 +4,7 @@
 namespace ModernGDV {
 #pragma pack(push, 1) //Sagt Visual Studio, den Vertex genau so, wie beschrieben im Speicher zu halten, damit wir ihn 1:1 auf die Grafikkarte kopieren können
 
-	class ColorVertex { //Muss zu den Inputs im Vertex-Shader passen
+	struct ColorVertex { //Muss zu den Inputs im Vertex-Shader passen
 	public:
 		float X; float Y; float Z;
 		float R; float G; float B;

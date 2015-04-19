@@ -19,6 +19,6 @@ void main() {
 	//3D-Koordinaten werden dabei als Vektor mit 4! Elementen angegeben, wobei das letzte Element immer 1 ist, weshalb wir den eingegebenen Vertex um eine 1 erweitern
 	//Dies hat mathematische Hintergründe (sonst könnte man keine Translationen aka Verschiebungen machen)
 
-	color = inColor; //Die Farbe wird einfach übernommen
-	//color = vec3(inPosition.z,0,-inPosition.z); //Tiefe als Farbe anzeigen, rot=positiv, blau=negativ
+	//color = inColor ; //Die Farbe wird einfach übernommen
+	color = vec3(inPosition.z*3,0,-inPosition.z*3); //Tiefe als Farbe anzeigen, rot=positiv, blau=negativ
 }

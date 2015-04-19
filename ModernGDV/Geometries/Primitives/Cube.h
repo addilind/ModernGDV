@@ -9,7 +9,7 @@ private:
 public:
 	virtual ~Cube();
 	virtual void Render() override;
-	static Cube Get();
+	//static Cube Get();
 
 private:
 	Cube();

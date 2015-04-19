@@ -18,6 +18,7 @@ public:
 	~Torso();
 
 	void Render();
+	void createVertexBuffer(const std::vector<ModernGDV::ColorVertex>& vertexBufferData);
 };
 
 #endif

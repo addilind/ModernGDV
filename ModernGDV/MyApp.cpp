@@ -3,7 +3,7 @@
 using ModernGDV::ColorVertex;
 
 MyApp::MyApp( std::vector<std::string> commandline, ModernGDV::ModernGDV* mgdv )
-	: mgdv(mgdv), shaderTransform(0U), vertexBuffer(0U)
+: mgdv(mgdv), shaderTransform(0U), vertexBuffer(0U), testtorso()
 {
 	shaderTransform = glGetUniformLocation( mgdv->GetShaderProgram(), "transformation" );
 
@@ -25,6 +25,10 @@ void MyApp::Render ()
 	glEnable( GL_DEPTH_TEST ); //Z-Buffer aktivieren
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
+	viewMatrix = glm::lookAt(glm::vec3(3.f*glm::sin(glfwGetTime()), 1, 3.f*glm::cos(glfwGetTime())), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	transform(glm::mat4());
+
+	testtorso.Render();
 }
 
 void MyApp::transform(const glm::mat4& tran)

@@ -1,6 +1,7 @@
 #include "Cube.h"
 
-Cube Cube::Get()
-{
-
-}
+//Cube Cube::Get()
+//{
+//	//	return instance;
+//	return;
+//}
