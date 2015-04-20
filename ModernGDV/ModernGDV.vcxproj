@@ -92,6 +92,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModernGDV\ModernGDV.cpp" />
     <ClCompile Include="MyApp.cpp" />
+    <ClCompile Include="Geometries\Thigh.cpp" />
+    <ClCompile Include="Geometries\Shank.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="FragmentShader.glsl">
@@ -114,6 +116,8 @@
     <ClInclude Include="ModernGDV\MGDVApp.h" />
     <ClInclude Include="ModernGDV\ModernGDV.h" />
     <ClInclude Include="MyApp.h" />
+    <ClInclude Include="Geometries\Thigh.h" />
+    <ClInclude Include="Geometries\Shank.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

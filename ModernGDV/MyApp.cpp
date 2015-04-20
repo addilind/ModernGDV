@@ -28,7 +28,9 @@ void MyApp::Render ()
 	viewMatrix = glm::lookAt(glm::vec3(3.f*glm::sin(glfwGetTime()), 1, 3.f*glm::cos(glfwGetTime())), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 	transform(glm::mat4());
 
-	testtorso.Render();
+	//testtorso.Render();
+	//testthigh.Render();
+	testshank.Render();
 }
 
 void MyApp::transform(const glm::mat4& tran)
