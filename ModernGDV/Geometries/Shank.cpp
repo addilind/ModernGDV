@@ -8,26 +8,26 @@ Shank::Shank()
 	std::vector<ColorVertex> vertices;
 	
 	//Unterschenkel linke Seite
-	vertices.push_back(ColorVertex(-0.10f, -0.45f, +0.10f)); // unten links vorne	0
-	vertices.push_back(ColorVertex(-0.05f, -0.45f, +0.10f)); // unten rechts vorne	
-	vertices.push_back(ColorVertex(-0.10f, -0.45f, -0.10f)); // unten links hinten	2
-	vertices.push_back(ColorVertex(-0.05f, -0.45f, -0.10f)); // unten rechts hinten	
+	vertices.push_back(ColorVertex(-0.15f, -0.45f, +0.08f)); // unten links vorne	0
+	vertices.push_back(ColorVertex(-0.075f, -0.45f, +0.08f)); // unten rechts vorne	
+	vertices.push_back(ColorVertex(-0.15f, -0.45f, -0.08f)); // unten links hinten	2
+	vertices.push_back(ColorVertex(-0.075f, -0.45f, -0.08f)); // unten rechts hinten	
 
-	vertices.push_back(ColorVertex(-0.10f, +0.05f, +0.10f)); // oben links vorne	4
-	vertices.push_back(ColorVertex(-0.05f, +0.05f, +0.10f)); // oben rechts vorne		
-	vertices.push_back(ColorVertex(-0.10f, +0.05f, -0.10f)); // oben links hinten	6
-	vertices.push_back(ColorVertex(-0.05f, +0.05f, -0.10f)); // oben rechts hinten	
+	vertices.push_back(ColorVertex(-0.15f, +0.05f, +0.075f)); // oben links vorne	4
+	vertices.push_back(ColorVertex(-0.075f, +0.05f, +0.075f)); // oben rechts vorne		
+	vertices.push_back(ColorVertex(-0.15f, +0.05f, -0.075f)); // oben links hinten	6
+	vertices.push_back(ColorVertex(-0.075f, +0.05f, -0.075f)); // oben rechts hinten	
 
 	//Unterschenkel rechte Seite
-	vertices.push_back(ColorVertex(+0.05f, -0.45f, +0.10f)); // unten links vorne	8
-	vertices.push_back(ColorVertex(+0.10f, -0.45f, +0.10f)); // unten rechts vorne	
-	vertices.push_back(ColorVertex(+0.05f, -0.45f, -0.10f)); // unten links hinten	10
-	vertices.push_back(ColorVertex(+0.10f, -0.45f, -0.10f)); // unten rechts hinten	
+	vertices.push_back(ColorVertex(+0.075f, -0.45f, +0.08f)); // unten links vorne	8
+	vertices.push_back(ColorVertex(+0.15f, -0.45f, +0.08f)); // unten rechts vorne	
+	vertices.push_back(ColorVertex(+0.075f, -0.45f, -0.08f)); // unten links hinten	10
+	vertices.push_back(ColorVertex(+0.15f, -0.45f, -0.08f)); // unten rechts hinten	
 
-	vertices.push_back(ColorVertex(+0.05f, +0.05f, +0.10f)); // oben links vorne	12
-	vertices.push_back(ColorVertex(+0.10f, +0.05f, +0.10f)); // oben rechts vorne		
-	vertices.push_back(ColorVertex(+0.05f, +0.05f, -0.10f)); // oben links hinten	14
-	vertices.push_back(ColorVertex(+0.10f, +0.05f, -0.10f)); // oben rechts hinten	
+	vertices.push_back(ColorVertex(+0.075f, +0.05f, +0.075f)); // oben links vorne	12
+	vertices.push_back(ColorVertex(+0.15f, +0.05f, +0.075f)); // oben rechts vorne		
+	vertices.push_back(ColorVertex(+0.075f, +0.05f, -0.075f)); // oben links hinten	14
+	vertices.push_back(ColorVertex(+0.15f, +0.05f, -0.075f)); // oben rechts hinten	
 
 	createVertexBuffer(vertices);
 }

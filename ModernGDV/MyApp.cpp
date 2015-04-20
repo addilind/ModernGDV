@@ -24,7 +24,7 @@ void MyApp::Render ()
 	glEnable( GL_DEPTH_TEST ); //Z-Buffer aktivieren
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-	mgdv->SetViewMatrix(glm::lookAt(glm::vec3(3.f*glm::sin(glfwGetTime()), -1, 3.f*glm::cos(glfwGetTime())), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0)));
+	mgdv->SetViewMatrix(glm::lookAt(glm::vec3(3.f*glm::sin(glfwGetTime()/2.f), 0.f, 3.f*glm::cos(glfwGetTime()/2.f)), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0)));
 
 	robot.Render();
 }

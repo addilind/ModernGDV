@@ -7,15 +7,15 @@ Thigh::Thigh()
 {
 	std::vector<ColorVertex> vertices;
 
-	vertices.push_back(ColorVertex(-0.05f, -0.50f, +0.05f)); //Oberschenekl unten links vorne	0
-	vertices.push_back(ColorVertex(+0.05f, -0.50f, +0.05f)); //Oberschenekl unten rechts vorne	
-	vertices.push_back(ColorVertex(-0.05f, -0.50f, -0.05f)); //Oberschenekl unten links hinten	2
-	vertices.push_back(ColorVertex(+0.05f, -0.50f, -0.05f)); //Oberschenekl unten rechts hinten	
+	vertices.push_back(ColorVertex(-0.075f, -0.50f, +0.075f)); //Oberschenekl unten links vorne	0
+	vertices.push_back(ColorVertex(+0.075f, -0.50f, +0.075f)); //Oberschenekl unten rechts vorne	
+	vertices.push_back(ColorVertex(-0.075f, -0.50f, -0.075f)); //Oberschenekl unten links hinten	2
+	vertices.push_back(ColorVertex(+0.075f, -0.50f, -0.075f)); //Oberschenekl unten rechts hinten	
 
-	vertices.push_back(ColorVertex(-0.05f, +0.05f, +0.05f)); //Oberschenekl oben links vorne	4
-	vertices.push_back(ColorVertex(+0.05f, +0.05f, +0.05f)); //Oberschenekl oben rechts vorne		
-	vertices.push_back(ColorVertex(-0.05f, +0.05f, -0.05f)); //Oberschenekl oben links hinten	6
-	vertices.push_back(ColorVertex(+0.05f, +0.05f, -0.05f)); //Oberschenekl oben rechts hinten	
+	vertices.push_back(ColorVertex(-0.075f, +0.05f, +0.075f)); //Oberschenekl oben links vorne	4
+	vertices.push_back(ColorVertex(+0.075f, +0.05f, +0.075f)); //Oberschenekl oben rechts vorne		
+	vertices.push_back(ColorVertex(-0.075f, +0.05f, -0.075f)); //Oberschenekl oben links hinten	6
+	vertices.push_back(ColorVertex(+0.075f, +0.05f, -0.075f)); //Oberschenekl oben rechts hinten	
 
 	createVertexBuffer(vertices);
 }

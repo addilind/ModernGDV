@@ -14,8 +14,21 @@ void Robot::Render()
 	mgdv->PushTransform();
 	torso.Render();
 
-	mgdv->AddTransform( glm::translate( glm::mat4(), glm::vec3( -0.2f, 0.2f, 0.f) ) ); //Linker Oberschenkel
+	mgdv->AddTransform( glm::translate( glm::mat4(), glm::vec3( -0.2f, 0.15f, 0.f) ) ); //Linker Oberschenkel
+	mgdv->AddTransform(glm::rotate(glm::mat4(), static_cast<float>(glm::sin(glfwGetTime())), glm::vec3(1, 0, 0)));
 	thigh.Render();
+
+	mgdv->AddTransform(glm::translate(glm::mat4(), glm::vec3(0.f, -0.40f, 0.f))); //Linker Unterschenkel
+	mgdv->AddTransform(glm::rotate(glm::mat4(), static_cast<float>(-glm::sin(glfwGetTime())), glm::vec3(1, 0, 0)));
+	shank.Render();
+
+	mgdv->ReloadTransform();
+	mgdv->AddTransform(glm::translate(glm::mat4(), glm::vec3(+0.2f, 0.15f, 0.f))); //Rechter Oberschenkel
+	thigh.Render();
+
+	mgdv->AddTransform(glm::translate(glm::mat4(), glm::vec3(0.f, -0.40f, 0.f))); //Rechter Unterschenkel
+	mgdv->AddTransform(glm::rotate(glm::mat4(), static_cast<float>(glm::cos(glfwGetTime())), glm::vec3(1, 0, 0)));
+	shank.Render();
 
 	mgdv->PopTransform();
 }
