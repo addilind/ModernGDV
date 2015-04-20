@@ -7,10 +7,7 @@
 #include <vector>
 #include "Geometries\Primitives\Primitive.h"
 #include "Geometries\Primitives\Cube.h"
-#include "Geometries\Torso.h"
-#include "Geometries\Thigh.h"
-#include "Geometries\Shank.h"
-
+#include "Geometries\Robot.h"
 class MyApp : public ModernGDV::App
 {
 private:
@@ -19,21 +16,14 @@ private:
 	GLuint shaderTransform;
 
 	GLuint vertexBuffer;
+	
+	Robot robot;
 
-	glm::mat4 projectionMatrix;
-	glm::mat4 viewMatrix;
-
-	//std::vector<Primitive> primitives;
-	Torso testtorso;
-	Thigh testthigh;
-	Shank testshank;
 public:
 	MyApp( std::vector<std::string> commandline, ModernGDV::ModernGDV* mgdv );
 	virtual ~MyApp();
 
 	virtual void Render() override;
-private:
-	void transform(const glm::mat4& transform);
 };
 
 #endif

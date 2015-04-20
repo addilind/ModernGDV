@@ -6,6 +6,7 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <vector>
+#include <stack>
 
 #include "MGDVVertex.h"
 #include "MGDVApp.h"
@@ -22,6 +23,11 @@ namespace ModernGDV {
 		GLuint vertexArray;
 		GLuint shaderTransform;
 
+		glm::mat4 transform;
+		std::stack<glm::mat4> transformStack;
+		glm::mat4 projectionMatrix;
+		glm::mat4 viewMatrix;
+
 		App* app;
 	public:
 		ModernGDV();
@@ -32,6 +38,15 @@ namespace ModernGDV {
 
 		GLuint GetShaderProgram();
 		GLFWwindow* GetWindow();
+
+		void SetProjectionMatrix( glm::mat4& projectionMat );
+		void SetViewMatrix( glm::mat4& viewMat );
+		//void SetTransform(glm::mat4);
+		void AddTransform( glm::mat4& );
+		void PushTransform();
+		void ReloadTransform();
+		void PopTransform( int count = 1 );
+		void ResetTransform();
 
 	private:
 		void createWindow();

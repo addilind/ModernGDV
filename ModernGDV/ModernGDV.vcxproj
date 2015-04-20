@@ -94,6 +94,7 @@
     <ClCompile Include="MyApp.cpp" />
     <ClCompile Include="Geometries\Thigh.cpp" />
     <ClCompile Include="Geometries\Shank.cpp" />
+    <ClCompile Include="Geometries\Robot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="FragmentShader.glsl">
@@ -118,6 +119,7 @@
     <ClInclude Include="MyApp.h" />
     <ClInclude Include="Geometries\Thigh.h" />
     <ClInclude Include="Geometries\Shank.h" />
+    <ClInclude Include="Geometries\Robot.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

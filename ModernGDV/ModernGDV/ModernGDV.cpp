@@ -75,6 +75,49 @@ GLFWwindow* ModernGDV::ModernGDV::GetWindow()
 	return window;
 }
 
+void ModernGDV::ModernGDV::SetProjectionMatrix(glm::mat4& projectionMat)
+{
+	projectionMatrix = projectionMat;
+	ResetTransform();
+}
+
+void ModernGDV::ModernGDV::SetViewMatrix(glm::mat4& viewMat)
+{
+	viewMatrix = viewMat;
+	ResetTransform();
+}
+
+void ModernGDV::ModernGDV::AddTransform(glm::mat4& additionalTransform)
+{
+	transform = transform * additionalTransform; //Transformation dazumultiplizeren
+	glUniformMatrix4fv( shaderTransform, 1, GL_FALSE, &transform[0][0] ); //An Grafikkarte uebertragen
+}
+
+void ModernGDV::ModernGDV::PushTransform()
+{
+	transformStack.push( transform );
+}
+
+void ModernGDV::ModernGDV::ReloadTransform()
+{
+	transform = transformStack.top();
+	glUniformMatrix4fv( shaderTransform, 1, GL_FALSE, &transform[0][0] ); //An Grafikkarte uebertragen
+}
+
+void ModernGDV::ModernGDV::PopTransform(int count)
+{
+	for (int i = 0; i < count; ++i)
+		transformStack.pop();
+}
+
+void ModernGDV::ModernGDV::ResetTransform()
+{
+	while (!transformStack.empty())
+		transformStack.pop();
+	transform = projectionMatrix * viewMatrix;
+	glUniformMatrix4fv( shaderTransform, 1, GL_FALSE, &transform[0][0] ); //An Grafikkarte uebertragen
+}
+
 void ModernGDV::ModernGDV::createWindow()
 {
 	glfwWindowHint( GLFW_SAMPLES, 4 ); // 4x Antialiasing

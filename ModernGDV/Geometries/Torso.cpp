@@ -13,35 +13,35 @@ Torso::Torso()
 	std::vector<ColorVertex> vertices;
 	vertices.push_back(ColorVertex(+0.00f, +0.00f, +0.0f)); //Spitze Pyramide unten	0
 
-	vertices.push_back(ColorVertex(-0.10f, +0.10f, +0.15f)); //Grundflaeche Pyramide links vorne	
-	vertices.push_back(ColorVertex(+0.10f, +0.10f, +0.15f)); //Grundflaeche Pyramide rechts vorne	2
-	vertices.push_back(ColorVertex(-0.10f, +0.10f, -0.15f)); //Grundflaeche Pyramide links hinten	
-	vertices.push_back(ColorVertex(+0.10f, +0.10f, -0.15f)); //Grundflaeche Pyramide rechts hinten	4
+	vertices.push_back(ColorVertex(-0.10f, +0.10f, +0.08f)); //Grundflaeche Pyramide links vorne	
+	vertices.push_back(ColorVertex(+0.10f, +0.10f, +0.08f)); //Grundflaeche Pyramide rechts vorne	2
+	vertices.push_back(ColorVertex(-0.10f, +0.10f, -0.08f)); //Grundflaeche Pyramide links hinten	
+	vertices.push_back(ColorVertex(+0.10f, +0.10f, -0.08f)); //Grundflaeche Pyramide rechts hinten	4
 
-	vertices.push_back(ColorVertex(-0.10f, +0.25f, +0.15f)); //kl Quader links vorne	
-	vertices.push_back(ColorVertex(+0.10f, +0.25f, +0.15f)); //kl Quader rechts vorne	6
-	vertices.push_back(ColorVertex(-0.10f, +0.25f, -0.15f)); //kl Quader links hinten	
-	vertices.push_back(ColorVertex(+0.10f, +0.25f, -0.15f)); //kl Quader rechts hinten	8
+	vertices.push_back(ColorVertex(-0.10f, +0.25f, +0.10f)); //kl Quader links vorne	
+	vertices.push_back(ColorVertex(+0.10f, +0.25f, +0.10f)); //kl Quader rechts vorne	6
+	vertices.push_back(ColorVertex(-0.10f, +0.25f, -0.10f)); //kl Quader links hinten	
+	vertices.push_back(ColorVertex(+0.10f, +0.25f, -0.10f)); //kl Quader rechts hinten	8
 
-	vertices.push_back(ColorVertex(-0.20f, +0.25f, +0.2f)); //Pyramidenstumpf unten links vorne
-	vertices.push_back(ColorVertex(+0.20f, +0.25f, +0.2f)); //Pyramidenstumpf unten rechts vorne	10
-	vertices.push_back(ColorVertex(-0.20f, +0.25f, -0.2f)); //Pyramidenstumpf unten links hinten
-	vertices.push_back(ColorVertex(+0.20f, +0.25f, -0.2f)); //Pyramidenstumpf unten rechts hinten	12
+	vertices.push_back(ColorVertex(-0.20f, +0.25f, +0.12f)); //Pyramidenstumpf unten links vorne
+	vertices.push_back(ColorVertex(+0.20f, +0.25f, +0.12f)); //Pyramidenstumpf unten rechts vorne	10
+	vertices.push_back(ColorVertex(-0.20f, +0.25f, -0.12f)); //Pyramidenstumpf unten links hinten
+	vertices.push_back(ColorVertex(+0.20f, +0.25f, -0.12f)); //Pyramidenstumpf unten rechts hinten	12
 
-	vertices.push_back(ColorVertex(-0.25f, +0.45f, +0.2f)); //Pyramidenstumpf oben links vorne
-	vertices.push_back(ColorVertex(+0.25f, +0.45f, +0.2f)); //Pyramidenstumpf oben rechts vorne		14
-	vertices.push_back(ColorVertex(-0.25f, +0.45f, -0.2f)); //Pyramidenstumpf oben links hinten
-	vertices.push_back(ColorVertex(+0.25f, +0.45f, -0.2f)); //Pyramidenstumpf oben rechts hinten	16
+	vertices.push_back(ColorVertex(-0.25f, +0.45f, +0.13f)); //Pyramidenstumpf oben links vorne
+	vertices.push_back(ColorVertex(+0.25f, +0.45f, +0.13f)); //Pyramidenstumpf oben rechts vorne		14
+	vertices.push_back(ColorVertex(-0.25f, +0.45f, -0.13f)); //Pyramidenstumpf oben links hinten
+	vertices.push_back(ColorVertex(+0.25f, +0.45f, -0.13f)); //Pyramidenstumpf oben rechts hinten	16
 
-	vertices.push_back(ColorVertex(-0.30f, +0.45f, +0.25f)); //Quader unten links vorne
-	vertices.push_back(ColorVertex(+0.30f, +0.45f, +0.25f)); //Quader unten rechts vorne	18
-	vertices.push_back(ColorVertex(-0.30f, +0.45f, -0.25f)); //Quader unten links hinten
-	vertices.push_back(ColorVertex(+0.30f, +0.45f, -0.25f)); //Quader unten rechts hinten	20
+	vertices.push_back(ColorVertex(-0.30f, +0.45f, +0.15f)); //Quader unten links vorne
+	vertices.push_back(ColorVertex(+0.30f, +0.45f, +0.15f)); //Quader unten rechts vorne	18
+	vertices.push_back(ColorVertex(-0.30f, +0.45f, -0.15f)); //Quader unten links hinten
+	vertices.push_back(ColorVertex(+0.30f, +0.45f, -0.15f)); //Quader unten rechts hinten	20
 
-	vertices.push_back(ColorVertex(-0.30f, +1.00f, +0.25f)); //Quader oben links vorne
-	vertices.push_back(ColorVertex(+0.30f, +1.00f, +0.25f)); //Quader oben rechts vorne		22
-	vertices.push_back(ColorVertex(-0.30f, +1.00f, -0.25f)); //Quader oben links hinten
-	vertices.push_back(ColorVertex(+0.30f, +1.00f, -0.25f)); //Quader oben rechts hinten	24
+	vertices.push_back(ColorVertex(-0.30f, +1.00f, +0.15f)); //Quader oben links vorne
+	vertices.push_back(ColorVertex(+0.30f, +1.00f, +0.15f)); //Quader oben rechts vorne		22
+	vertices.push_back(ColorVertex(-0.30f, +1.00f, -0.15f)); //Quader oben links hinten
+	vertices.push_back(ColorVertex(+0.30f, +1.00f, -0.15f)); //Quader oben rechts hinten	24
 
 
 	createVertexBuffer(vertices);
