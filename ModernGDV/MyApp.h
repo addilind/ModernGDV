@@ -5,8 +5,6 @@
 #include "ModernGDV/ModernGDV.h"
 
 #include <vector>
-#include "Geometries\Primitives\Primitive.h"
-#include "Geometries\Primitives\Cube.h"
 #include "Geometries\Robot.h"
 class MyApp : public ModernGDV::App
 {

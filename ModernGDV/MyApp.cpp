@@ -26,5 +26,9 @@ void MyApp::Render ()
 
 	mgdv->SetViewMatrix(glm::lookAt(glm::vec3(3.f*glm::sin(glfwGetTime()/2.f), 0.f, 3.f*glm::cos(glfwGetTime()/2.f)), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0)));
 
+	mgdv->ResetTransform();
+
 	robot.Render();
+
+
 }

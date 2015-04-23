@@ -30,9 +30,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Geometries\Primitives\Cube.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Geometries\Torso.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -70,12 +67,6 @@
     <ClInclude Include="Geometries\Terrain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Geometries\Primitives\Cube.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Geometries\Primitives\Primitive.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Geometries\Torso.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -86,6 +77,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Geometries\Robot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometries\Primitives\Triangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -7,6 +7,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 #include <stack>
+#include <map>
 
 #include "MGDVVertex.h"
 #include "MGDVApp.h"
@@ -21,13 +22,20 @@ namespace ModernGDV {
 		GLuint fragmentShader;
 		GLuint shaderProgram;
 		GLuint vertexArray;
-		GLuint shaderTransform;
+
+		GLuint shaderUniformModel;
+		GLuint shaderUniformNormal;
+		GLuint shaderUniformView;
+		GLuint shaderUniformProj;
+		GLuint shaderUniformLightPos;
+		GLuint shaderUniformDiffuseTextureSampler;
 
 		glm::mat4 transform;
 		std::stack<glm::mat4> transformStack;
 		glm::mat4 projectionMatrix;
 		glm::mat4 viewMatrix;
 
+		std::map<std::string, GLuint> textureCache;
 		App* app;
 	public:
 		ModernGDV();
@@ -41,12 +49,14 @@ namespace ModernGDV {
 
 		void SetProjectionMatrix( glm::mat4& projectionMat );
 		void SetViewMatrix( glm::mat4& viewMat );
-		//void SetTransform(glm::mat4);
-		void AddTransform( glm::mat4& );
+		const glm::mat4* Transform(  );
+		void SetTransform( glm::mat4& transform );
 		void PushTransform();
 		void ReloadTransform();
 		void PopTransform( int count = 1 );
 		void ResetTransform();
+
+		GLuint GetTexture( const std::string& filename );
 
 	private:
 		void createWindow();
@@ -54,6 +64,9 @@ namespace ModernGDV {
 		void createShaders( );
 		void createShaderProgram( );
 		void createVertexArray( );
+		void uploadTransform( );
+		GLuint loadTexture( const std::string& filename );
+		void deinit();
 	};
 }
 

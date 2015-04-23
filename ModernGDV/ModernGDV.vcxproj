@@ -87,7 +87,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Geometries\Primitives\Cube.cpp" />
     <ClCompile Include="Geometries\Torso.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModernGDV\ModernGDV.cpp" />
@@ -109,8 +108,7 @@
     <None Include="VertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Geometries\Primitives\Cube.h" />
-    <ClInclude Include="Geometries\Primitives\Primitive.h" />
+    <ClInclude Include="Geometries\Primitives\Triangle.h" />
     <ClInclude Include="Geometries\Terrain.h" />
     <ClInclude Include="Geometries\Torso.h" />
     <ClInclude Include="ModernGDV\MGDVVertex.h" />

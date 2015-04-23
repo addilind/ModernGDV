@@ -6,7 +6,10 @@
 #include <vector>
 
 ModernGDV::ModernGDV::ModernGDV( )
-	: glfwInitialized( false ), window( nullptr ), vertexShader( 0U ), fragmentShader( 0U ), shaderProgram( 0U ), vertexArray( 0U ), app( nullptr )
+	: glfwInitialized( false ), window( nullptr ),
+	vertexShader( 0U ), fragmentShader( 0U ), shaderProgram( 0U ), vertexArray( 0U ),
+	shaderUniformModel( 0U ), shaderUniformNormal( 0U ), shaderUniformView( 0U ), shaderUniformProj( 0U ), shaderUniformLightPos( 0U ), shaderUniformDiffuseTextureSampler( 0U ),
+	 app( nullptr )
 {
 	if (!glfwInit()) //GLFW Initialisieren
 		throw std::runtime_error( "Cannot initialize GLFW" );
@@ -14,31 +17,36 @@ ModernGDV::ModernGDV::ModernGDV( )
 	glfwInitialized = true;
 	std::cout << "GLFW initialized" << std::endl;
 
-	createWindow();
-	std::cout << "Window created" << std::endl;
+	try
+	{
+		createWindow();
+		std::cout << "Window created" << std::endl;
 
-	createShaders();
-	createShaderProgram();
+		createShaders();
+		createShaderProgram();
 
-	createVertexArray();
+		createVertexArray();
 
-	shaderTransform = glGetUniformLocation( shaderProgram, "transformation" );
+		shaderUniformModel = glGetUniformLocation( shaderProgram, "model" );
+		shaderUniformNormal = glGetUniformLocation( shaderProgram, "normal" );
+		shaderUniformView = glGetUniformLocation( shaderProgram, "view" );
+		shaderUniformProj = glGetUniformLocation( shaderProgram, "proj" );
+		shaderUniformLightPos = glGetUniformLocation( shaderProgram, "lightPos" );
+		shaderUniformDiffuseTextureSampler = glGetUniformLocation( shaderProgram, "diffuseTextureSampler" );
+	}
+	catch ( ... )
+	{
+		deinit(); //Destructor would not be called on exception in constructor (since there never really was an instance to destruct) -> manually clean up
+		throw;
+	}
+
 
 	std::cout << "ModernGDV Initialization finished" << std::endl;
 }
 
 ModernGDV::ModernGDV::~ModernGDV()
 {
-	if (shaderProgram > 0U)
-		glDeleteProgram( shaderProgram );
-	if (fragmentShader > 0U)
-		glDeleteShader( fragmentShader );
-	if (vertexShader > 0U)
-		glDeleteShader( vertexShader );
-	if (window)
-		glfwDestroyWindow( window ); //Fenster entladen, falls vorhanden
-	if (glfwInitialized)
-		glfwTerminate(); //GLFW beenden, falls initialisiert
+	deinit();
 }
 
 void ModernGDV::ModernGDV::Run()
@@ -49,8 +57,8 @@ void ModernGDV::ModernGDV::Run()
 
 	while (!glfwWindowShouldClose( window )) { //Dauerschleife, solange das Fenster offen ist
 		glUseProgram( shaderProgram );
-		glm::mat4 transform;
-		glUniformMatrix4fv( shaderTransform, 1, GL_FALSE, &transform[0][0] ); //Einheitsmatrix als Standard-Transformation setzen
+		ResetTransform();
+
 		app->Render();
 
 		glfwSwapBuffers( window ); //Gezeichnetes auf den Monitor bringen
@@ -78,19 +86,25 @@ GLFWwindow* ModernGDV::ModernGDV::GetWindow()
 void ModernGDV::ModernGDV::SetProjectionMatrix(glm::mat4& projectionMat)
 {
 	projectionMatrix = projectionMat;
-	ResetTransform();
+	glUniformMatrix4fv( shaderUniformProj, 1, GL_FALSE, &projectionMatrix[0][0] ); //An Grafikkarte uebertragen
 }
 
 void ModernGDV::ModernGDV::SetViewMatrix(glm::mat4& viewMat)
 {
 	viewMatrix = viewMat;
+	glUniformMatrix4fv( shaderUniformProj, 1, GL_FALSE, &viewMatrix[0][0] ); //An Grafikkarte uebertragen
 	ResetTransform();
 }
 
-void ModernGDV::ModernGDV::AddTransform(glm::mat4& additionalTransform)
+const glm::mat4* ModernGDV::ModernGDV::Transform()
 {
-	transform = transform * additionalTransform; //Transformation dazumultiplizeren
-	glUniformMatrix4fv( shaderTransform, 1, GL_FALSE, &transform[0][0] ); //An Grafikkarte uebertragen
+	return &transform;
+}
+
+void ModernGDV::ModernGDV::SetTransform(glm::mat4& trans)
+{
+	transform = trans; //Transformation speichern
+	uploadTransform();
 }
 
 void ModernGDV::ModernGDV::PushTransform()
@@ -101,21 +115,34 @@ void ModernGDV::ModernGDV::PushTransform()
 void ModernGDV::ModernGDV::ReloadTransform()
 {
 	transform = transformStack.top();
-	glUniformMatrix4fv( shaderTransform, 1, GL_FALSE, &transform[0][0] ); //An Grafikkarte uebertragen
+	uploadTransform();
 }
 
 void ModernGDV::ModernGDV::PopTransform(int count)
 {
 	for (int i = 0; i < count; ++i)
 		transformStack.pop();
+	ReloadTransform();
 }
 
 void ModernGDV::ModernGDV::ResetTransform()
 {
 	while (!transformStack.empty())
 		transformStack.pop();
-	transform = projectionMatrix * viewMatrix;
-	glUniformMatrix4fv( shaderTransform, 1, GL_FALSE, &transform[0][0] ); //An Grafikkarte uebertragen
+	transform = glm::mat4();
+	uploadTransform();
+}
+
+GLuint ModernGDV::ModernGDV::GetTexture(const std::string& filename)
+{
+	//Suche nach Datei in Texturcache
+	auto cacheEntry = textureCache.find( filename );
+	if (cacheEntry != textureCache.end())
+		return cacheEntry->second; //Gib gefundene ID zurück
+
+	GLuint texID = loadTexture( filename ); //Lade Textur
+	textureCache.insert( std::pair<std::string, GLuint>(filename, texID) ); //Speichere die Textur im cache
+	return texID;
 }
 
 void ModernGDV::ModernGDV::createWindow()
@@ -176,8 +203,9 @@ void ModernGDV::ModernGDV::createShaders( )
 	if (result != GL_TRUE) {
 		int infoLogLength = -1;
 		glGetShaderiv( vertexShader, GL_INFO_LOG_LENGTH, &infoLogLength );
-		std::vector<char> vertexShaderErrorMessage( infoLogLength );
-		glGetShaderInfoLog( vertexShader, infoLogLength, NULL, &vertexShaderErrorMessage[0] );
+		std::vector<char> vertexShaderErrorMessage( infoLogLength + 4 );
+		vertexShaderErrorMessage[0] = 'V'; vertexShaderErrorMessage[1] = 'S'; vertexShaderErrorMessage[2] = ':'; vertexShaderErrorMessage[3] = ' ';
+		glGetShaderInfoLog( vertexShader, infoLogLength, nullptr, &vertexShaderErrorMessage[4] );
 		throw std::runtime_error( &vertexShaderErrorMessage[0] );
 	}
 
@@ -185,8 +213,9 @@ void ModernGDV::ModernGDV::createShaders( )
 	if (result != GL_TRUE) {
 		int infoLogLength = -1;
 		glGetShaderiv( fragmentShader, GL_INFO_LOG_LENGTH, &infoLogLength );
-		std::vector<char> fragmentShaderErrorMessage( infoLogLength );
-		glGetShaderInfoLog( fragmentShader, infoLogLength, NULL, &fragmentShaderErrorMessage[0] );
+		std::vector<char> fragmentShaderErrorMessage( infoLogLength + 4 );
+		fragmentShaderErrorMessage[0] = 'F'; fragmentShaderErrorMessage[1] = 'S'; fragmentShaderErrorMessage[2] = ':'; fragmentShaderErrorMessage[3] = ' ';
+		glGetShaderInfoLog( fragmentShader, infoLogLength, nullptr, &fragmentShaderErrorMessage[4] );
 		throw std::runtime_error( &fragmentShaderErrorMessage[0] );
 	}
 }
@@ -217,4 +246,104 @@ void ModernGDV::ModernGDV::createVertexArray()
 {	//Speichert im Hintergrund die Eigenschaften der VertexBuffer
 	glGenVertexArrays( 1, &vertexArray );
 	glBindVertexArray( vertexArray );
+}
+
+void ModernGDV::ModernGDV::uploadTransform()
+{
+	glUniformMatrix4fv( shaderUniformModel, 1, GL_FALSE, &transform[0][0] ); //An Grafikkarte uebertragen
+	glm::mat3 normal(glm::transpose( glm::inverse( viewMatrix * transform ) )); //Transformation für Normalen berechnen
+	glUniformMatrix3fv( shaderUniformNormal, 1, GL_FALSE, &normal[0][0] ); //An Grafikkarte uebertragens
+}
+
+#define DXT1 0x31545844 // "DXT1" in ASCII
+#define DXT3 0x33545844 // "DXT3" in ASCII
+#define DXT5 0x35545844 // "DXT5" in ASCII
+GLuint ModernGDV::ModernGDV::loadTexture(const std::string& filename)
+{
+	std::ifstream file( filename, std::ifstream::binary );
+	if (!file)
+		throw std::runtime_error( "Cannot open texture file!" );
+
+	char filecode[4]; //Dateiheader überprüfen
+	file.read( filecode, 4 );
+	if (strncmp( filecode, "DDS ", 4 ) != 0)
+		throw std::runtime_error( "Invalid texture file, must be using DXT1/3/5 compression!" );
+
+	char header[124];
+	file.read( header, 124);
+
+	unsigned int height = *reinterpret_cast<unsigned int*>(&(header[8]));
+	unsigned int width = *reinterpret_cast<unsigned int*>(&(header[12]));
+	unsigned int linearSize = *reinterpret_cast<unsigned int*>(&(header[16]));
+	unsigned int mipMapCount = *reinterpret_cast<unsigned int*>(&(header[24]));
+	unsigned int fourCC = *reinterpret_cast<unsigned int*>(&(header[80]));
+
+	unsigned int bufsize;
+
+	/* Buffergröße errechnen: Falls die Textur vorberechnete MIPMAPs mitbringt, ist sie doppelt so groß */
+	bufsize = mipMapCount > 1 ? linearSize * 2 : linearSize;
+	std::vector<char> imageData( bufsize );
+	file.read( &imageData[0], bufsize );
+
+	file.close();
+
+	unsigned int components = (fourCC == DXT1) ? 3 : 4;
+	unsigned int format;
+	switch (fourCC)
+	{
+	case DXT1:
+		format = GL_COMPRESSED_RGBA_S3TC_DXT1_EXT;
+		break;
+	case DXT3:
+		format = GL_COMPRESSED_RGBA_S3TC_DXT3_EXT;
+		break;
+	case DXT5:
+		format = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
+		break;
+	default:
+		throw std::runtime_error( "Texture declares unknown compression format!" );
+	}
+
+	// OpenGL-Textur erstellen
+	GLuint textureID;
+	glGenTextures( 1, &textureID );
+	glBindTexture( GL_TEXTURE_2D, textureID );
+	glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
+
+	unsigned int blockSize = (format == GL_COMPRESSED_RGBA_S3TC_DXT1_EXT) ? 8 : 16;
+	unsigned int offset = 0;
+
+	// Einzelne Bildversionen laden
+	for (unsigned int level = 0; level < mipMapCount && (width || height); ++level)
+	{
+		unsigned int size = ((width + 3) / 4)*((height + 3) / 4)*blockSize;
+		glCompressedTexImage2D( GL_TEXTURE_2D, level, format, width, height, 0, size, &imageData[0] + offset );
+
+		offset += size;
+		width /= 2;
+		height /= 2;
+
+		if (width < 1) throw std::runtime_error( "Texture width must be a power of 2" );
+		if (height < 1) throw std::runtime_error( "Texture height must be a power of 2" );
+	}
+
+	return textureID;
+}
+
+void ModernGDV::ModernGDV::deinit()
+{
+	for (auto tex = textureCache.begin(); tex != textureCache.end(); ++tex)
+		glDeleteTextures( 1, &tex->second );
+	if (shaderProgram > 0U)
+		glDeleteProgram( shaderProgram );
+	if (fragmentShader > 0U)
+		glDeleteShader( fragmentShader );
+	if (vertexShader > 0U)
+		glDeleteShader( vertexShader );
+	if (window) {
+		glfwDestroyWindow( window ); //Fenster entladen, falls vorhanden
+		glfwPollEvents();
+	}
+	if (glfwInitialized)
+		glfwTerminate(); //GLFW beenden, falls initialisiert
 }
