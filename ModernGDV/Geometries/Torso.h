@@ -9,16 +9,19 @@
 #include <vector>
 
 #include "../ModernGDV/MGDVVertex.h"
+#include "../ModernGDV/ModernGDV.h"
 
 class Torso {
 private:
+	ModernGDV::ModernGDV* mgdv;
 	GLuint vertexBuffer;
+	GLuint texture;
 public:
-	Torso();
+	Torso(ModernGDV::ModernGDV* mgdv);
 	~Torso();
 
 	void Render();
-	void createVertexBuffer(const std::vector<ModernGDV::ColorVertex>& vertexBufferData);
+	void createVertexBuffer(const std::vector<ModernGDV::Vertex>& vertexBufferData);
 };
 
 #endif

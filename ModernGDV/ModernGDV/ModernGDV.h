@@ -35,6 +35,7 @@ namespace ModernGDV {
 		glm::mat4 projectionMatrix;
 		glm::mat4 viewMatrix;
 
+		glm::vec3 lightPos;
 		std::map<std::string, GLuint> textureCache;
 		App* app;
 	public:
@@ -56,7 +57,9 @@ namespace ModernGDV {
 		void PopTransform( int count = 1 );
 		void ResetTransform();
 
+		void SetLightPos( const glm::vec3& position );
 		GLuint GetTexture( const std::string& filename );
+		void UseTexture( GLuint id );
 
 	private:
 		void createWindow();
@@ -65,6 +68,8 @@ namespace ModernGDV {
 		void createShaderProgram( );
 		void createVertexArray( );
 		void uploadTransform( );
+		void uploadView();
+		void uploadProj();
 		GLuint loadTexture( const std::string& filename );
 		void deinit();
 	};

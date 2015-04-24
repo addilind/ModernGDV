@@ -58,6 +58,8 @@ void ModernGDV::ModernGDV::Run()
 	while (!glfwWindowShouldClose( window )) { //Dauerschleife, solange das Fenster offen ist
 		glUseProgram( shaderProgram );
 		ResetTransform();
+		glUniform3f( shaderUniformLightPos, lightPos.x, lightPos.y, lightPos.z );
+		uploadProj();
 
 		app->Render();
 
@@ -86,13 +88,13 @@ GLFWwindow* ModernGDV::ModernGDV::GetWindow()
 void ModernGDV::ModernGDV::SetProjectionMatrix(glm::mat4& projectionMat)
 {
 	projectionMatrix = projectionMat;
-	glUniformMatrix4fv( shaderUniformProj, 1, GL_FALSE, &projectionMatrix[0][0] ); //An Grafikkarte uebertragen
+	uploadProj();
 }
 
 void ModernGDV::ModernGDV::SetViewMatrix(glm::mat4& viewMat)
 {
 	viewMatrix = viewMat;
-	glUniformMatrix4fv( shaderUniformProj, 1, GL_FALSE, &viewMatrix[0][0] ); //An Grafikkarte uebertragen
+	uploadView();
 	ResetTransform();
 }
 
@@ -122,7 +124,10 @@ void ModernGDV::ModernGDV::PopTransform(int count)
 {
 	for (int i = 0; i < count; ++i)
 		transformStack.pop();
-	ReloadTransform();
+	if (transformStack.empty())
+		ResetTransform();
+	else
+		ReloadTransform();
 }
 
 void ModernGDV::ModernGDV::ResetTransform()
@@ -133,6 +138,12 @@ void ModernGDV::ModernGDV::ResetTransform()
 	uploadTransform();
 }
 
+void ModernGDV::ModernGDV::SetLightPos(const glm::vec3& position)
+{
+	lightPos = position;
+	glUniform3f( shaderUniformLightPos, lightPos.x, lightPos.y, lightPos.z );
+}
+
 GLuint ModernGDV::ModernGDV::GetTexture(const std::string& filename)
 {
 	//Suche nach Datei in Texturcache
@@ -140,9 +151,16 @@ GLuint ModernGDV::ModernGDV::GetTexture(const std::string& filename)
 	if (cacheEntry != textureCache.end())
 		return cacheEntry->second; //Gib gefundene ID zurück
 
-	GLuint texID = loadTexture( filename ); //Lade Textur
+	GLuint texID = loadTexture( "../Data/" + filename + ".dds" ); //Lade Textur
 	textureCache.insert( std::pair<std::string, GLuint>(filename, texID) ); //Speichere die Textur im cache
 	return texID;
+}
+
+void ModernGDV::ModernGDV::UseTexture(GLuint id)
+{
+	glActiveTexture( GL_TEXTURE0 );
+	glBindTexture( GL_TEXTURE_2D, id ); //Gegebene Textur in TEXTURE0-Slot einhängen
+	glUniform1i( shaderUniformDiffuseTextureSampler, 0 ); //TEXTURE0 als diffuseTexture verwenden
 }
 
 void ModernGDV::ModernGDV::createWindow()
@@ -255,6 +273,16 @@ void ModernGDV::ModernGDV::uploadTransform()
 	glUniformMatrix3fv( shaderUniformNormal, 1, GL_FALSE, &normal[0][0] ); //An Grafikkarte uebertragens
 }
 
+void ModernGDV::ModernGDV::uploadView()
+{
+	glUniformMatrix4fv( shaderUniformView, 1, GL_FALSE, &viewMatrix[0][0] ); //An Grafikkarte uebertragen
+}
+
+void ModernGDV::ModernGDV::uploadProj()
+{
+	glUniformMatrix4fv( shaderUniformProj, 1, GL_FALSE, &projectionMatrix[0][0] ); //An Grafikkarte uebertragen
+}
+
 #define DXT1 0x31545844 // "DXT1" in ASCII
 #define DXT3 0x33545844 // "DXT3" in ASCII
 #define DXT5 0x35545844 // "DXT5" in ASCII
@@ -323,8 +351,8 @@ GLuint ModernGDV::ModernGDV::loadTexture(const std::string& filename)
 		width /= 2;
 		height /= 2;
 
-		if (width < 1) throw std::runtime_error( "Texture width must be a power of 2" );
-		if (height < 1) throw std::runtime_error( "Texture height must be a power of 2" );
+		if (width < 1) width = 1;
+		if (height < 1) height = 1;
 	}
 
 	return textureID;

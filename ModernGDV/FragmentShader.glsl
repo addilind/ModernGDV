@@ -11,15 +11,15 @@ in vec3 lightdir_cam;	//Vektor, der in Richtung Licht zeigt (im Kamerakoordinate
 out vec3 endColor;		//Farbe
 
 uniform sampler2D diffuseTextureSampler;
-uniform mat4 lightPos;	//Position der Lichtquelle in Weltkoordinaten
+uniform vec3 lightPos;	//Position der Lichtquelle in Weltkoordinaten
 
 //diese Funktion wird für jeden Pixel, der in einem durch die Vertices definierten Dreieck liegt einzeln aufgerufen - auf der Grafikkarte
 void main(void) {
 	vec3 lightColor = vec3(1,1,1);
 	float lightPower = 60.0f;
 
-	vec3 diffuseColor = texture2D( diffuseTextureSampler, texcoord ).rgb;
-	vec3 ambient = 0.1f * diffuse;
+	vec3 diffuse = texture2D( diffuseTextureSampler, texcoord ).rgb;
+	vec3 ambient = 0.3f * diffuse;
 	vec3 specular = vec3(0.3,0.3,0.3);
 
 	float lightDistance = length( lightPos - position_world );
@@ -35,6 +35,6 @@ void main(void) {
 	float reflectionangle = clamp( dot( e, reflektionsrichtung ), 0, 1 );
 	
 	endColor = ambient +
-		diffuse * lightColor * lightPower * entryangle / (lightDistance * lightDistance) +
+		/*diffuse * lightColor * lightPower * entryangle / (lightDistance * lightDistance) */+
 		specular * lightColor * lightPower * pow( reflectionangle, 5 ) / (lightDistance * lightDistance);
 }

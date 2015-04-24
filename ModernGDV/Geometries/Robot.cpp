@@ -1,6 +1,7 @@
 #include "Robot.h"
 
 Robot::Robot(ModernGDV::ModernGDV* mgdv)
+	: torso(mgdv)
 {
 	this->mgdv = mgdv;
 }

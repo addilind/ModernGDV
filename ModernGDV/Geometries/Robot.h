@@ -16,7 +16,7 @@ class Robot
 {
 private:
 	ModernGDV::ModernGDV* mgdv;
-
+	
 	Torso torso;
 	Thigh thigh;
 	Shank shank;
