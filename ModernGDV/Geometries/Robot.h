@@ -15,14 +15,14 @@
 class Robot
 {
 private:
-	ModernGDV::ModernGDV* mgdv;
+	ModernGDV::Driver* mgdv;
 	
 	Torso torso;
 	Thigh thigh;
 	Shank shank;
 
 public:
-	explicit Robot(ModernGDV::ModernGDV* mgdv);
+	explicit Robot(ModernGDV::Driver* mgdv);
 	~Robot();
 
 	void Render();

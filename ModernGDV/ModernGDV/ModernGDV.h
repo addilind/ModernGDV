@@ -13,7 +13,7 @@
 #include "MGDVApp.h"
 
 namespace ModernGDV {
-	class ModernGDV {
+	class Driver {
 	private:
 		bool glfwInitialized; //Flag, ob GLFW deinitialisiert werden muss
 		GLFWwindow *window; //Anzeigefenster
@@ -39,8 +39,8 @@ namespace ModernGDV {
 		std::map<std::string, GLuint> textureCache;
 		App* app;
 	public:
-		ModernGDV();
-		virtual ~ModernGDV();
+		Driver();
+		virtual ~Driver();
 
 		void Run();
 		void SetApp( App* application );
@@ -60,6 +60,7 @@ namespace ModernGDV {
 		void SetLightPos( const glm::vec3& position );
 		GLuint GetTexture( const std::string& filename );
 		void UseTexture( GLuint id );
+		GLuint CreateVertexBuffer( const std::vector<ModernGDV::Vertex>& vertices );
 
 	private:
 		void createWindow();

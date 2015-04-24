@@ -16,7 +16,7 @@ uniform vec3 lightPos;	//Position der Lichtquelle in Weltkoordinaten
 //diese Funktion wird für jeden Pixel, der in einem durch die Vertices definierten Dreieck liegt einzeln aufgerufen - auf der Grafikkarte
 void main(void) {
 	vec3 lightColor = vec3(1,1,1);
-	float lightPower = 60.0f;
+	float lightPower = 1.0f;
 
 	vec3 diffuse = texture2D( diffuseTextureSampler, texcoord ).rgb;
 	vec3 ambient = 0.1f * diffuse;
@@ -35,6 +35,6 @@ void main(void) {
 	float reflectionangle = clamp( dot( e, reflektionsrichtung ), 0, 1 );
 	
 	endColor = ambient +
-		/*diffuse * lightColor * lightPower * entryangle / (lightDistance * lightDistance) */+
+		diffuse * lightColor * lightPower * entryangle / (lightDistance * lightDistance) +
 		specular * lightColor * lightPower * pow( reflectionangle, 5 ) / (lightDistance * lightDistance);
 }

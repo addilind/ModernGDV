@@ -13,15 +13,14 @@
 
 class Torso {
 private:
-	ModernGDV::ModernGDV* mgdv;
+	ModernGDV::Driver* mgdv;
 	GLuint vertexBuffer;
 	GLuint texture;
 public:
-	Torso(ModernGDV::ModernGDV* mgdv);
+	Torso(ModernGDV::Driver* mgdv);
 	~Torso();
 
 	void Render();
-	void createVertexBuffer(const std::vector<ModernGDV::Vertex>& vertexBufferData);
 };
 
 #endif
