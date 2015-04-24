@@ -29,10 +29,8 @@ void MyApp::Render ()
 	glEnable( GL_DEPTH_TEST ); //Z-Buffer aktivieren
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-	mgdv->SetViewMatrix( glm::lookAt( glm::vec3( 0.0f, .2f, 1.5f), glm::vec3( 0, 0, 0 ), glm::vec3( 0, 1, 0 ) ) );
+	mgdv->SetViewMatrix( glm::lookAt( glm::vec3( 2.f*glm::sin( glfwGetTime() / 30.f ), -0.3f, 2.f*glm::cos( glfwGetTime() / 30.f )), glm::vec3( 0, 0, 0 ), glm::vec3( 0, 1, 0 ) ) );
 	mgdv->SetLightPos( glm::vec3( 1.f*glm::sin( glfwGetTime() / 3.f ), 0.3f, 1.f*glm::cos( glfwGetTime() / 3.f ) ) );
-
-
 
 	mgdv->ResetTransform();
 
