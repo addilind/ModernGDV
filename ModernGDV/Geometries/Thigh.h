@@ -9,16 +9,19 @@
 #include <vector>
 
 #include "../ModernGDV/MGDVVertex.h"
+#include "../ModernGDV/ModernGDV.h"
 
 class Thigh {
 private:
 	GLuint vertexBuffer;
+	ModernGDV::Driver* mgdv;
+	GLuint texture;
 public:
-	Thigh();
+	Thigh(ModernGDV::Driver* mgdv);
 	~Thigh();
 
 	void Render();
-	void createVertexBuffer(const std::vector<ModernGDV::ColorVertex>& vertexBufferData);
+
 };
 
 #endif

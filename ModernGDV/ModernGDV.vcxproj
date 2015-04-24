@@ -108,6 +108,7 @@
     <None Include="VertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Geometries\Primitives\Quad.h" />
     <ClInclude Include="Geometries\Primitives\Triangle.h" />
     <ClInclude Include="Geometries\Terrain.h" />
     <ClInclude Include="Geometries\Torso.h" />

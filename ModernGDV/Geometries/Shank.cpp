@@ -1,35 +1,74 @@
 #include "Shank.h"
 
-using ModernGDV::ColorVertex;
+#include "Primitives/Quad.h"
 
-Shank::Shank()
-: vertexBuffer(0U)
+using ModernGDV::Vertex;
+using glm::vec3;
+using glm::vec2;
+
+
+Shank::Shank(ModernGDV::Driver* mgdv)
+: mgdv(mgdv), vertexBuffer(0U), texture(0U)
 {
-	std::vector<ColorVertex> vertices;
-	
-	//Unterschenkel linke Seite
-	vertices.push_back(ColorVertex(-0.15f, -0.45f, +0.08f)); // unten links vorne	0
-	vertices.push_back(ColorVertex(-0.075f, -0.45f, +0.08f)); // unten rechts vorne	
-	vertices.push_back(ColorVertex(-0.15f, -0.45f, -0.08f)); // unten links hinten	2
-	vertices.push_back(ColorVertex(-0.075f, -0.45f, -0.08f)); // unten rechts hinten	
+	std::vector<Vertex> vertices;
 
-	vertices.push_back(ColorVertex(-0.15f, +0.05f, +0.075f)); // oben links vorne	4
-	vertices.push_back(ColorVertex(-0.075f, +0.05f, +0.075f)); // oben rechts vorne		
-	vertices.push_back(ColorVertex(-0.15f, +0.05f, -0.075f)); // oben links hinten	6
-	vertices.push_back(ColorVertex(-0.075f, +0.05f, -0.075f)); // oben rechts hinten	
+	//Unterschenkel linke Seite
+	vec3 lCubeBottomFrontLeft(-0.15f, -0.45f, +0.08f);
+	vec3 lCubeBottomFrontRight(-0.075f, -0.45f, +0.08f);
+	vec3 lCubeBottomBackLeft(-0.15f, -0.45f, -0.08f);
+	vec3 lCubeBottomBackRight(-0.075f, -0.45f, -0.08f);
+
+	vec3 lCubeTopFrontLeft(-0.15f, +0.05f, +0.075f);
+	vec3 lCubeTopFrontRight(-0.075f, +0.05f, +0.075f);
+	vec3 lCubeTopBackLeft(-0.15f, +0.05f, -0.075f);
+	vec3 lCubeTopBackRight(-0.075f, +0.05f, -0.075f);
+
+	//Bodenfläche Quader
+	Quad::Create(vertices, lCubeBottomFrontLeft, vec2(0.f, 0.f), lCubeBottomFrontRight, vec2(1.f, 0.f),
+		lCubeBottomBackRight, vec2(1.f, 1.f), lCubeBottomBackLeft, vec2(0.f, 1.f));
+	//Seitenflächen Quader
+	Quad::Create(vertices, lCubeTopFrontLeft, vec2(0.f, 0.f), lCubeTopFrontRight, vec2(1.f, 0.f),
+		lCubeBottomFrontRight, vec2(1.f, 1.f), lCubeBottomFrontLeft, vec2(0.f, 1.f));
+	Quad::Create(vertices, lCubeTopFrontRight, vec2(0.f, 0.f), lCubeTopBackRight, vec2(1.f, 0.f),
+		lCubeBottomBackRight, vec2(1.f, 1.f), lCubeBottomFrontRight, vec2(0.f, 1.f));
+	Quad::Create(vertices, lCubeTopBackRight, vec2(0.f, 0.f), lCubeTopBackLeft, vec2(1.f, 0.f),
+		lCubeBottomBackLeft, vec2(1.f, 1.f), lCubeBottomBackRight, vec2(0.f, 1.f));
+	Quad::Create(vertices, lCubeTopBackLeft, vec2(0.f, 0.f), lCubeTopFrontLeft, vec2(1.f, 0.f),
+		lCubeBottomFrontLeft, vec2(1.f, 1.f), lCubeBottomBackLeft, vec2(0.f, 1.f));
+	//Oberseite Quader
+	Quad::Create(vertices, lCubeTopFrontLeft, vec2(0.f, 1.f), lCubeTopBackLeft, vec2(0.f, 0.f),
+		lCubeTopBackRight, vec2(1.f, 0.f), lCubeTopFrontRight, vec2(1.f, 1.f));
 
 	//Unterschenkel rechte Seite
-	vertices.push_back(ColorVertex(+0.075f, -0.45f, +0.08f)); // unten links vorne	8
-	vertices.push_back(ColorVertex(+0.15f, -0.45f, +0.08f)); // unten rechts vorne	
-	vertices.push_back(ColorVertex(+0.075f, -0.45f, -0.08f)); // unten links hinten	10
-	vertices.push_back(ColorVertex(+0.15f, -0.45f, -0.08f)); // unten rechts hinten	
+	vec3 rCubeBottomFrontLeft(+0.075f, -0.45f, +0.08f);
+	vec3 rCubeBottomFrontRight(+0.15f, -0.45f, +0.08f);
+	vec3 rCubeBottomBackLeft(+0.075f, -0.45f, -0.08f);
+	vec3 rCubeBottomBackRight(+0.15f, -0.45f, -0.08f);
 
-	vertices.push_back(ColorVertex(+0.075f, +0.05f, +0.075f)); // oben links vorne	12
-	vertices.push_back(ColorVertex(+0.15f, +0.05f, +0.075f)); // oben rechts vorne		
-	vertices.push_back(ColorVertex(+0.075f, +0.05f, -0.075f)); // oben links hinten	14
-	vertices.push_back(ColorVertex(+0.15f, +0.05f, -0.075f)); // oben rechts hinten	
+	vec3 rCubeTopFrontLeft(+0.075f, +0.05f, +0.075f);
+	vec3 rCubeTopFrontRight(+0.15f, +0.05f, +0.075f);
+	vec3 rCubeTopBackLeft(+0.075f, +0.05f, -0.075f);
+	vec3 rCubeTopBackRight(+0.15f, +0.05f, -0.075f);
 
-	createVertexBuffer(vertices);
+	//Bodenfläche Quader
+	Quad::Create(vertices, rCubeBottomFrontLeft, vec2(0.f, 0.f), rCubeBottomFrontRight, vec2(1.f, 0.f),
+		rCubeBottomBackRight, vec2(1.f, 1.f), rCubeBottomBackLeft, vec2(0.f, 1.f));
+	//Seitenflächen Quader
+	Quad::Create(vertices, rCubeTopFrontLeft, vec2(0.f, 0.f), rCubeTopFrontRight, vec2(1.f, 0.f),
+		rCubeBottomFrontRight, vec2(1.f, 1.f), rCubeBottomFrontLeft, vec2(0.f, 1.f));
+	Quad::Create(vertices, rCubeTopFrontRight, vec2(0.f, 0.f), rCubeTopBackRight, vec2(1.f, 0.f),
+		rCubeBottomBackRight, vec2(1.f, 1.f), rCubeBottomFrontRight, vec2(0.f, 1.f));
+	Quad::Create(vertices, rCubeTopBackRight, vec2(0.f, 0.f), rCubeTopBackLeft, vec2(1.f, 0.f),
+		rCubeBottomBackLeft, vec2(1.f, 1.f), rCubeBottomBackRight, vec2(0.f, 1.f));
+	Quad::Create(vertices, rCubeTopBackLeft, vec2(0.f, 0.f), rCubeTopFrontLeft, vec2(1.f, 0.f),
+		rCubeBottomFrontLeft, vec2(1.f, 1.f), rCubeBottomBackLeft, vec2(0.f, 1.f));
+	//Oberseite Quader
+	Quad::Create(vertices, rCubeTopFrontLeft, vec2(0.f, 1.f), rCubeTopBackLeft, vec2(0.f, 0.f),
+		rCubeTopBackRight, vec2(1.f, 0.f), rCubeTopFrontRight, vec2(1.f, 1.f));
+
+	vertexBuffer = mgdv->CreateVertexBuffer(vertices);
+
+	texture = mgdv->GetTexture("test");
 }
 
 Shank::~Shank()
@@ -40,35 +79,25 @@ Shank::~Shank()
 void Shank::Render()
 {
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-
-	ColorVertex::SetLayout();
+	Vertex::SetLayout();
+	mgdv->UseTexture(texture);
+	unsigned char index = 0U;
 	//Unterschenkel linke Seite
-	unsigned char front[10] = { 0, 1, 4, 5, 6, 7, 2, 3, 0, 1 };
-	glDrawElements(GL_TRIANGLE_STRIP, 10, GL_UNSIGNED_BYTE, front);
+	index = Quad::Draw(index); //Bodenfläche Quader
+	index = Quad::Draw(index); //Seitenflächen Quader
+	index = Quad::Draw(index);
+	index = Quad::Draw(index);
+	index = Quad::Draw(index);
+	index = Quad::Draw(index); //Oberseite Quader
 
-	unsigned char right[4] = { 1, 3, 5, 7 };
-	glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_BYTE, right);
+	//Unterschenkel rechte Seite
+	index = Quad::Draw(index); //Bodenfläche Quader
+	index = Quad::Draw(index); //Seitenflächen Quader
+	index = Quad::Draw(index);
+	index = Quad::Draw(index);
+	index = Quad::Draw(index);
+	index = Quad::Draw(index); //Oberseite Quader
 
-	unsigned char left[4] = { 0, 2, 4, 6 };
-	glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_BYTE, left);
-
-	//Unterschenkel rechte Seite    alle Indizes + 8
-	unsigned char frontr[10] = { 8, 9, 12, 13, 14, 15, 10, 11, 8, 9 };
-	glDrawElements(GL_TRIANGLE_STRIP, 10, GL_UNSIGNED_BYTE, frontr);
-
-	unsigned char rightr[4] = { 9, 11, 13, 15 };
-	glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_BYTE, rightr);
-
-	unsigned char leftr[4] = { 8, 10, 12, 14 };
-	glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_BYTE, leftr);
-
-
-	ColorVertex::ResetLayout();
+	Vertex::ResetLayout();
 }
 
-void Shank::createVertexBuffer(const std::vector<ModernGDV::ColorVertex>& vertexBufferData)
-{	//Vertices aus dem CPU-Hauptspeicher in den Grafik-RAM kopieren
-	glGenBuffers(1, &vertexBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, vertexBufferData.size() * sizeof(ColorVertex), &vertexBufferData[0], GL_STATIC_DRAW);
-}

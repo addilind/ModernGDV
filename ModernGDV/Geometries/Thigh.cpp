@@ -1,23 +1,49 @@
 #include "Thigh.h"
 
-using ModernGDV::ColorVertex;
+#include "Primitives/Quad.h"
 
-Thigh::Thigh()
-: vertexBuffer(0U)
+using ModernGDV::Vertex;
+using glm::vec3;
+using glm::vec2;
+
+
+Thigh::Thigh(ModernGDV::Driver* mgdv)
+: mgdv(mgdv), vertexBuffer(0U), texture(0U)
 {
-	std::vector<ColorVertex> vertices;
+	std::vector<Vertex> vertices;
 
-	vertices.push_back(ColorVertex(-0.075f, -0.50f, +0.075f)); //Oberschenekl unten links vorne	0
-	vertices.push_back(ColorVertex(+0.075f, -0.50f, +0.075f)); //Oberschenekl unten rechts vorne	
-	vertices.push_back(ColorVertex(-0.075f, -0.50f, -0.075f)); //Oberschenekl unten links hinten	2
-	vertices.push_back(ColorVertex(+0.075f, -0.50f, -0.075f)); //Oberschenekl unten rechts hinten	
+	vec3 CubeBottomFrontLeft(-0.075f, -0.50f, +0.075f);
+	vec3 CubeBottomFrontRight(+0.075f, -0.50f, +0.075f);
+	vec3 CubeBottomBackLeft(-0.075f, -0.50f, -0.075f);
+	vec3 CubeBottomBackRight(+0.075f, -0.50f, -0.075f);
 
-	vertices.push_back(ColorVertex(-0.075f, +0.05f, +0.075f)); //Oberschenekl oben links vorne	4
-	vertices.push_back(ColorVertex(+0.075f, +0.05f, +0.075f)); //Oberschenekl oben rechts vorne		
-	vertices.push_back(ColorVertex(-0.075f, +0.05f, -0.075f)); //Oberschenekl oben links hinten	6
-	vertices.push_back(ColorVertex(+0.075f, +0.05f, -0.075f)); //Oberschenekl oben rechts hinten	
+	vec3 CubeTopFrontLeft(-0.075f, +0.05f, +0.075f);
+	vec3 CubeTopFrontRight(+0.075f, +0.05f, +0.075f);
+	vec3 CubeTopBackLeft(-0.075f, +0.05f, -0.075f);
+	vec3 CubeTopBackRight(+0.075f, +0.05f, -0.075f);
 
-	createVertexBuffer(vertices);
+	//Bodenfläche Quader
+	Quad::Create(vertices, CubeBottomFrontLeft, vec2(0.f, 0.f), CubeBottomFrontRight, vec2(1.f, 0.f),
+		CubeBottomBackRight, vec2(1.f, 1.f), CubeBottomBackLeft, vec2(0.f, 1.f));
+	//Seitenflächen Quader
+	Quad::Create(vertices, CubeTopFrontLeft, vec2(0.f, 0.f), CubeTopFrontRight, vec2(1.f, 0.f),
+		CubeBottomFrontRight, vec2(1.f, 1.f), CubeBottomFrontLeft, vec2(0.f, 1.f));
+	Quad::Create(vertices, CubeTopFrontRight, vec2(0.f, 0.f), CubeTopBackRight, vec2(1.f, 0.f),
+		CubeBottomBackRight, vec2(1.f, 1.f), CubeBottomFrontRight, vec2(0.f, 1.f));
+	Quad::Create(vertices, CubeTopBackRight, vec2(0.f, 0.f), CubeTopBackLeft, vec2(1.f, 0.f),
+		CubeBottomBackLeft, vec2(1.f, 1.f), CubeBottomBackRight, vec2(0.f, 1.f));
+	Quad::Create(vertices, CubeTopBackLeft, vec2(0.f, 0.f), CubeTopFrontLeft, vec2(1.f, 0.f),
+		CubeBottomFrontLeft, vec2(1.f, 1.f), CubeBottomBackLeft, vec2(0.f, 1.f));
+	//Oberseite Quader
+	Quad::Create(vertices, CubeTopFrontLeft, vec2(0.f, 1.f), CubeTopBackLeft, vec2(0.f, 0.f),
+		CubeTopBackRight, vec2(1.f, 0.f), CubeTopFrontRight, vec2(1.f, 1.f));
+
+
+	vertexBuffer = mgdv->CreateVertexBuffer(vertices);
+
+	texture = mgdv->GetTexture("test");
+
+	
 }
 
 Thigh::~Thigh()
@@ -28,24 +54,19 @@ Thigh::~Thigh()
 void Thigh::Render()
 {
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+	Vertex::SetLayout();
+	mgdv->UseTexture(texture);
+	unsigned char index = 0U;
 
-	ColorVertex::SetLayout();
+	index = Quad::Draw(index); //Bodenfläche Quader
 
-	unsigned char front[10] = { 0, 1, 4, 5, 6, 7, 2, 3, 0, 1 };
-	glDrawElements(GL_TRIANGLE_STRIP, 10, GL_UNSIGNED_BYTE, front);
+	index = Quad::Draw(index); //Seitenflächen Quader
+	index = Quad::Draw(index);
+	index = Quad::Draw(index);
+	index = Quad::Draw(index);
 
-	unsigned char right[4] = { 1, 3, 5 ,7 };
-	glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_BYTE, right);
+	index = Quad::Draw(index); //Oberseite Quader
 
-	unsigned char left[4] = { 0, 2, 4, 6 };
-	glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_BYTE, left);
-
-	ColorVertex::ResetLayout();
+	Vertex::ResetLayout();
 }
 
-void Thigh::createVertexBuffer(const std::vector<ModernGDV::ColorVertex>& vertexBufferData)
-{	//Vertices aus dem CPU-Hauptspeicher in den Grafik-RAM kopieren
-	glGenBuffers(1, &vertexBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, vertexBufferData.size() * sizeof(ColorVertex), &vertexBufferData[0], GL_STATIC_DRAW);
-}

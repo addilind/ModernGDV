@@ -32,7 +32,18 @@ Torso::Torso( ModernGDV::Driver* mgdv )
 	vec3 truncatedPyramidTopFrontRight	( +0.25f, +0.45f, +0.13f );
 	vec3 truncatedPyramidTopBackLeft	( -0.25f, +0.45f, -0.13f );
 	vec3 truncatedPyramidTopBackRight	( +0.25f, +0.45f, -0.13f );
+	
+	
+	vec3 CubeBottomFrontLeft(-0.30f, +0.45f, +0.15f);
+	vec3 CubeBottomFrontRight(+0.30f, +0.45f, +0.15f);
+	vec3 CubeBottomBackLeft(-0.30f, +0.45f, -0.15f);
+	vec3 CubeBottomBackRight(+0.30f, +0.45f, -0.15f);
 
+	vec3 CubeTopFrontLeft(-0.30f, +1.0f, +0.15f);
+	vec3 CubeTopFrontRight(+0.30f, +1.0f, +0.15f);
+	vec3 CubeTopBackLeft(-0.30f, +1.0f, -0.15f);
+	vec3 CubeTopBackRight(+0.30f, +1.0f, -0.15f);
+	
 
 	Tri::Create( vertices, pyramidTop, vec2( 0.5f, 0.f ), pyramidBaseFrontLeft, vec2( 0.f, 1.f ), pyramidBaseFrontRight, vec2( 1.f, 1.f ) );
 	Tri::Create( vertices, pyramidTop, vec2( 0.5f, 1.f ), pyramidBaseFrontRight, vec2( 0.f, 0.f ), pyramidBaseBackRight, vec2( 1.f, 0.f ) );
@@ -56,6 +67,23 @@ Torso::Torso( ModernGDV::Driver* mgdv )
 	Quad::Create( vertices, truncatedPyramidTopBackLeft, vec2( 0.f, 0.f ), truncatedPyramidTopFrontLeft, vec2( 1.f, 0.f ),
 		truncatedPyramidBottomFrontLeft, vec2( 1.f, 1.f ), truncatedPyramidBottomBackLeft, vec2( 0.f, 1.f ) );
 
+	//Bodenfläche Quader
+	Quad::Create(vertices, CubeBottomFrontLeft, vec2(0.f, 0.f), CubeBottomFrontRight, vec2(1.f, 0.f),
+		CubeBottomBackRight, vec2(1.f, 1.f), CubeBottomBackLeft, vec2(0.f, 1.f));
+	//Seitenflächen Quader
+	Quad::Create(vertices, CubeTopFrontLeft, vec2(0.f, 0.f), CubeTopFrontRight, vec2(1.f, 0.f),
+		CubeBottomFrontRight, vec2(1.f, 1.f), CubeBottomFrontLeft, vec2(0.f, 1.f));
+	Quad::Create(vertices, CubeTopFrontRight, vec2(0.f, 0.f), CubeTopBackRight, vec2(1.f, 0.f),
+		CubeBottomBackRight, vec2(1.f, 1.f), CubeBottomFrontRight, vec2(0.f, 1.f));
+	Quad::Create(vertices, CubeTopBackRight, vec2(0.f, 0.f), CubeTopBackLeft, vec2(1.f, 0.f),
+		CubeBottomBackLeft, vec2(1.f, 1.f), CubeBottomBackRight, vec2(0.f, 1.f));
+	Quad::Create(vertices, CubeTopBackLeft, vec2(0.f, 0.f), CubeTopFrontLeft, vec2(1.f, 0.f),
+		CubeBottomFrontLeft, vec2(1.f, 1.f), CubeBottomBackLeft, vec2(0.f, 1.f));
+	//Oberseite Quader
+	Quad::Create(vertices, CubeTopFrontLeft, vec2(0.f, 1.f), CubeTopBackLeft, vec2(0.f, 0.f),
+		CubeTopBackRight, vec2(1.f, 0.f), CubeTopFrontRight, vec2(1.f, 1.f));
+
+
 	vertexBuffer = mgdv->CreateVertexBuffer(vertices);
 
 	texture = mgdv->GetTexture( "test" );
@@ -72,22 +100,33 @@ void Torso::Render()
 	Vertex::SetLayout();
 
 	mgdv->UseTexture( texture );
-	Tri::Draw( 0U );
-	Tri::Draw( 3U );
-	Tri::Draw( 6U );
-	Tri::Draw( 9U );
+	unsigned char index = 0U;
+	index = Tri::Draw(index);
+	index = Tri::Draw(index);
+	index = Tri::Draw(index);
+	index = Tri::Draw(index);
 
-	Quad::Draw( 12U );
-	Quad::Draw( 16U );
-	Quad::Draw( 20U );
-	Quad::Draw( 24U );
+	index = Quad::Draw(index);
+	index = Quad::Draw(index);
+	index = Quad::Draw(index);
+	index = Quad::Draw(index);
 
-	Quad::Draw( 28U );
+	index = Quad::Draw(index);
 
-	Quad::Draw( 32U );
-	Quad::Draw( 36U );
-	Quad::Draw( 40U );
-	Quad::Draw( 44U );
+	index = Quad::Draw(index);
+	index = Quad::Draw(index);
+	index = Quad::Draw(index);
+	index = Quad::Draw(index);
+
+	index = Quad::Draw(index); //Bodenfläche Quader
+	
+	index = Quad::Draw(index); //Seitenflächen Quader
+	index = Quad::Draw(index);
+	index = Quad::Draw(index);
+	index = Quad::Draw(index);
+	
+	index = Quad::Draw(index); //Oberseite Quader
+
 
 
 	Vertex::ResetLayout();

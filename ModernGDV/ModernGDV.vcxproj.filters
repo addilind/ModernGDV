@@ -82,5 +82,8 @@
     <ClInclude Include="Geometries\Primitives\Triangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Geometries\Primitives\Quad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

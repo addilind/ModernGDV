@@ -39,9 +39,10 @@ namespace Quad
 		glDrawElements( GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_BYTE, indices );
 	}
 
-	inline void Draw( unsigned char startIndex)
+	inline unsigned char Draw( unsigned char startIndex)
 	{
 		Draw( startIndex, startIndex + 1U, startIndex + 2U, startIndex + 3U );
+		return startIndex + 4U;
 	}
 }
 

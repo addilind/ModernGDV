@@ -18,8 +18,8 @@ void main(void) {
 	vec3 lightColor = vec3(1,1,1);
 	float lightPower = 1.0f;
 
-	vec3 diffuse = texture2D( diffuseTextureSampler, texcoord ).rgb;
-	vec3 ambient = 0.1f * diffuse;
+	vec3 diffuse = texture( diffuseTextureSampler, texcoord ).rgb;
+	vec3 ambient = 0.5f * diffuse;
 	vec3 specular = vec3(0.3,0.3,0.3);
 
 	float lightDistance = length( lightPos - position_world );
