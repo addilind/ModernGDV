@@ -8,9 +8,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "../ModernGDV/ModernGDV.h"
-#include "Torso.h"
-#include "Thigh.h"
-#include "Shank.h"
+#include "Robot/Torso.h"
+#include "Robot/Thigh.h"
+#include "Robot/Shank.h"
 
 class Robot
 {

@@ -6,12 +6,15 @@
 
 #include <vector>
 #include "Geometries\Robot.h"
+#include "Geometries/Skybox.h"
+
 class MyApp : public ModernGDV::App
 {
 private:
 	ModernGDV::Driver* mgdv;
 	
 	Robot robot;
+	Skybox sky;
 	GLuint lampvb;
 	GLuint lamptex;
 

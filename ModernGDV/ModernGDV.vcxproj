@@ -87,12 +87,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Geometries\Torso.cpp" />
+    <ClCompile Include="Geometries\Robot\Head.cpp" />
+    <ClCompile Include="Geometries\Robot\Torso.cpp" />
+    <ClCompile Include="Geometries\Skybox.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModernGDV\ModernGDV.cpp" />
     <ClCompile Include="MyApp.cpp" />
-    <ClCompile Include="Geometries\Thigh.cpp" />
-    <ClCompile Include="Geometries\Shank.cpp" />
+    <ClCompile Include="Geometries\Robot\Thigh.cpp" />
+    <ClCompile Include="Geometries\Robot\Shank.cpp" />
     <ClCompile Include="Geometries\Robot.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -110,14 +112,16 @@
   <ItemGroup>
     <ClInclude Include="Geometries\Primitives\Quad.h" />
     <ClInclude Include="Geometries\Primitives\Triangle.h" />
+    <ClInclude Include="Geometries\Robot\Head.h" />
+    <ClInclude Include="Geometries\Skybox.h" />
     <ClInclude Include="Geometries\Terrain.h" />
-    <ClInclude Include="Geometries\Torso.h" />
+    <ClInclude Include="Geometries\Robot\Torso.h" />
     <ClInclude Include="ModernGDV\MGDVVertex.h" />
     <ClInclude Include="ModernGDV\MGDVApp.h" />
     <ClInclude Include="ModernGDV\ModernGDV.h" />
     <ClInclude Include="MyApp.h" />
-    <ClInclude Include="Geometries\Thigh.h" />
-    <ClInclude Include="Geometries\Shank.h" />
+    <ClInclude Include="Geometries\Robot\Thigh.h" />
+    <ClInclude Include="Geometries\Robot\Shank.h" />
     <ClInclude Include="Geometries\Robot.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

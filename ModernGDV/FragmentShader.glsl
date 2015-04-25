@@ -19,7 +19,7 @@ void main(void) {
 	float lightPower = 1.0f;
 
 	vec3 diffuse = texture( diffuseTextureSampler, texcoord ).rgb;
-	vec3 ambient = 0.5f * diffuse;
+	vec3 ambient = 1.0f * diffuse;
 	vec3 specular = vec3(0.3,0.3,0.3);
 
 	float lightDistance = length( lightPos - position_world );
@@ -34,7 +34,7 @@ void main(void) {
 
 	float reflectionangle = clamp( dot( e, reflektionsrichtung ), 0, 1 );
 	
-	endColor = ambient +
+	endColor = ambient/* +
 		diffuse * lightColor * lightPower * entryangle / (lightDistance * lightDistance) +
-		specular * lightColor * lightPower * pow( reflectionangle, 5 ) / (lightDistance * lightDistance);
+		specular * lightColor * lightPower * pow( reflectionangle, 5 ) / (lightDistance * lightDistance)*/;
 }
