@@ -45,13 +45,13 @@ void Robot::Render()
 
 	mgdv->ReloadTransform();
 
-	mgdv->SetTransform(glm::translate(*mgdv->Transform(), glm::vec3(+0.40f, 0.95f, 0.f))); //Linker Oberarm
+	mgdv->SetTransform(glm::translate(*mgdv->Transform(), glm::vec3(+0.40f, 0.95f, 0.f))); //Rechte Oberarm
 	mgdv->SetTransform(glm::rotate(*mgdv->Transform(), static_cast<float>(glm::sin(glfwGetTime())), glm::vec3(1, 0, 0)));
 	mgdv->SetTransform(glm::rotate(*mgdv->Transform(), glm::pi<float>()*0.5f, glm::vec3(0, 1, 0)));
 	mgdv->SetTransform(glm::scale(*mgdv->Transform(), glm::vec3(0.5f, 0.9f, 0.7f)));
 	shank.Render();
 
-	mgdv->SetTransform(glm::translate(*mgdv->Transform(), glm::vec3(0.f, -0.40f, 0.f))); //Linker Unterarm
+	mgdv->SetTransform(glm::translate(*mgdv->Transform(), glm::vec3(0.f, -0.40f, 0.f))); //Rechte Unterarm
 	thigh.Render();
 
 	mgdv->PopTransform();
