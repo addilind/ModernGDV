@@ -91,6 +91,7 @@
     <ClCompile Include="Geometries\Robot\Torso.cpp" />
     <ClCompile Include="Geometries\Skybox.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ModernGDV\Camera.cpp" />
     <ClCompile Include="ModernGDV\ModernGDV.cpp" />
     <ClCompile Include="MyApp.cpp" />
     <ClCompile Include="Geometries\Robot\Thigh.cpp" />
@@ -116,6 +117,7 @@
     <ClInclude Include="Geometries\Skybox.h" />
     <ClInclude Include="Geometries\Terrain.h" />
     <ClInclude Include="Geometries\Robot\Torso.h" />
+    <ClInclude Include="ModernGDV\Camera.h" />
     <ClInclude Include="ModernGDV\MGDVVertex.h" />
     <ClInclude Include="ModernGDV\MGDVApp.h" />
     <ClInclude Include="ModernGDV\ModernGDV.h" />

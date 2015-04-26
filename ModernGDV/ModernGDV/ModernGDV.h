@@ -29,13 +29,17 @@ namespace ModernGDV {
 		GLuint shaderUniformProj;
 		GLuint shaderUniformLightPos;
 		GLuint shaderUniformDiffuseTextureSampler;
+		GLuint shaderUniformLightColor;
+		GLuint shaderUniformLightPower;
+		GLuint shaderUniformAmbientLight;
+		GLuint shaderUniformSpecularColor;
+		GLuint shaderUniformSpecularPower;
 
 		glm::mat4 transform;
 		std::stack<glm::mat4> transformStack;
 		glm::mat4 projectionMatrix;
 		glm::mat4 viewMatrix;
 
-		glm::vec3 lightPos;
 		std::map<std::string, GLuint> textureCache;
 		App* app;
 	public:
@@ -57,7 +61,8 @@ namespace ModernGDV {
 		void PopTransform( int count = 1 );
 		void ResetTransform();
 
-		void SetLightPos( const glm::vec3& position );
+		void SetLight( const glm::vec3& position, const glm::vec3& color, const float& power, const float& ambient );
+		void SetSpecularProperties( const glm::vec3& specularColor, const float& specularPower = 5.0f);
 		GLuint GetTexture( const std::string& filename );
 		void UseTexture( GLuint id );
 		GLuint CreateVertexBuffer( const std::vector<ModernGDV::Vertex>& vertices );

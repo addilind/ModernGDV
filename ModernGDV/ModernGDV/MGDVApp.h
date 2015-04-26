@@ -15,7 +15,7 @@ namespace ModernGDV {
 		App() {};
 		virtual ~App() {};
 
-		virtual void Render() = 0;
+		virtual void Render(float deltaT) = 0;
 	};
 }
 

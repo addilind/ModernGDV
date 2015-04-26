@@ -12,6 +12,7 @@ Robot::~Robot()
 
 void Robot::Render()
 {
+	mgdv->SetSpecularProperties( glm::vec3( 0.5f, 0.5f, 0.5f ), 5.f );
 	mgdv->PushTransform();
 	torso.Render();
 

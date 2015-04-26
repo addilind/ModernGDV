@@ -5,8 +5,8 @@
 #include "ModernGDV/ModernGDV.h"
 
 #include <vector>
-#include "Geometries\Robot.h"
-#include "Geometries/Skybox.h"
+#include "Geometries/Robot.h"
+#include "ModernGDV/Camera.h"
 
 class MyApp : public ModernGDV::App
 {
@@ -14,7 +14,7 @@ private:
 	ModernGDV::Driver* mgdv;
 	
 	Robot robot;
-	Skybox sky;
+	ModernGDV::Camera camera;
 	GLuint lampvb;
 	GLuint lamptex;
 
@@ -22,7 +22,7 @@ public:
 	MyApp( std::vector<std::string> commandline, ModernGDV::Driver* mgdv );
 	virtual ~MyApp();
 
-	virtual void Render() override;
+	virtual void Render( float deltaT ) override;
 };
 
 #endif

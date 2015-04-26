@@ -4,7 +4,7 @@
 using ModernGDV::ColorVertex;
 
 MyApp::MyApp( std::vector<std::string> commandline, ModernGDV::Driver* mgdv )
-	: mgdv(mgdv), robot(mgdv), sky(mgdv)
+	: mgdv(mgdv), robot(mgdv), camera(mgdv)
 {
 	mgdv->SetProjectionMatrix(glm::perspective( 45.0f, 4.0f / 3.0f, 0.1f, 100.0f ));
 
@@ -29,21 +29,10 @@ MyApp::~MyApp()
 {
 }
 
-void MyApp::Render ()
+void MyApp::Render( float deltaT )
 {
-	glEnable( GL_CULL_FACE );
-
-	mgdv->SetViewMatrix( glm::lookAt( glm::vec3( -2.f*glm::sin( glfwGetTime() / 5.f ), 1.3f, 2.f*glm::cos( glfwGetTime() / 5.f ) ), glm::vec3( 0, 0, 0 ), glm::vec3( 0, 1, 0 ) ) );
-	mgdv->SetLightPos( glm::vec3( 1.f*glm::sin( glfwGetTime() / 3.f ), 0.3f, 1.f*glm::cos( glfwGetTime() / 3.f ) ) );
-
-	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-	glDisable( GL_DEPTH_TEST ); //Z-Buffer deaktivieren, um Sky-Cube zu zeichnen
-
-	mgdv->SetTransform( glm::translate( glm::mat4(), glm::vec3( -2.f*glm::sin( glfwGetTime() / 5.f ), 1.3f, 2.f*glm::cos( glfwGetTime() / 5.f ) ) ) );
-	sky.Render();
-
-	glEnable( GL_DEPTH_TEST ); //Z-Buffer aktivieren
-
+	camera.Run( deltaT );
+	mgdv->SetLight( glm::vec3( 1.f*glm::sin( glfwGetTime() / 3.f ), 0.3f, 1.f*glm::cos( glfwGetTime() / 3.f ) ), glm::vec3(1.0f,0.9f,0.6f), 1.f, 0.3f );
 
 	mgdv->ResetTransform();
 	robot.Render();
@@ -53,7 +42,8 @@ void MyApp::Render ()
 	ModernGDV::Vertex::SetLayout();
 	mgdv->UseTexture( lamptex );
 	mgdv->SetTransform( glm::translate( glm::mat4(), glm::vec3( 1.f*glm::sin( glfwGetTime() / 3.f ), 0.3f, 1.f*glm::cos( glfwGetTime() / 3.f ) ) ) );
-	mgdv->SetLightPos( glm::vec3( 1.f*glm::sin( glfwGetTime() / 3.f ) - 1.f, 0.3f, 1.f*glm::cos( glfwGetTime() / 3.f ) + 1.f ) );
+	mgdv->SetLight( glm::vec3(0), glm::vec3( 1, 1, 1 ), 0.f, 1.f );//Dont light
+	mgdv->SetSpecularProperties( glm::vec3( 0 ), 1.f );
 	Quad::Draw( 0U );
 	Quad::Draw( 4U );
 	ModernGDV::Vertex::ResetLayout();

@@ -5,11 +5,12 @@
 #include <fstream>
 #include <vector>
 
-ModernGDV::Driver::Driver( )
+ModernGDV::Driver::Driver()
 	: glfwInitialized( false ), window( nullptr ),
 	vertexShader( 0U ), fragmentShader( 0U ), shaderProgram( 0U ), vertexArray( 0U ),
-	shaderUniformModel( 0U ), shaderUniformNormal( 0U ), shaderUniformView( 0U ), shaderUniformProj( 0U ), shaderUniformLightPos( 0U ), shaderUniformDiffuseTextureSampler( 0U ),
-	 app( nullptr )
+	shaderUniformModel( 0U ), shaderUniformNormal( 0U ), shaderUniformView( 0U ), shaderUniformProj( 0U ), shaderUniformLightPos( 0U ),
+	shaderUniformDiffuseTextureSampler( 0U ), shaderUniformLightColor( 0U ), shaderUniformLightPower( 0U ), shaderUniformAmbientLight( 0U ), shaderUniformSpecularColor( 0U ),
+	app( nullptr )
 {
 	if (!glfwInit()) //GLFW Initialisieren
 		throw std::runtime_error( "Cannot initialize GLFW" );
@@ -33,8 +34,13 @@ ModernGDV::Driver::Driver( )
 		shaderUniformProj = glGetUniformLocation( shaderProgram, "proj" );
 		shaderUniformLightPos = glGetUniformLocation( shaderProgram, "lightPos" );
 		shaderUniformDiffuseTextureSampler = glGetUniformLocation( shaderProgram, "diffuseTextureSampler" );
+		shaderUniformLightColor = glGetUniformLocation( shaderProgram, "lightColor" );
+		shaderUniformLightPower = glGetUniformLocation( shaderProgram, "lightPower" );
+		shaderUniformAmbientLight = glGetUniformLocation( shaderProgram, "ambientLight" );
+		shaderUniformSpecularColor = glGetUniformLocation( shaderProgram, "specularColor" );
+		shaderUniformSpecularPower = glGetUniformLocation( shaderProgram, "specularPower" );
 	}
-	catch ( ... )
+	catch (...)
 	{
 		deinit(); //Destructor would not be called on exception in constructor (since there never really was an instance to destruct) -> manually clean up
 		throw;
@@ -54,14 +60,16 @@ void ModernGDV::Driver::Run()
 	if (app == nullptr)
 		throw std::logic_error( "Must call SetApp before running" );
 
+	double lastTime = glfwGetTime();
 
 	while (!glfwWindowShouldClose( window )) { //Dauerschleife, solange das Fenster offen ist
 		glUseProgram( shaderProgram );
 		ResetTransform();
-		glUniform3f( shaderUniformLightPos, lightPos.x, lightPos.y, lightPos.z );
 		uploadProj();
 
-		app->Render();
+		double now = glfwGetTime();
+		app->Render( now - lastTime );
+		lastTime = now;
 
 		glfwSwapBuffers( window ); //Gezeichnetes auf den Monitor bringen
 		glfwPollEvents(); //Tastendrücke, Mausbewegungen, Meldungen vom Betriebssystem etc. verarbeiten
@@ -85,13 +93,13 @@ GLFWwindow* ModernGDV::Driver::GetWindow()
 	return window;
 }
 
-void ModernGDV::Driver::SetProjectionMatrix(glm::mat4& projectionMat)
+void ModernGDV::Driver::SetProjectionMatrix( glm::mat4& projectionMat )
 {
 	projectionMatrix = projectionMat;
 	uploadProj();
 }
 
-void ModernGDV::Driver::SetViewMatrix(glm::mat4& viewMat)
+void ModernGDV::Driver::SetViewMatrix( glm::mat4& viewMat )
 {
 	viewMatrix = viewMat;
 	uploadView();
@@ -103,7 +111,7 @@ const glm::mat4* ModernGDV::Driver::Transform()
 	return &transform;
 }
 
-void ModernGDV::Driver::SetTransform(glm::mat4& trans)
+void ModernGDV::Driver::SetTransform( glm::mat4& trans )
 {
 	transform = trans; //Transformation speichern
 	uploadTransform();
@@ -120,7 +128,7 @@ void ModernGDV::Driver::ReloadTransform()
 	uploadTransform();
 }
 
-void ModernGDV::Driver::PopTransform(int count)
+void ModernGDV::Driver::PopTransform( int count )
 {
 	for (int i = 0; i < count; ++i)
 		transformStack.pop();
@@ -138,13 +146,21 @@ void ModernGDV::Driver::ResetTransform()
 	uploadTransform();
 }
 
-void ModernGDV::Driver::SetLightPos(const glm::vec3& position)
+void ModernGDV::Driver::SetLight( const glm::vec3& position, const glm::vec3& color, const float& power, const float& ambient )
 {
-	lightPos = position;
-	glUniform3f( shaderUniformLightPos, lightPos.x, lightPos.y, lightPos.z );
+	glUniform3f( shaderUniformLightPos, position.x, position.y, position.z );
+	glUniform3f( shaderUniformLightColor, color.x, color.y, color.z );
+	glUniform1f( shaderUniformLightPower, power );
+	glUniform1f( shaderUniformAmbientLight, ambient );
 }
 
-GLuint ModernGDV::Driver::GetTexture(const std::string& filename)
+void ModernGDV::Driver::SetSpecularProperties(const glm::vec3& specularColor, const float& specularPower)
+{
+	glUniform3f( shaderUniformSpecularColor, specularColor.x, specularColor.y, specularColor.z );
+	glUniform1f( shaderUniformSpecularPower, specularPower );
+}
+
+GLuint ModernGDV::Driver::GetTexture( const std::string& filename )
 {
 	//Suche nach Datei in Texturcache
 	auto cacheEntry = textureCache.find( filename );
@@ -152,18 +168,18 @@ GLuint ModernGDV::Driver::GetTexture(const std::string& filename)
 		return cacheEntry->second; //Gib gefundene ID zurück
 
 	GLuint texID = loadTexture( "../Data/" + filename + ".dds" ); //Lade Textur
-	textureCache.insert( std::pair<std::string, GLuint>(filename, texID) ); //Speichere die Textur im cache
+	textureCache.insert( std::pair<std::string, GLuint>( filename, texID ) ); //Speichere die Textur im cache
 	return texID;
 }
 
-void ModernGDV::Driver::UseTexture(GLuint id)
+void ModernGDV::Driver::UseTexture( GLuint id )
 {
 	glActiveTexture( GL_TEXTURE0 );
 	glBindTexture( GL_TEXTURE_2D, id ); //Gegebene Textur in TEXTURE0-Slot einhängen
 	glUniform1i( shaderUniformDiffuseTextureSampler, 0 ); //TEXTURE0 als diffuseTexture verwenden
 }
 
-GLuint ModernGDV::Driver::CreateVertexBuffer(const std::vector<ModernGDV::Vertex>& vertices)
+GLuint ModernGDV::Driver::CreateVertexBuffer( const std::vector<ModernGDV::Vertex>& vertices )
 {//Vertices aus dem CPU-Hauptspeicher in den Grafik-RAM kopieren
 	GLuint vertexBuffer;
 	glGenBuffers( 1, &vertexBuffer );
@@ -197,7 +213,7 @@ std::vector<char> ModernGDV::Driver::readShaderFile( const char* filename )
 	int shaderLength = static_cast<int>(shaderFile.tellg());
 	shaderFile.seekg( 0, shaderFile.beg );
 
-	std::vector<char> shaderGLSL(shaderLength + 1);
+	std::vector<char> shaderGLSL( shaderLength + 1 );
 	memset( &shaderGLSL[0], 0, shaderLength + 1 ); //Speicher mit nullen füllen, damit nach einlesen der Datei der String durch ein 0-byte terminiert wird
 	shaderFile.read( &shaderGLSL[0], shaderLength );
 
@@ -206,7 +222,7 @@ std::vector<char> ModernGDV::Driver::readShaderFile( const char* filename )
 	return shaderGLSL;
 }
 
-void ModernGDV::Driver::createShaders( )
+void ModernGDV::Driver::createShaders()
 {
 	//GLSL-Dateien einlesen
 	auto vertexShaderGLSL = readShaderFile( "VertexShader.glsl" );
@@ -278,7 +294,7 @@ void ModernGDV::Driver::createVertexArray()
 void ModernGDV::Driver::uploadTransform()
 {
 	glUniformMatrix4fv( shaderUniformModel, 1, GL_FALSE, &transform[0][0] ); //An Grafikkarte uebertragen
-	glm::mat3 normal(glm::transpose( glm::inverse( viewMatrix * transform ) )); //Transformation für Normalen berechnen
+	glm::mat3 normal( glm::transpose( glm::inverse( viewMatrix * transform ) ) ); //Transformation für Normalen berechnen
 	glUniformMatrix3fv( shaderUniformNormal, 1, GL_FALSE, &normal[0][0] ); //An Grafikkarte uebertragens
 }
 
@@ -295,7 +311,7 @@ void ModernGDV::Driver::uploadProj()
 #define DXT1 0x31545844 // "DXT1" in ASCII
 #define DXT3 0x33545844 // "DXT3" in ASCII
 #define DXT5 0x35545844 // "DXT5" in ASCII
-GLuint ModernGDV::Driver::loadTexture(const std::string& filename)
+GLuint ModernGDV::Driver::loadTexture( const std::string& filename )
 {
 	std::ifstream file( filename, std::ifstream::binary );
 	if (!file)
@@ -307,7 +323,7 @@ GLuint ModernGDV::Driver::loadTexture(const std::string& filename)
 		throw std::runtime_error( "Invalid texture file, must be using DXT1/3/5 compression!" );
 
 	char header[124];
-	file.read( header, 124);
+	file.read( header, 124 );
 
 	unsigned int height = *reinterpret_cast<unsigned int*>(&(header[8]));
 	unsigned int width = *reinterpret_cast<unsigned int*>(&(header[12]));
