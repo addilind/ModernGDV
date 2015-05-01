@@ -93,6 +93,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModernGDV\Camera.cpp" />
     <ClCompile Include="ModernGDV\ModernGDV.cpp" />
+    <ClCompile Include="ModernGDV\Textures\Texture.cpp" />
     <ClCompile Include="MyApp.cpp" />
     <ClCompile Include="Geometries\Robot\Thigh.cpp" />
     <ClCompile Include="Geometries\Robot\Shank.cpp" />
@@ -121,6 +122,8 @@
     <ClInclude Include="ModernGDV\MGDVVertex.h" />
     <ClInclude Include="ModernGDV\MGDVApp.h" />
     <ClInclude Include="ModernGDV\ModernGDV.h" />
+    <ClInclude Include="ModernGDV\Textures\DDSDefs.h" />
+    <ClInclude Include="ModernGDV\Textures\Texture.h" />
     <ClInclude Include="MyApp.h" />
     <ClInclude Include="Geometries\Robot\Thigh.h" />
     <ClInclude Include="Geometries\Robot\Shank.h" />

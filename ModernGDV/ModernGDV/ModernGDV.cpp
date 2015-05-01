@@ -312,7 +312,7 @@ void ModernGDV::Driver::uploadProj()
 #define DXT3 0x33545844 // "DXT3" in ASCII
 #define DXT5 0x35545844 // "DXT5" in ASCII
 GLuint ModernGDV::Driver::loadTexture( const std::string& filename )
-{
+{ //Siehe https://msdn.microsoft.com/en-us/library/windows/desktop/bb943991%28v=vs.85%29.aspx
 	std::ifstream file( filename, std::ifstream::binary );
 	if (!file)
 		throw std::runtime_error( "Cannot open texture file!" );
@@ -320,7 +320,7 @@ GLuint ModernGDV::Driver::loadTexture( const std::string& filename )
 	char filecode[4]; //Dateiheader überprüfen
 	file.read( filecode, 4 );
 	if (strncmp( filecode, "DDS ", 4 ) != 0)
-		throw std::runtime_error( "Invalid texture file, must be using DXT1/3/5 compression!" );
+		throw std::runtime_error( "Invalid texture file, must be a DDS file using DXT1/3/5 compression!" );
 
 	char header[124];
 	file.read( header, 124 );
