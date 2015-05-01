@@ -1,11 +1,6 @@
-#ifndef TERRAIN_H
-#define TERRAIN_H
-
-
+#pragma once
 
 class Terrain
 {
 	
 };
-
-#endif

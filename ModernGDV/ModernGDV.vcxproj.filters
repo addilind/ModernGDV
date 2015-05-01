@@ -60,6 +60,9 @@
     <ClCompile Include="Geometries\Robot\ShoulderJoint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ModernGDV\CCallbackWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="FragmentShader.glsl">
@@ -122,6 +125,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Geometries\Robot\ShoulderJoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModernGDV\CCallbackWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModernGDV\OGLInc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

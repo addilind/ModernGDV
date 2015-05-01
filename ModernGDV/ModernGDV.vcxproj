@@ -58,6 +58,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;GLEW_STATIC;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -76,6 +77,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;GLEW_STATIC;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -94,6 +96,7 @@
     <ClCompile Include="Geometries\Skybox.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModernGDV\Camera.cpp" />
+    <ClCompile Include="ModernGDV\CCallbackWrapper.cpp" />
     <ClCompile Include="ModernGDV\ModernGDV.cpp" />
     <ClCompile Include="ModernGDV\Textures\Texture.cpp" />
     <ClCompile Include="MyApp.cpp" />
@@ -123,9 +126,11 @@
     <ClInclude Include="Geometries\Terrain.h" />
     <ClInclude Include="Geometries\Robot\Torso.h" />
     <ClInclude Include="ModernGDV\Camera.h" />
+    <ClInclude Include="ModernGDV\CCallbackWrapper.h" />
     <ClInclude Include="ModernGDV\MGDVVertex.h" />
     <ClInclude Include="ModernGDV\MGDVApp.h" />
     <ClInclude Include="ModernGDV\ModernGDV.h" />
+    <ClInclude Include="ModernGDV\OGLInc.h" />
     <ClInclude Include="ModernGDV\Textures\DDSDefs.h" />
     <ClInclude Include="ModernGDV\Textures\Texture.h" />
     <ClInclude Include="MyApp.h" />

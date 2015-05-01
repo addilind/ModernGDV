@@ -10,8 +10,11 @@ ModernGDV::Driver::Driver()
 	vertexShader( 0U ), fragmentShader( 0U ), shaderProgram( 0U ), vertexArray( 0U ),
 	shaderUniformModel( 0U ), shaderUniformNormal( 0U ), shaderUniformView( 0U ), shaderUniformProj( 0U ), shaderUniformLightPos( 0U ),
 	shaderUniformDiffuseTextureSampler( 0U ), shaderUniformLightColor( 0U ), shaderUniformLightPower( 0U ), shaderUniformAmbientLight( 0U ), shaderUniformSpecularColor( 0U ),
-	app( nullptr )
+	aspectRatio(4.f/3.f), fov(45.f), farDist(100.f),
+	textureCache(), app( nullptr )
 {
+	Callbacks::mgdvDriverInstance = this;
+
 	if (!glfwInit()) //GLFW Initialisieren
 		throw std::runtime_error( "Cannot initialize GLFW" );
 
@@ -39,6 +42,8 @@ ModernGDV::Driver::Driver()
 		shaderUniformAmbientLight = glGetUniformLocation( shaderProgram, "ambientLight" );
 		shaderUniformSpecularColor = glGetUniformLocation( shaderProgram, "specularColor" );
 		shaderUniformSpecularPower = glGetUniformLocation( shaderProgram, "specularPower" );
+
+		updateProj();
 	}
 	catch (...)
 	{
@@ -68,7 +73,7 @@ void ModernGDV::Driver::Run()
 		uploadProj();
 
 		double now = glfwGetTime();
-		app->Render( now - lastTime );
+		app->Render( static_cast<float>( now - lastTime ) );
 		lastTime = now;
 
 		glfwSwapBuffers( window ); //Gezeichnetes auf den Monitor bringen
@@ -83,6 +88,13 @@ void ModernGDV::Driver::SetApp( App* application )
 	app = application;
 }
 
+void ModernGDV::Driver::FramebufferSizeChanged(GLFWwindow* window, int width, int height)
+{
+	glViewport( 0, 0, width, height );
+	aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+	updateProj();
+}
+
 GLuint ModernGDV::Driver::GetShaderProgram()
 {
 	return shaderProgram;
@@ -93,10 +105,11 @@ GLFWwindow* ModernGDV::Driver::GetWindow()
 	return window;
 }
 
-void ModernGDV::Driver::SetProjectionMatrix( glm::mat4& projectionMat )
+void ModernGDV::Driver::SetProjectionOptions(const float& fov, const float& farPlane)
 {
-	projectionMatrix = projectionMat;
-	uploadProj();
+	this->fov = fov;
+	farDist = farPlane;
+	updateProj();
 }
 
 void ModernGDV::Driver::SetViewMatrix( glm::mat4& viewMat )
@@ -195,6 +208,7 @@ void ModernGDV::Driver::createWindow()
 	glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 0 );
 	glfwWindowHint( GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE );
 	window = glfwCreateWindow( 1024, 768, "GDV: Bastian Kreuzer (734877), Adrian Mueller (734922)", nullptr, nullptr ); //Fenster erstellen
+	glfwSetFramebufferSizeCallback( window, Callbacks::glfwFramebufferSizeCallback );
 
 	if (!window)
 		throw std::runtime_error( "Cannot create window" );
@@ -303,6 +317,12 @@ void ModernGDV::Driver::uploadView()
 	glUniformMatrix4fv( shaderUniformView, 1, GL_FALSE, &viewMatrix[0][0] ); //An Grafikkarte uebertragen
 }
 
+void ModernGDV::Driver::updateProj()
+{
+	projectionMatrix = glm::perspective( fov, aspectRatio, 0.1f, farDist );
+	uploadProj();
+}
+
 void ModernGDV::Driver::uploadProj()
 {
 	glUniformMatrix4fv( shaderUniformProj, 1, GL_FALSE, &projectionMatrix[0][0] ); //An Grafikkarte uebertragen
@@ -324,4 +344,5 @@ void ModernGDV::Driver::deinit()
 	}
 	if (glfwInitialized)
 		glfwTerminate(); //GLFW beenden, falls initialisiert
+	Callbacks::mgdvDriverInstance = nullptr;
 }

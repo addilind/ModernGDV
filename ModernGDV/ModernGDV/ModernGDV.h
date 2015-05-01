@@ -1,17 +1,13 @@
-#ifndef MODERNGDV_H
-#define MODERNGDV_H
+#pragma once
 
-#include <epoxy/gl.h>
-#include <epoxy/wgl.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <vector>
 #include <stack>
 #include <map>
-
+#include "OGLInc.h"
+#include "CCallbackWrapper.h"
 #include "MGDVVertex.h"
 #include "MGDVApp.h"
 #include "Textures/Texture.h"
+#include <vector>
 
 namespace ModernGDV {
 	class Driver {
@@ -41,6 +37,10 @@ namespace ModernGDV {
 		glm::mat4 projectionMatrix;
 		glm::mat4 viewMatrix;
 
+		float aspectRatio;
+		float fov;
+		float farDist;
+
 		std::map<std::string, Textures::Texture> textureCache;
 		App* app;
 	public:
@@ -50,10 +50,12 @@ namespace ModernGDV {
 		void Run();
 		void SetApp( App* application );
 
+		void FramebufferSizeChanged( GLFWwindow* window, int width, int height );
+
 		GLuint GetShaderProgram();
 		GLFWwindow* GetWindow();
 
-		void SetProjectionMatrix( glm::mat4& projectionMat );
+		void SetProjectionOptions( const float& fov, const float& farPlane );
 		void SetViewMatrix( glm::mat4& viewMat );
 		const glm::mat4* Transform(  );
 		void SetTransform( glm::mat4& transform );
@@ -76,9 +78,8 @@ namespace ModernGDV {
 		void createVertexArray( );
 		void uploadTransform( );
 		void uploadView();
+		void updateProj();
 		void uploadProj();
 		void deinit();
 	};
 }
-
-#endif

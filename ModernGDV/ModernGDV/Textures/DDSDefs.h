@@ -1,5 +1,5 @@
-#ifndef MGDV_TEXTURES_DDSDEFS_H
-#define MGDV_TEXTURES_DDSDEFS_H
+#pragma once
+
 #include <stdint.h>
 
 namespace ModernGDV
@@ -58,5 +58,3 @@ namespace ModernGDV
 		};
 	}
 }
-
-#endif

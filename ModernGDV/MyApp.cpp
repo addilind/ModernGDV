@@ -1,12 +1,10 @@
 #include "MyApp.h"
 #include "Geometries/Primitives/Quad.h"
 
-using ModernGDV::ColorVertex;
-
 MyApp::MyApp( std::vector<std::string> commandline, ModernGDV::Driver* mgdv )
 	: mgdv(mgdv), robot(mgdv), camera(mgdv)
 {
-	mgdv->SetProjectionMatrix(glm::perspective( 45.0f, 4.0f / 3.0f, 0.1f, 100.0f ));
+	mgdv->SetProjectionOptions(45.0f, 100.f);
 
 	mgdv->SetApp( this );
 

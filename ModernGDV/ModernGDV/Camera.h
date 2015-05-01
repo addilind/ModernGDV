@@ -1,5 +1,4 @@
-#ifndef MGDV_CAMERA_H
-#define MGDV_CAMERA_H
+#pragma once
 
 #include "../Geometries/Skybox.h"
 
@@ -29,5 +28,3 @@ namespace ModernGDV
 		void updateViewMat();
 	};
 }
-
-#endif

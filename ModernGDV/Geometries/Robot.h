@@ -1,11 +1,6 @@
-#ifndef ROBOT_H
-#define ROBOT_H
+#pragma once
 
-#include <epoxy/gl.h>
-#include <epoxy/wgl.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include "../ModernGDV/OGLInc.h"
 
 #include "../ModernGDV/ModernGDV.h"
 #include "Robot/Torso.h"
@@ -30,5 +25,3 @@ public:
 
 	void Render();
 };
-
-#endif

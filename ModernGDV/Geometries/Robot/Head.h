@@ -1,11 +1,6 @@
-#ifndef MGDV_HEAD_H
-#define MGDV_HEAD_H
+#pragma once
 
-#include <epoxy/gl.h>
-#include <epoxy/wgl.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include "../../ModernGDV/OGLInc.h"
 #include <vector>
 
 #include "../../ModernGDV/MGDVVertex.h"
@@ -23,5 +18,3 @@ public:
 	void Render( const float& mouthAngle );
 
 };
-
-#endif

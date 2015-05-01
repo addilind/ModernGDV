@@ -1,11 +1,6 @@
-#ifndef MGDVAPP_H
-#define MGDVAPP_H
+#pragma once
 
-#include <epoxy/gl.h>
-#include <epoxy/wgl.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp> 
+#include "OGLInc.h"
 
 #include "MGDVVertex.h"
 
@@ -18,5 +13,3 @@ namespace ModernGDV {
 		virtual void Render(float deltaT) = 0;
 	};
 }
-
-#endif

@@ -1,13 +1,6 @@
-#ifndef MGDV_SKYBOX_H
-#define MGDV_SKYBOX_H
+#pragma once
 
-#include <epoxy/gl.h>
-#include <epoxy/wgl.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <vector>
-
+#include "../ModernGDV/OGLInc.h"
 #include "../ModernGDV/MGDVVertex.h"
 #include "../ModernGDV/ModernGDV.h"
 
@@ -22,5 +15,3 @@ public:
 
 	void Render();
 };
-
-#endif

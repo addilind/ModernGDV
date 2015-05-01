@@ -1,11 +1,8 @@
-#ifndef MGDV_TEXTURES_TEXTURE_H
-#define MGDV_TEXTURES_TEXTURE_H
-#include <stdint.h>
-#include <epoxy/gl.h>
-#include <epoxy/wgl.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
+#pragma once
+
 #include <string>
+
+#include "../OGLInc.h"
 
 namespace ModernGDV
 {
@@ -24,4 +21,3 @@ namespace ModernGDV
 		};
 	}
 }
-#endif

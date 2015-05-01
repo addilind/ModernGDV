@@ -1,11 +1,6 @@
-#ifndef MGDV_TRIANGLE_H
-#define MGDV_TRIANGLE_H
+#pragma once
 
-#include <epoxy/gl.h>
-#include <epoxy/wgl.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include "../../ModernGDV/OGLInc.h"
 #include <vector>
 
 #include "../../ModernGDV/MGDVVertex.h"
@@ -35,5 +30,3 @@ namespace Tri
 		return startIndex + 3U;
 	}
 }
-
-#endif
