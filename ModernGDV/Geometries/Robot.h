@@ -12,7 +12,7 @@
 #include "Robot/Thigh.h"
 #include "Robot/Shank.h"
 #include "Robot/Foot.h"
-#include "Robot/BrachialJoint.h"
+#include "Robot/ShoulderJoint.h"
 
 class Robot
 {
@@ -23,7 +23,7 @@ private:
 	Thigh thigh;
 	Shank shank;
 	Foot foot;
-	BrachialJoint bjoint;
+	ShoulderJoint shoulderJoint;
 public:
 	explicit Robot(ModernGDV::Driver* mgdv);
 	~Robot();

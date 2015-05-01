@@ -54,7 +54,10 @@
     <ClCompile Include="Geometries\Robot\Foot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Geometries\Robot\BrachialJoint.cpp">
+    <ClCompile Include="ModernGDV\Textures\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometries\Robot\ShoulderJoint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -112,7 +115,13 @@
     <ClInclude Include="Geometries\Robot\Foot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Geometries\Robot\BrachialJoint.h">
+    <ClInclude Include="ModernGDV\Textures\DDSDefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModernGDV\Textures\Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometries\Robot\ShoulderJoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

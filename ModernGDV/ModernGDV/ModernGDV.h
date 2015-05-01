@@ -11,6 +11,7 @@
 
 #include "MGDVVertex.h"
 #include "MGDVApp.h"
+#include "Textures/Texture.h"
 
 namespace ModernGDV {
 	class Driver {
@@ -40,7 +41,7 @@ namespace ModernGDV {
 		glm::mat4 projectionMatrix;
 		glm::mat4 viewMatrix;
 
-		std::map<std::string, GLuint> textureCache;
+		std::map<std::string, Textures::Texture> textureCache;
 		App* app;
 	public:
 		Driver();
@@ -76,7 +77,6 @@ namespace ModernGDV {
 		void uploadTransform( );
 		void uploadView();
 		void uploadProj();
-		GLuint loadTexture( const std::string& filename );
 		void deinit();
 	};
 }

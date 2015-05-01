@@ -87,7 +87,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Geometries\Robot\BrachialJoint.cpp" />
+    <ClCompile Include="Geometries\Robot\ShoulderJoint.cpp" />
     <ClCompile Include="Geometries\Robot\Foot.cpp" />
     <ClCompile Include="Geometries\Robot\Head.cpp" />
     <ClCompile Include="Geometries\Robot\Torso.cpp" />
@@ -114,7 +114,7 @@
     <None Include="VertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Geometries\Robot\BrachialJoint.h" />
+    <ClInclude Include="Geometries\Robot\ShoulderJoint.h" />
     <ClInclude Include="Geometries\Robot\Foot.h" />
     <ClInclude Include="Geometries\Primitives\Quad.h" />
     <ClInclude Include="Geometries\Primitives\Triangle.h" />

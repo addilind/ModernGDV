@@ -25,21 +25,21 @@ ModernGDV::Textures::Texture::Texture(const std::string& filename) : glID(0U)
 	unsigned int bufsize = header.MipMapCount > 1 ? header.PitchOrLinearSize * 2 : header.PitchOrLinearSize;
 	std::vector<char> imageData( bufsize );
 	file.read( &imageData[0], bufsize );
-	auto read = file.gcount();
+	auto byteRead = file.gcount();
+	imageData.resize( byteRead ); //Überflüssig reservierten Speicher freigeben + Wert zur BufferOverflow-Überprüfung setzen
 
 	file.close();
 
-	unsigned int components = (header.ddspf.dwFourCC == DXT1) ? 3 : 4;
-	unsigned int format;
-	switch (fourCC)
+	GLuint format;
+	switch (header.ddspf.FourCC)
 	{
-	case DXT1:
+	case DDS_PIXELFORMAT::DXT1:
 		format = GL_COMPRESSED_RGBA_S3TC_DXT1_EXT;
 		break;
-	case DXT3:
+	case DDS_PIXELFORMAT::DXT3:
 		format = GL_COMPRESSED_RGBA_S3TC_DXT3_EXT;
 		break;
-	case DXT5:
+	case DDS_PIXELFORMAT::DXT5:
 		format = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
 		break;
 	default:
@@ -47,19 +47,24 @@ ModernGDV::Textures::Texture::Texture(const std::string& filename) : glID(0U)
 	}
 
 	// OpenGL-Textur erstellen
-	GLuint textureID;
-	glGenTextures( 1, &textureID );
-	glBindTexture( GL_TEXTURE_2D, textureID );
+	glGenTextures( 1, &glID );
+	glBindTexture( GL_TEXTURE_2D, glID );
 	glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0 );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, header.MipMapCount - 1 );
 
 	unsigned int blockSize = (format == GL_COMPRESSED_RGBA_S3TC_DXT1_EXT) ? 8 : 16;
 	unsigned int offset = 0;
+	unsigned int width = header.Width;
+	unsigned int height = header.Height;
 
 	// Einzelne Bildversionen laden
-	for (unsigned int level = 0; level < mipMapCount && (width || height); ++level)
+	for (unsigned int level = 0; level < header.MipMapCount; ++level)
 	{
 		unsigned int size = ((width + 3) / 4)*((height + 3) / 4)*blockSize;
-		glCompressedTexImage2D( GL_TEXTURE_2D, level, format, width, height, 0, size, &imageData[0] + offset );
+		if (offset + size > imageData.size())
+			throw std::runtime_error( "Texture contains too few data!" );
+		glCompressedTexImage2D( GL_TEXTURE_2D, level, format, width, height, 0, size, &imageData[offset] );
 
 		offset += size;
 		width /= 2;
@@ -68,11 +73,19 @@ ModernGDV::Textures::Texture::Texture(const std::string& filename) : glID(0U)
 		if (width < 1) width = 1;
 		if (height < 1) height = 1;
 	}
-
-	return textureID;
 }
 
 ModernGDV::Textures::Texture::~Texture()
 {
+}
 
+GLuint ModernGDV::Textures::Texture::GetID() const
+{
+	return glID;
+}
+
+void ModernGDV::Textures::Texture::Unload()
+{
+	glDeleteTextures( 1, &glID );
+	glID = 0;
 }

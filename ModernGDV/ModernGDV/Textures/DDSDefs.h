@@ -8,23 +8,18 @@ namespace ModernGDV
 	{
 		struct DDS_PIXELFORMAT {
 			enum FourCC : uint32_t {
-				DDSD_CAPS = 0x1,
-				DDSD_HEIGHT = 0x2,
-				DDSD_WIDTH = 0x4,
-				DDSD_PITCH = 0x8,
-				DDSD_PIXELFORMAT = 0x1000,
-				DDSD_MIPMAPCOUNT = 0x20000,
-				DDSD_LINEARSIZE = 0x80000,
-				DDSD_DEPTH = 0x800000
+				DXT1 = 0x31545844, // "DXT1" in ASCII
+				DXT3 = 0x33545844, // "DXT3" in ASCII
+				DXT5 = 0x35545844  // "DXT5" in ASCII
 			};
-			uint32_t dwSize;
-			uint32_t dwFlags;
-			FourCC dwFourCC;
-			uint32_t dwRGBBitCount;
-			uint32_t dwRBitMask;
-			uint32_t dwGBitMask;
-			uint32_t dwBBitMask;
-			uint32_t dwABitMask;
+			uint32_t Size;
+			uint32_t Flags;
+			FourCC   FourCC;
+			uint32_t RGBBitCount;
+			uint32_t RBitMask;
+			uint32_t GBitMask;
+			uint32_t BBitMask;
+			uint32_t ABitMask;
 		};
 		struct DDS_HEADER {
 			enum Flag : uint32_t {

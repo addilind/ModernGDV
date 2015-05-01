@@ -1,4 +1,4 @@
-#include "BrachialJoint.h"
+#include "ShoulderJoint.h"
 
 #include "../Primitives/Quad.h"
 
@@ -7,7 +7,7 @@ using glm::vec3;
 using glm::vec2;
 
 
-BrachialJoint::BrachialJoint(ModernGDV::Driver* mgdv)
+ShoulderJoint::ShoulderJoint( ModernGDV::Driver* mgdv )
 : mgdv(mgdv), vertexBuffer(0U), texture(0U)
 {
 	std::vector<Vertex> vertices;
@@ -45,12 +45,12 @@ BrachialJoint::BrachialJoint(ModernGDV::Driver* mgdv)
 
 }
 
-BrachialJoint::~BrachialJoint()
+ShoulderJoint::~ShoulderJoint()
 {
 
 }
 
-void BrachialJoint::Render()
+void ShoulderJoint::Render()
 {
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	Vertex::SetLayout();

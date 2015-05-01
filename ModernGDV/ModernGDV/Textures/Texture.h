@@ -19,6 +19,8 @@ namespace ModernGDV
 			Texture( const std::string& filename );
 			~Texture();
 
+			GLuint GetID() const;
+			void Unload();
 		};
 	}
 }

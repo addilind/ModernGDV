@@ -1,5 +1,5 @@
-#ifndef MGDV_BrachialJoint_H
-#define MGDV_BrachialJoint_H
+#ifndef MGDV_SHOULDERJOINT_H
+#define MGDV_SHOULDERJOINT_H
 
 #include <epoxy/gl.h>
 #include <epoxy/wgl.h>
@@ -11,14 +11,14 @@
 #include "../../ModernGDV/MGDVVertex.h"
 #include "../../ModernGDV/ModernGDV.h"
 
-class BrachialJoint {
+class ShoulderJoint {
 private:
 	GLuint vertexBuffer;
 	ModernGDV::Driver* mgdv;
 	GLuint texture;
 public:
-	BrachialJoint(ModernGDV::Driver* mgdv);
-	~BrachialJoint();
+	ShoulderJoint(ModernGDV::Driver* mgdv);
+	~ShoulderJoint();
 
 	void Render();
 

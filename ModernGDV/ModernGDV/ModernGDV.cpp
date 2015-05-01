@@ -165,11 +165,11 @@ GLuint ModernGDV::Driver::GetTexture( const std::string& filename )
 	//Suche nach Datei in Texturcache
 	auto cacheEntry = textureCache.find( filename );
 	if (cacheEntry != textureCache.end())
-		return cacheEntry->second; //Gib gefundene ID zurück
+		return cacheEntry->second.GetID(); //Gib gefundene ID zurück
 
-	GLuint texID = loadTexture( "../Data/" + filename + ".dds" ); //Lade Textur
-	textureCache.insert( std::pair<std::string, GLuint>( filename, texID ) ); //Speichere die Textur im cache
-	return texID;
+	//Speichere die Textur im cache und gib ihre ID zurück
+	return textureCache.insert( std::pair<std::string, Textures::Texture>(
+		filename, Textures::Texture( "../Data/" + filename + ".dds" )  ) ).first->second.GetID(); 
 }
 
 void ModernGDV::Driver::UseTexture( GLuint id )
@@ -308,85 +308,10 @@ void ModernGDV::Driver::uploadProj()
 	glUniformMatrix4fv( shaderUniformProj, 1, GL_FALSE, &projectionMatrix[0][0] ); //An Grafikkarte uebertragen
 }
 
-#define DXT1 0x31545844 // "DXT1" in ASCII
-#define DXT3 0x33545844 // "DXT3" in ASCII
-#define DXT5 0x35545844 // "DXT5" in ASCII
-GLuint ModernGDV::Driver::loadTexture( const std::string& filename )
-{ //Siehe https://msdn.microsoft.com/en-us/library/windows/desktop/bb943991%28v=vs.85%29.aspx
-	std::ifstream file( filename, std::ifstream::binary );
-	if (!file)
-		throw std::runtime_error( "Cannot open texture file!" );
-
-	char filecode[4]; //Dateiheader überprüfen
-	file.read( filecode, 4 );
-	if (strncmp( filecode, "DDS ", 4 ) != 0)
-		throw std::runtime_error( "Invalid texture file, must be a DDS file using DXT1/3/5 compression!" );
-
-	char header[124];
-	file.read( header, 124 );
-
-	unsigned int height = *reinterpret_cast<unsigned int*>(&(header[8]));
-	unsigned int width = *reinterpret_cast<unsigned int*>(&(header[12]));
-	unsigned int linearSize = *reinterpret_cast<unsigned int*>(&(header[16]));
-	unsigned int mipMapCount = *reinterpret_cast<unsigned int*>(&(header[24]));
-	unsigned int fourCC = *reinterpret_cast<unsigned int*>(&(header[80]));
-
-	unsigned int bufsize;
-
-	/* Buffergröße errechnen: Falls die Textur vorberechnete MIPMAPs mitbringt, ist sie doppelt so groß */
-	bufsize = mipMapCount > 1 ? linearSize * 2 : linearSize;
-	std::vector<char> imageData( bufsize );
-	file.read( &imageData[0], bufsize );
-
-	file.close();
-
-	unsigned int components = (fourCC == DXT1) ? 3 : 4;
-	unsigned int format;
-	switch (fourCC)
-	{
-	case DXT1:
-		format = GL_COMPRESSED_RGBA_S3TC_DXT1_EXT;
-		break;
-	case DXT3:
-		format = GL_COMPRESSED_RGBA_S3TC_DXT3_EXT;
-		break;
-	case DXT5:
-		format = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
-		break;
-	default:
-		throw std::runtime_error( "Texture declares unknown compression format!" );
-	}
-
-	// OpenGL-Textur erstellen
-	GLuint textureID;
-	glGenTextures( 1, &textureID );
-	glBindTexture( GL_TEXTURE_2D, textureID );
-	glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
-
-	unsigned int blockSize = (format == GL_COMPRESSED_RGBA_S3TC_DXT1_EXT) ? 8 : 16;
-	unsigned int offset = 0;
-
-	// Einzelne Bildversionen laden
-	for (unsigned int level = 0; level < mipMapCount && (width || height); ++level)
-	{
-		unsigned int size = ((width + 3) / 4)*((height + 3) / 4)*blockSize;
-		glCompressedTexImage2D( GL_TEXTURE_2D, level, format, width, height, 0, size, &imageData[0] + offset );
-
-		offset += size;
-		width /= 2;
-		height /= 2;
-
-		if (width < 1) width = 1;
-		if (height < 1) height = 1;
-	}
-
-	return textureID;
-}
-
 void ModernGDV::Driver::deinit()
 {
 	for (auto tex = textureCache.begin(); tex != textureCache.end(); ++tex)
-		glDeleteTextures( 1, &tex->second );
+		tex->second.Unload();
 	if (shaderProgram > 0U)
 		glDeleteProgram( shaderProgram );
 	if (fragmentShader > 0U)
