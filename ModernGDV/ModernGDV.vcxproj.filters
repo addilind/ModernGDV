@@ -51,7 +51,10 @@
     <ClCompile Include="ModernGDV\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ModernGDV\Textures\Texture.cpp">
+    <ClCompile Include="Geometries\Robot\Foot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometries\Robot\BrachialJoint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -106,10 +109,10 @@
     <ClInclude Include="ModernGDV\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ModernGDV\Textures\DDSDefs.h">
+    <ClInclude Include="Geometries\Robot\Foot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ModernGDV\Textures\Texture.h">
+    <ClInclude Include="Geometries\Robot\BrachialJoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -18,10 +18,10 @@ Shank::Shank(ModernGDV::Driver* mgdv)
 	vec3 lCuboidBottomBackLeft(-0.15f, -0.45f, -0.08f);
 	vec3 lCuboidBottomBackRight(-0.075f, -0.45f, -0.08f);
 
-	vec3 lCuboidTopFrontLeft(-0.15f, +0.05f, +0.075f);
-	vec3 lCuboidTopFrontRight(-0.075f, +0.05f, +0.075f);
-	vec3 lCuboidTopBackLeft(-0.15f, +0.05f, -0.075f);
-	vec3 lCuboidTopBackRight(-0.075f, +0.05f, -0.075f);
+	vec3 lCuboidTopFrontLeft(-0.15f, +0.05f, +0.08f);
+	vec3 lCuboidTopFrontRight(-0.075f, +0.05f, +0.08f);
+	vec3 lCuboidTopBackLeft(-0.15f, +0.05f, -0.08f);
+	vec3 lCuboidTopBackRight(-0.075f, +0.05f, -0.08f);
 
 	//Bodenfläche Quader
 	Quad::Create(vertices, lCuboidBottomFrontLeft, vec2(0.f, 0.f), lCuboidBottomFrontRight, vec2(1.f, 0.f),
@@ -45,10 +45,10 @@ Shank::Shank(ModernGDV::Driver* mgdv)
 	vec3 rCuboidBottomBackLeft(+0.075f, -0.45f, -0.08f);
 	vec3 rCuboidBottomBackRight(+0.15f, -0.45f, -0.08f);
 
-	vec3 rCuboidTopFrontLeft(+0.075f, +0.05f, +0.075f);
-	vec3 rCuboidTopFrontRight(+0.15f, +0.05f, +0.075f);
-	vec3 rCuboidTopBackLeft(+0.075f, +0.05f, -0.075f);
-	vec3 rCuboidTopBackRight(+0.15f, +0.05f, -0.075f);
+	vec3 rCuboidTopFrontLeft(+0.075f, +0.05f, +0.08f);
+	vec3 rCuboidTopFrontRight(+0.15f, +0.05f, +0.08f);
+	vec3 rCuboidTopBackLeft(+0.075f, +0.05f, -0.08f);
+	vec3 rCuboidTopBackRight(+0.15f, +0.05f, -0.08f);
 
 	//Bodenfläche Quader
 	Quad::Create(vertices, rCuboidBottomFrontLeft, vec2(0.f, 0.f), rCuboidBottomFrontRight, vec2(1.f, 0.f),
