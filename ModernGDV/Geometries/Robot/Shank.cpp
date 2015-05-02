@@ -3,11 +3,12 @@
 #include "../Primitives/Quad.h"
 
 using ModernGDV::Vertex;
+using Geometries::Primitives::Quad;
 using glm::vec3;
 using glm::vec2;
 
 
-Shank::Shank(ModernGDV::Driver* mgdv)
+Geometries::Robot::Shank::Shank(ModernGDV::Driver* mgdv)
 : mgdv(mgdv), vertexBuffer(0U), texture(0U)
 {
 	std::vector<Vertex> vertices;
@@ -71,12 +72,12 @@ Shank::Shank(ModernGDV::Driver* mgdv)
 	texture = mgdv->GetTexture("test");
 }
 
-Shank::~Shank()
+Geometries::Robot::Shank::~Shank()
 {
 
 }
 
-void Shank::Render()
+void Geometries::Robot::Shank::Render()
 {
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	Vertex::SetLayout();

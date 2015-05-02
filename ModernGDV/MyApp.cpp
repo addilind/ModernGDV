@@ -1,6 +1,8 @@
 #include "MyApp.h"
 #include "Geometries/Primitives/Quad.h"
 
+using Geometries::Primitives::Quad;
+
 MyApp::MyApp( std::vector<std::string> commandline, ModernGDV::Driver* mgdv )
 	: mgdv(mgdv), robot(mgdv), camera(mgdv)
 {

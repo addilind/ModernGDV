@@ -1,16 +1,16 @@
 #include "Robot.h"
 
-Robot::Robot(ModernGDV::Driver* mgdv)
+Geometries::Robot::Robot::Robot( ModernGDV::Driver* mgdv )
 : torso(mgdv), thigh(mgdv), shank(mgdv), foot(mgdv), shoulderJoint(mgdv)
 {
 	this->mgdv = mgdv;
 }
 
-Robot::~Robot()
+Geometries::Robot::Robot::~Robot()
 {
 }
 
-void Robot::Render()
+void Geometries::Robot::Robot::Render()
 {
 	mgdv->SetSpecularProperties( glm::vec3( 0.5f, 0.5f, 0.5f ), 50.f );
 	mgdv->PushTransform();

@@ -44,6 +44,8 @@ ModernGDV::Driver::Driver()
 		shaderUniformSpecularPower = glGetUniformLocation( shaderProgram, "specularPower" );
 
 		updateProj();
+
+		glEnable( GL_SAMPLE_ALPHA_TO_COVERAGE );
 	}
 	catch (...)
 	{
@@ -69,6 +71,7 @@ void ModernGDV::Driver::Run()
 
 	while (!glfwWindowShouldClose( window )) { //Dauerschleife, solange das Fenster offen ist
 		glUseProgram( shaderProgram );
+		
 		ResetTransform();
 		uploadProj();
 

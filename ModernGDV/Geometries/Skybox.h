@@ -4,14 +4,17 @@
 #include "../ModernGDV/MGDVVertex.h"
 #include "../ModernGDV/ModernGDV.h"
 
-class Skybox
+namespace Geometries
 {
-	GLuint vertexBuffer;
-	ModernGDV::Driver* mgdv;
-	GLuint texture;
-public:
-	Skybox( ModernGDV::Driver* mgdv );
-	~Skybox();
+	class Skybox
+	{
+		GLuint vertexBuffer;
+		ModernGDV::Driver* mgdv;
+		GLuint texture;
+	public:
+		Skybox( ModernGDV::Driver* mgdv );
+		~Skybox();
 
-	void Render();
-};
+		void Render();
+	};
+}

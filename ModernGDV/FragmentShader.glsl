@@ -8,7 +8,7 @@ in vec3 eyedir_cam;		//Vektor, der in Richtung Kamera zeigt (im Kamerakoordinate
 in vec3 lightdir_cam;	//Vektor, der in Richtung Licht zeigt (im Kamerakoordinatensystem)
 
 // Eigenschaften, die der FragmentShader ausgibt (normalerweise nur die Farbe, die auf den Monitor gezeichnet werden soll, als RGBA, also mit Transparenz als 4. Wert)
-out vec3 endColor;		//Farbe
+out vec4 endColor;		//Farbe
 
 uniform sampler2D diffuseTextureSampler;
 uniform vec3 lightPos;	//Position der Lichtquelle in Weltkoordinaten
@@ -21,8 +21,8 @@ uniform float specularPower;
 //diese Funktion wird für jeden Pixel, der in einem durch die Vertices definierten Dreieck liegt einzeln aufgerufen - auf der Grafikkarte
 void main(void) {
 
-	vec3 diffuse = texture( diffuseTextureSampler, texcoord ).rgb;
-	vec3 ambient = ambientLight * diffuse;
+	vec4 diffuse = texture( diffuseTextureSampler, texcoord );
+	vec3 ambient = ambientLight * diffuse.rgb;
 
 	float lightDistance = length( lightPos - position_world );
 
@@ -36,7 +36,7 @@ void main(void) {
 
 	float reflectionangle = clamp( dot( e, reflektionsrichtung ), 0, 1 );
 	
-	endColor = ambient +
-		diffuse * lightColor * lightPower * entryangle / (lightDistance * lightDistance) +
-		specularColor * lightColor * lightPower * pow( reflectionangle, specularPower ) / (lightDistance * lightDistance);
+	endColor = vec4(ambient +
+		diffuse.rgb * lightColor * lightPower * entryangle / (lightDistance * lightDistance) +
+		specularColor * lightColor * lightPower * pow( reflectionangle, specularPower ) / (lightDistance * lightDistance), diffuse.a);
 }

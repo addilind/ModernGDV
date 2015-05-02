@@ -4,10 +4,12 @@
 #include "../Primitives/Quad.h"
 
 using ModernGDV::Vertex;
+using Geometries::Primitives::Quad;
+using Geometries::Primitives::Tri;
 using glm::vec3;
 using glm::vec2;
 
-Torso::Torso( ModernGDV::Driver* mgdv )
+Geometries::Robot::Torso::Torso( ModernGDV::Driver* mgdv )
 	: mgdv(mgdv), vertexBuffer(0U), texture(0U)
 {
 	std::vector<Vertex> vertices;
@@ -88,12 +90,12 @@ Torso::Torso( ModernGDV::Driver* mgdv )
 	texture = mgdv->GetTexture( "test" );
 }
 
-Torso::~Torso()
+Geometries::Robot::Torso::~Torso()
 {
 
 }
 
-void Torso::Render()
+void Geometries::Robot::Torso::Render()
 {
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	Vertex::SetLayout();

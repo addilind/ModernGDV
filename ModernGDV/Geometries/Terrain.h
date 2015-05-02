@@ -1,6 +1,9 @@
 #pragma once
 
-class Terrain
+namespace Geometries
 {
-	
-};
+	class Terrain
+	{
+
+	};
+}

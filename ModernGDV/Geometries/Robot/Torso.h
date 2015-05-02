@@ -6,14 +6,20 @@
 #include "../../ModernGDV/MGDVVertex.h"
 #include "../../ModernGDV/ModernGDV.h"
 
-class Torso {
-private:
-	ModernGDV::Driver* mgdv;
-	GLuint vertexBuffer;
-	GLuint texture;
-public:
-	Torso(ModernGDV::Driver* mgdv);
-	~Torso();
+namespace Geometries
+{
+	namespace Robot
+	{
+		class Torso {
+		private:
+			ModernGDV::Driver* mgdv;
+			GLuint vertexBuffer;
+			GLuint texture;
+		public:
+			Torso( ModernGDV::Driver* mgdv );
+			~Torso();
 
-	void Render();
-};
+			void Render();
+		};
+	}
+}

@@ -6,15 +6,21 @@
 #include "../../ModernGDV/MGDVVertex.h"
 #include "../../ModernGDV/ModernGDV.h"
 
-class Thigh {
-private:
-	GLuint vertexBuffer;
-	ModernGDV::Driver* mgdv;
-	GLuint texture;
-public:
-	Thigh( ModernGDV::Driver* mgdv );
-	~Thigh();
+namespace Geometries
+{
+	namespace Robot
+	{
+		class Thigh {
+		private:
+			GLuint vertexBuffer;
+			ModernGDV::Driver* mgdv;
+			GLuint texture;
+		public:
+			Thigh( ModernGDV::Driver* mgdv );
+			~Thigh();
 
-	void Render();
+			void Render();
 
-};
+		};
+	}
+}

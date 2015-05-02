@@ -8,7 +8,7 @@ namespace ModernGDV
 	{
 	private:
 		Driver* mgdv;
-		Skybox skybox;
+		Geometries::Skybox skybox;
 		glm::vec3 lookAt;
 
 		float xzAngle;

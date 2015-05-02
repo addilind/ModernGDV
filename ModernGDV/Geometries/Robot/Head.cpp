@@ -3,11 +3,12 @@
 #include "../Primitives/Quad.h"
 
 using ModernGDV::Vertex;
+using Geometries::Primitives::Quad;
 using glm::vec3;
 using glm::vec2;
 
 
-Head::Head(ModernGDV::Driver* mgdv)
+Geometries::Robot::Head::Head(ModernGDV::Driver* mgdv)
 : mgdv(mgdv), vertexBuffer(0U), texture(0U)
 {
 	std::vector<Vertex> vertices;
@@ -45,12 +46,12 @@ Head::Head(ModernGDV::Driver* mgdv)
 	
 }
 
-Head::~Head()
+Geometries::Robot::Head::~Head()
 {
 
 }
 
-void Head::Render( const float& mouthAngle )
+void Geometries::Robot::Head::Render( const float& mouthAngle )
 {
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	Vertex::SetLayout();

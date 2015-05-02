@@ -3,11 +3,12 @@
 #include "../Primitives/Quad.h"
 
 using ModernGDV::Vertex;
+using Geometries::Primitives::Quad;
 using glm::vec3;
 using glm::vec2;
 
 
-Thigh::Thigh(ModernGDV::Driver* mgdv)
+Geometries::Robot::Thigh::Thigh(ModernGDV::Driver* mgdv)
 : mgdv(mgdv), vertexBuffer(0U), texture(0U)
 {
 	std::vector<Vertex> vertices;
@@ -45,12 +46,12 @@ Thigh::Thigh(ModernGDV::Driver* mgdv)
 	
 }
 
-Thigh::~Thigh()
+Geometries::Robot::Thigh::~Thigh()
 {
 
 }
 
-void Thigh::Render()
+void Geometries::Robot::Thigh::Render()
 {
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	Vertex::SetLayout();

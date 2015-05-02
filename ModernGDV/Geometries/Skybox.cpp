@@ -3,11 +3,12 @@
 #include "Primitives/Quad.h"
 
 using ModernGDV::Vertex;
+using Geometries::Primitives::Quad;
 using glm::vec3;
 using glm::vec2;
 
 
-Skybox::Skybox( ModernGDV::Driver* mgdv )
+Geometries::Skybox::Skybox( ModernGDV::Driver* mgdv )
 	: mgdv( mgdv ), vertexBuffer( 0U ), texture( 0U )
 {
 	std::vector<Vertex> vertices;
@@ -46,12 +47,12 @@ Skybox::Skybox( ModernGDV::Driver* mgdv )
 	texture = mgdv->GetTexture( "skybox" );
 }
 
-Skybox::~Skybox()
+Geometries::Skybox::~Skybox()
 {
 
 }
 
-void Skybox::Render()
+void Geometries::Skybox::Render()
 {
 	glBindBuffer( GL_ARRAY_BUFFER, vertexBuffer );
 	Vertex::SetLayout();

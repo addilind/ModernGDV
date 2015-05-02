@@ -6,15 +6,21 @@
 #include "../../ModernGDV/MGDVVertex.h"
 #include "../../ModernGDV/ModernGDV.h"
 
-class Head {
-private:
-	GLuint vertexBuffer;
-	ModernGDV::Driver* mgdv;
-	GLuint texture;
-public:
-	Head( ModernGDV::Driver* mgdv );
-	~Head();
+namespace Geometries
+{
+	namespace Robot
+	{
+		class Head {
+		private:
+			GLuint vertexBuffer;
+			ModernGDV::Driver* mgdv;
+			GLuint texture;
+		public:
+			Head( ModernGDV::Driver* mgdv );
+			~Head();
 
-	void Render( const float& mouthAngle );
+			void Render( const float& mouthAngle );
 
-};
+		};
+	}
+}

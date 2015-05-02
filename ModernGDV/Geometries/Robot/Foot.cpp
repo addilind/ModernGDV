@@ -3,11 +3,12 @@
 #include "../Primitives/Quad.h"
 
 using ModernGDV::Vertex;
+using Geometries::Primitives::Quad;
 using glm::vec3;
 using glm::vec2;
 
 
-Foot::Foot(ModernGDV::Driver* mgdv)
+Geometries::Robot::Foot::Foot(ModernGDV::Driver* mgdv)
 : mgdv(mgdv), vertexBuffer(0U), texture(0U)
 {
 	std::vector<Vertex> vertices;
@@ -22,7 +23,7 @@ Foot::Foot(ModernGDV::Driver* mgdv)
 	vec3 cuboidTopBackLeft(-0.075f, +0.05f, -0.24f);
 	vec3 cuboidTopBackRight(+0.075f, +0.05f, -0.24f);
 
-	Quad::Create(vertices, cuboidBottomFrontLeft, vec2(0.f, 0.f), cuboidBottomFrontRight, vec2(1.f, 0.f),
+	Quad::Create( vertices, cuboidBottomFrontLeft, vec2( 0.f, 0.f ), cuboidBottomFrontRight, vec2( 1.f, 0.f ),
 		cuboidBottomBackRight, vec2(1.f, 1.f), cuboidBottomBackLeft, vec2(0.f, 1.f));				//Bodenfläche Quader
 
 	Quad::Create(vertices, cuboidTopFrontLeft, vec2(0.f, 0.f), cuboidTopFrontRight, vec2(1.f, 0.f),
@@ -42,12 +43,12 @@ Foot::Foot(ModernGDV::Driver* mgdv)
 	texture = mgdv->GetTexture("test");
 }
 
-Foot::~Foot()
+Geometries::Robot::Foot::~Foot()
 {
 
 }
 
-void Foot::Render()
+void Geometries::Robot::Foot::Render()
 {
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	Vertex::SetLayout();

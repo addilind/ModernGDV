@@ -3,11 +3,12 @@
 #include "../Primitives/Quad.h"
 
 using ModernGDV::Vertex;
+using Geometries::Primitives::Quad;
 using glm::vec3;
 using glm::vec2;
 
 
-ShoulderJoint::ShoulderJoint( ModernGDV::Driver* mgdv )
+Geometries::Robot::ShoulderJoint::ShoulderJoint( ModernGDV::Driver* mgdv )
 : mgdv(mgdv), vertexBuffer(0U), texture(0U)
 {
 	std::vector<Vertex> vertices;
@@ -45,12 +46,12 @@ ShoulderJoint::ShoulderJoint( ModernGDV::Driver* mgdv )
 
 }
 
-ShoulderJoint::~ShoulderJoint()
+Geometries::Robot::ShoulderJoint::~ShoulderJoint()
 {
 
 }
 
-void ShoulderJoint::Render()
+void Geometries::Robot::ShoulderJoint::Render()
 {
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	Vertex::SetLayout();

@@ -5,15 +5,15 @@
 #include "ModernGDV/ModernGDV.h"
 
 #include <vector>
-#include "Geometries/Robot.h"
+#include "Geometries/Robot/Robot.h"
 #include "ModernGDV/Camera.h"
 
 class MyApp : public ModernGDV::App
 {
 private:
 	ModernGDV::Driver* mgdv;
-	
-	Robot robot;
+
+	Geometries::Robot::Robot robot;
 	ModernGDV::Camera camera;
 	GLuint lampvb;
 	GLuint lamptex;

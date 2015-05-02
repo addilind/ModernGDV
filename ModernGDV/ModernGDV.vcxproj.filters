@@ -30,9 +30,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Geometries\Robot.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Geometries\Robot\Shank.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -63,6 +60,9 @@
     <ClCompile Include="ModernGDV\CCallbackWrapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Geometries\Robot\Robot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="FragmentShader.glsl">
@@ -84,9 +84,6 @@
     </ClInclude>
     <ClInclude Include="ModernGDV\MGDVVertex.h">
       <Filter>Header Files\ModernGDV</Filter>
-    </ClInclude>
-    <ClInclude Include="Geometries\Robot.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Geometries\Primitives\Triangle.h">
       <Filter>Header Files</Filter>
@@ -131,6 +128,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ModernGDV\OGLInc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometries\Robot\Robot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
