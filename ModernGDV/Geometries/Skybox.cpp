@@ -9,7 +9,7 @@ using glm::vec2;
 
 
 Geometries::Skybox::Skybox( ModernGDV::Driver* mgdv )
-	: mgdv( mgdv ), vertexBuffer( 0U ), texture( 0U )
+	: vertexBuffer( 0U ), mgdv( mgdv ), texture( nullptr )
 {
 	std::vector<Vertex> vertices;
 
@@ -44,6 +44,8 @@ Geometries::Skybox::Skybox( ModernGDV::Driver* mgdv )
 
 	vertexBuffer = mgdv->CreateVertexBuffer( vertices );
 
+	shaderID = mgdv->ShaderLib.GetShaderID( "default" );
+
 	texture = mgdv->GetTexture( "skybox" );
 }
 
@@ -54,11 +56,12 @@ Geometries::Skybox::~Skybox()
 
 void Geometries::Skybox::Render()
 {
+	mgdv->ShaderLib.UseShader( shaderID );
 	glBindBuffer( GL_ARRAY_BUFFER, vertexBuffer );
 	Vertex::SetLayout();
-	mgdv->UseTexture( texture );
-	unsigned char index = 0U;
+	mgdv->ShaderLib.SetDiffuseTex( texture );
 
+	unsigned char index = 0U;
 	index = Quad::Draw( index ); //Bodenfläche Würfel
 
 	index = Quad::Draw( index ); //Seitenflächen Würfel

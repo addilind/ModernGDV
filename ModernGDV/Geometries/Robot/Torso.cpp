@@ -10,7 +10,7 @@ using glm::vec3;
 using glm::vec2;
 
 Geometries::Robot::Torso::Torso( ModernGDV::Driver* mgdv )
-	: mgdv(mgdv), vertexBuffer(0U), texture(0U)
+	: mgdv(mgdv), vertexBuffer(0U), texture(nullptr)
 {
 	std::vector<Vertex> vertices;
 
@@ -100,7 +100,7 @@ void Geometries::Robot::Torso::Render()
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	Vertex::SetLayout();
 
-	mgdv->UseTexture( texture );
+	mgdv->ShaderLib.SetDiffuseTex( texture );
 	unsigned char index = 0U;
 	index = Tri::Draw(index);
 	index = Tri::Draw(index);
@@ -127,8 +127,6 @@ void Geometries::Robot::Torso::Render()
 	index = Quad::Draw(index);
 	
 	index = Quad::Draw(index); //Oberseite Quader
-
-
 
 	Vertex::ResetLayout();
 }

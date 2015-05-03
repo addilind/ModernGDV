@@ -9,7 +9,7 @@ using glm::vec2;
 
 
 Geometries::Robot::Foot::Foot(ModernGDV::Driver* mgdv)
-: mgdv(mgdv), vertexBuffer(0U), texture(0U)
+: vertexBuffer(0U), mgdv(mgdv), texture(nullptr)
 {
 	std::vector<Vertex> vertices;
 
@@ -52,7 +52,7 @@ void Geometries::Robot::Foot::Render()
 {
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	Vertex::SetLayout();
-	mgdv->UseTexture(texture);
+	mgdv->ShaderLib.SetDiffuseTex( texture );
 	unsigned char index = 0U;
 
 	index = Quad::Draw(index); //Bodenfläche Quader

@@ -1,7 +1,7 @@
 #include "Robot.h"
 
 Geometries::Robot::Robot::Robot( ModernGDV::Driver* mgdv )
-: torso(mgdv), thigh(mgdv), shank(mgdv), foot(mgdv), shoulderJoint(mgdv), thighJoint(mgdv), head(mgdv), neck(mgdv)
+	: torso( mgdv ), thigh( mgdv ), shank( mgdv ), foot( mgdv ), shoulderJoint( mgdv )
 {
 	this->mgdv = mgdv;
 }
@@ -10,78 +10,72 @@ Geometries::Robot::Robot::~Robot()
 {
 }
 
-void Geometries::Robot::Robot::Render()
+void Geometries::Robot::Robot::Render( const glm::mat4& transform )
 {
-	mgdv->SetSpecularProperties( glm::vec3( 0.5f, 0.5f, 0.5f ), 50.f );
-	mgdv->PushTransform();
+
+	mgdv->ShaderLib.UseShader( mgdv->ShaderLib.GetShaderID( "default" ) );
+	mgdv->ShaderLib.SetSpecularProperties( glm::vec3( 0.5f, 0.5f, 0.5f ), 50.f );
+	mgdv->ShaderLib.SetModel( transform );
 	torso.Render();
-	//-----------------------
-	mgdv->SetTransform(glm::translate(*mgdv->Transform(), glm::vec3(0.f, 1.15f, 0.f)));
-	neck.Render();
-	//mgdv->ReloadTransform();
 
-	//mgdv->SetTransform(glm::translate(*mgdv->Transform(), glm::vec3(0.f, 1.225f, 0.f)));
-	head.Render();
-
-	mgdv->ReloadTransform();
-	//-----------------------
-	mgdv->SetTransform(glm::translate(*mgdv->Transform(), glm::vec3(-0.25f, 0.14f, 0.f))); //Linkes Oberschenkel Gelenk
-	//mgdv->SetTransform(glm::rotate(*mgdv->Transform(), static_cast<float>(0.6f*glm::sin(glfwGetTime())), glm::vec3(1, 0, 0)));
-	thighJoint.Render();
-	
-	thigh.Render(); //Linker Oberschenkel
-
-	mgdv->SetTransform(glm::translate(*mgdv->Transform(), glm::vec3(0.f, -0.40f, 0.f))); //Linker Unterschenkel
-	//mgdv->SetTransform(glm::rotate(*mgdv->Transform(), static_cast<float>(-glm::sin(glfwGetTime())), glm::vec3(1, 0, 0)));
-	shank.Render();
-
-	
-	mgdv->SetTransform(glm::translate(*mgdv->Transform(), glm::vec3(0.f, -0.4f, 0.f))); //Linker Fuß
-	foot.Render();
-	
-	mgdv->ReloadTransform();
-
-	mgdv->SetTransform(glm::translate(*mgdv->Transform(), glm::vec3(+0.25f, 0.14f, 0.f))); //Rechtes Oberschenkel Gelenk
-	mgdv->SetTransform(glm::rotate(*mgdv->Transform(), glm::pi<float>(), glm::vec3(0, 0, 1)));
-	thighJoint.Render();
-
-	mgdv->SetTransform(glm::rotate(*mgdv->Transform(), glm::pi<float>(), glm::vec3(0, 0, 1)));
-	thigh.Render(); //Rechter Oberschenkel
-
-	mgdv->SetTransform(glm::translate(*mgdv->Transform(), glm::vec3(0.f, -0.40f, 0.f))); //Rechter Unterschenkel
-	mgdv->SetTransform(glm::rotate(*mgdv->Transform(), static_cast<float>(glm::cos(glfwGetTime())), glm::vec3(1, 0, 0)));
-	shank.Render();
-
-	mgdv->SetTransform(glm::translate(*mgdv->Transform(), glm::vec3(0.f, -0.4f, 0.f))); //Rechter Fuß
-	foot.Render();
-	
-	mgdv->ReloadTransform();
-
-	mgdv->SetTransform(glm::translate(*mgdv->Transform(), glm::vec3(-0.425f, 0.95f, 0.f))); //Linkes Armgelenk
-	//mgdv->SetTransform(glm::rotate(*mgdv->Transform(), static_cast<float>(glm::sin(glfwGetTime())), glm::vec3(1, 0, 0)));
-	shoulderJoint.Render();
-
-	mgdv->SetTransform(glm::rotate(*mgdv->Transform(), glm::pi<float>()*0.5f, glm::vec3(0, 1, 0))); //Linker Oberarm 90° gedreht
-	mgdv->SetTransform(glm::scale(*mgdv->Transform(), glm::vec3(0.5f, 0.9f, 0.7f)));
-	shank.Render();
-
-	mgdv->SetTransform(glm::translate(*mgdv->Transform(), glm::vec3(0.f, -0.40f, 0.f))); //Linker Unterarm
+	glm::mat4 subtransform = transform; //Push
+	subtransform = glm::translate( subtransform, glm::vec3( -0.2f, 0.15f, 0.f ) ); //Linker Oberschenkel
+	subtransform = glm::rotate( subtransform, static_cast<float>(glm::sin( glfwGetTime() )), glm::vec3( 1, 0, 0 ) );
+	mgdv->ShaderLib.SetModel( subtransform );
 	thigh.Render();
 
-	mgdv->ReloadTransform();
-
-	mgdv->SetTransform(glm::translate(*mgdv->Transform(), glm::vec3(+0.425f, 0.95f, 0.f))); //Rechtes Armgelenk
-	mgdv->SetTransform(glm::rotate(*mgdv->Transform(), static_cast<float>(glm::sin(glfwGetTime())), glm::vec3(1, 0, 0)));
-	shoulderJoint.Render();
-
-	mgdv->SetTransform(glm::rotate(*mgdv->Transform(), glm::pi<float>()*0.5f, glm::vec3(0, 1, 0)));  //Rechter Oberarm
-	mgdv->SetTransform(glm::scale(*mgdv->Transform(), glm::vec3(0.5f, 0.9f, 0.7f)));
+	subtransform = glm::translate( subtransform, glm::vec3( 0.f, -0.40f, 0.f ) ); //Linker Unterschenkel
+	mgdv->ShaderLib.SetModel( subtransform );
 	shank.Render();
 
-	mgdv->SetTransform(glm::translate(*mgdv->Transform(), glm::vec3(0.f, -0.40f, 0.f))); //Rechte Unterarm
+	subtransform = glm::translate( subtransform, glm::vec3( 0.f, -0.4f, 0.f ) ); //Linker Fuß
+	mgdv->ShaderLib.SetModel( subtransform );
+	foot.Render();
+
+	subtransform = transform; //Pop, Push
+
+	subtransform = glm::translate( subtransform, glm::vec3( +0.2f, 0.15f, 0.f ) ); //Rechter Oberschenkel
+	mgdv->ShaderLib.SetModel( subtransform );
 	thigh.Render();
 
-	mgdv->PopTransform();
+	subtransform = glm::translate( subtransform, glm::vec3( 0.f, -0.40f, 0.f ) ); //Rechter Unterschenkel
+	subtransform = glm::rotate( subtransform, static_cast<float>(glm::cos( glfwGetTime() )), glm::vec3( 1, 0, 0 ) );
+	mgdv->ShaderLib.SetModel( subtransform );
+	shank.Render();
 
+	subtransform = glm::translate( subtransform, glm::vec3( 0.f, -0.4f, 0.f ) ); //Rechter Fuß
+	mgdv->ShaderLib.SetModel( subtransform );
+	foot.Render();
 
+	subtransform = transform; //Pop, Push
+
+	subtransform = glm::translate( subtransform, glm::vec3( -0.375f, 0.95f, 0.f ) ); //Linkes Schultergelenk
+	subtransform = glm::rotate( subtransform, static_cast<float>(glm::sin( glfwGetTime() )), glm::vec3( 1, 0, 0 ) );
+	mgdv->ShaderLib.SetModel( subtransform );
+	shoulderJoint.Render();
+
+	subtransform = glm::rotate( subtransform, glm::pi<float>()*0.5f, glm::vec3( 0, 1, 0 ) ); //Linker Oberarm 
+	subtransform = glm::scale( subtransform, glm::vec3( 0.5f, 0.9f, 0.7f ) );
+	mgdv->ShaderLib.SetModel( subtransform );
+	shank.Render();
+
+	subtransform = glm::translate( subtransform, glm::vec3( 0.f, -0.40f, 0.f ) ); //Linker Unterarm
+	mgdv->ShaderLib.SetModel( subtransform );
+	thigh.Render();
+
+	subtransform = transform; //Pop
+
+	subtransform = glm::translate( subtransform, glm::vec3( +0.375f, 0.95f, 0.f ) ); //Rechtes Schultergelenk
+	subtransform = glm::rotate( subtransform, static_cast<float>(glm::sin( glfwGetTime() )), glm::vec3( 1, 0, 0 ) );
+	mgdv->ShaderLib.SetModel( subtransform );
+	shoulderJoint.Render();
+
+	subtransform = glm::rotate( subtransform, glm::pi<float>()*0.5f, glm::vec3( 0, 1, 0 ) );  //Rechter Oberarm
+	subtransform = glm::scale( subtransform, glm::vec3( 0.5f, 0.9f, 0.7f ) );
+	mgdv->ShaderLib.SetModel( subtransform );
+	shank.Render();
+
+	subtransform = glm::translate( subtransform, glm::vec3( 0.f, -0.40f, 0.f ) ); //Rechte Unterarm
+	mgdv->ShaderLib.SetModel( subtransform );
+	thigh.Render();
 }

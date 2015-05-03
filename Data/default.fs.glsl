@@ -16,7 +16,7 @@ uniform vec3 lightColor;
 uniform float lightPower;
 uniform float ambientLight;
 uniform vec3 specularColor;
-uniform float specularPower;
+uniform float specularExponent;
 
 //diese Funktion wird für jeden Pixel, der in einem durch die Vertices definierten Dreieck liegt einzeln aufgerufen - auf der Grafikkarte
 void main(void) {
@@ -38,5 +38,5 @@ void main(void) {
 	
 	endColor = vec4(ambient +
 		diffuse.rgb * lightColor * lightPower * entryangle / (lightDistance * lightDistance) +
-		specularColor * lightColor * lightPower * pow( reflectionangle, specularPower ) / (lightDistance * lightDistance), diffuse.a);
+		specularColor * lightColor * lightPower * pow( reflectionangle, specularExponent ) / (lightDistance * lightDistance), diffuse.a);
 }

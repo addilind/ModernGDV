@@ -14,7 +14,7 @@ namespace Geometries
 		private:
 			GLuint vertexBuffer;
 			ModernGDV::Driver* mgdv;
-			GLuint texture;
+			ModernGDV::Textures::Texture* texture;
 		public:
 			ShoulderJoint( ModernGDV::Driver* mgdv );
 			~ShoulderJoint();

@@ -10,9 +10,26 @@ ModernGDV::Camera::~Camera()
 {
 }
 
-void ModernGDV::Camera::Run(float deltaT)
+void ModernGDV::Camera::Render()
 {
-	const float twopi = 2.f * glm::pi<float>();
+	glEnable( GL_CULL_FACE );
+	mgdv->ShaderLib.SetView( viewMat );
+
+	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+	glDisable( GL_DEPTH_TEST ); //Z-Buffer deaktivieren, um Sky-Cube zu zeichnen
+
+	mgdv->ShaderLib.SetLight( glm::vec3( 0.f ), glm::vec3( 0.f ), 0.f, 1.f );//Beleuchtung für SkyBox deaktivieren
+	mgdv->ShaderLib.SetSpecularProperties( glm::vec3( 0.f ), 1.f );
+
+	mgdv->ShaderLib.SetModel( skyboxTransform );
+	skybox.Render();
+
+	glEnable( GL_DEPTH_TEST ); //Z-Buffer aktivieren
+}
+
+void ModernGDV::Camera::Update( float deltaT )
+{
+	const float twopi = glm::two_pi<float>();
 	const float heightbound = glm::pi<float>() * 0.499f;//Nicht ganz gerade von oben/unten
 	const float speedUpDown = 0.75f;
 	const float speedRightLeft = 1.f;
@@ -64,20 +81,6 @@ void ModernGDV::Camera::Run(float deltaT)
 
 	if (dirty)
 		updateViewMat();
-
-	glEnable( GL_CULL_FACE );
-	mgdv->SetViewMatrix( viewMat );
-
-	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-	glDisable( GL_DEPTH_TEST ); //Z-Buffer deaktivieren, um Sky-Cube zu zeichnen
-
-	mgdv->SetLight( glm::vec3( 0.f ), glm::vec3( 0.f ), 0.f, 1.f );//Beleuchtung für SkyBox deaktivieren
-	mgdv->SetSpecularProperties( glm::vec3( 0.f ), 1.f );
-
-	mgdv->SetTransform( skyboxTransform );
-	skybox.Render();
-
-	glEnable( GL_DEPTH_TEST ); //Z-Buffer aktivieren
 }
 
 void ModernGDV::Camera::updateViewMat()

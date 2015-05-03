@@ -14,7 +14,7 @@ namespace Geometries
 		private:
 			ModernGDV::Driver* mgdv;
 			GLuint vertexBuffer;
-			GLuint texture;
+			ModernGDV::Textures::Texture* texture;
 		public:
 			Torso( ModernGDV::Driver* mgdv );
 			~Torso();

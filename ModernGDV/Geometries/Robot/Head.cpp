@@ -9,7 +9,7 @@ using glm::vec2;
 
 
 Geometries::Robot::Head::Head(ModernGDV::Driver* mgdv)
-: mgdv(mgdv), vertexBuffer(0U), texture(0U)
+	: vertexBuffer( 0U ), mgdv( mgdv ), texture( nullptr )
 {
 	std::vector<Vertex> vertices;
 	//Kopf
@@ -81,7 +81,7 @@ void Geometries::Robot::Head::Render()
 {
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	Vertex::SetLayout();
-	mgdv->UseTexture(texture);
+	mgdv->ShaderLib.SetDiffuseTex( texture );
 	unsigned char index = 0U;
 
 	index = Quad::Draw(index); //Bodenfläche Quader

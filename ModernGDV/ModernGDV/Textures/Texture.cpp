@@ -30,7 +30,7 @@ ModernGDV::Textures::Texture::Texture(const std::string& filename) : glID(0U)
 
 	file.close();
 
-	GLuint format;
+	GLenum format;
 	switch (header.ddspf.FourCC)
 	{
 	case DDS_PIXELFORMAT::DXT1:
@@ -55,8 +55,10 @@ ModernGDV::Textures::Texture::Texture(const std::string& filename) : glID(0U)
 
 	unsigned int blockSize = (format == GL_COMPRESSED_RGBA_S3TC_DXT1_EXT) ? 8 : 16;
 	unsigned int offset = 0;
-	unsigned int width = header.Width;
-	unsigned int height = header.Height;
+	width = header.Width;
+	height = header.Height;
+	texelwidth = 1.f / width;
+	texelheight = 1.f / height;
 
 	// Einzelne Bildversionen laden
 	for (unsigned int level = 0; level < header.MipMapCount; ++level)
@@ -73,10 +75,32 @@ ModernGDV::Textures::Texture::Texture(const std::string& filename) : glID(0U)
 		if (width < 1) width = 1;
 		if (height < 1) height = 1;
 	}
+	width = header.Width;
+	height = header.Height;
 }
 
 ModernGDV::Textures::Texture::~Texture()
 {
+}
+
+unsigned int ModernGDV::Textures::Texture::GetWidth() const
+{
+	return width;
+}
+
+unsigned int ModernGDV::Textures::Texture::GetHeight() const
+{
+	return height;
+}
+
+float ModernGDV::Textures::Texture::GetTexelWidth() const
+{
+	return texelwidth;
+}
+
+float ModernGDV::Textures::Texture::GetTexelHeight() const
+{
+	return texelheight;
 }
 
 GLuint ModernGDV::Textures::Texture::GetID() const

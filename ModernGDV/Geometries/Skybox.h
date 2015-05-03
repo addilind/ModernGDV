@@ -10,7 +10,8 @@ namespace Geometries
 	{
 		GLuint vertexBuffer;
 		ModernGDV::Driver* mgdv;
-		GLuint texture;
+		ModernGDV::Textures::Texture* texture;
+		size_t shaderID;
 	public:
 		Skybox( ModernGDV::Driver* mgdv );
 		~Skybox();
