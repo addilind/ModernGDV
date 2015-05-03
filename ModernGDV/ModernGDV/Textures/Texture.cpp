@@ -30,7 +30,7 @@ ModernGDV::Textures::Texture::Texture(const std::string& filename) : glID(0U)
 
 	file.close();
 
-	GLuint format;
+	GLenum format;
 	switch (header.ddspf.FourCC)
 	{
 	case DDS_PIXELFORMAT::DXT1:
@@ -75,6 +75,8 @@ ModernGDV::Textures::Texture::Texture(const std::string& filename) : glID(0U)
 		if (width < 1) width = 1;
 		if (height < 1) height = 1;
 	}
+	width = header.Width;
+	height = header.Height;
 }
 
 ModernGDV::Textures::Texture::~Texture()
@@ -101,7 +103,7 @@ float ModernGDV::Textures::Texture::GetTexelHeight() const
 	return texelheight;
 }
 
-const GLuint ModernGDV::Textures::Texture::GetID() const
+GLuint ModernGDV::Textures::Texture::GetID() const
 {
 	return glID;
 }

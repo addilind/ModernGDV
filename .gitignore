@@ -5,3 +5,5 @@ Debug/build/
 Debug/ModernGDV.pdb
 *.ilk
 ModernGDV/ModernGDV.vcxproj.user
+*.exp
+Release/build/

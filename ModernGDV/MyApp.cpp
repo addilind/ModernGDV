@@ -40,9 +40,9 @@ void MyApp::Render(  )
 
 	mgdv->ShaderLib.SetLight( glm::vec3( 1.f*glm::sin( glfwGetTime() / 3.f ), 0.3f, 1.f*glm::cos( glfwGetTime() / 3.f ) ), glm::vec3(1.0f,0.9f,0.6f), 1.f, 0.3f );
 
-	/*robot.Render(glm::mat4());
+	robot.Render(glm::mat4());
 
-	glDisable( GL_CULL_FACE ); //Lampe ist nicht immer korrekt
+	/*glDisable( GL_CULL_FACE ); //Lampe ist nicht immer korrekt
 	glBindBuffer( GL_ARRAY_BUFFER, lampvb );
 	ModernGDV::Vertex::SetLayout();
 	mgdv->ShaderLib.SetDiffuseTex( lamptex );

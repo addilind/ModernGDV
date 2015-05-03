@@ -24,7 +24,7 @@ namespace ModernGDV
 			unsigned int GetHeight() const;
 			float GetTexelWidth() const;
 			float GetTexelHeight() const;
-			const GLuint GetID() const;
+			GLuint GetID() const;
 			void Unload();
 		};
 	}

@@ -9,9 +9,9 @@ ModernGDV::Shaders::ShaderSet::ShaderSet( ShaderLibrary* lib, const std::string&
 	shaderUniformModel( 999U ), shaderUniformNormal( 999U ), shaderUniformView( 999U ), shaderUniformProj( 999U ), shaderUniformLightPos( 999U ),
 	shaderUniformDiffuseTextureSampler( 999U ), shaderUniformLightColor( 999U ), shaderUniformLightPower( 999U ), shaderUniformAmbientLight( 999U ), shaderUniformSpecularColor( 999U )
 {
-	createVertexArray();
 	createShaders();
 	createShaderProgram();
+	createVertexArray();
 	loadActiveUniforms();
 }
 
@@ -27,7 +27,7 @@ ModernGDV::Shaders::ShaderSet::~ShaderSet()
 
 void ModernGDV::Shaders::ShaderSet::Bind()
 {
-	glBindVertexArray( vertexArray );
+	//glBindVertexArray( vertexArray );
 	glUseProgram( shaderProgram );
 
 	UploadModel();
@@ -129,11 +129,11 @@ void ModernGDV::Shaders::ShaderSet::createShaders()
 	glShaderSource( fragmentShader, 1, &fragmentShaderGLSLptr, nullptr );
 	glCompileShader( fragmentShader );
 
-	GLint result = GL_FALSE;
+	GLint result = 0;
 
 	//auf Fehler überprüfen, falls Fehler: Exception werfen
 	glGetShaderiv( vertexShader, GL_COMPILE_STATUS, &result );
-	if (result != GL_TRUE) {
+	if (result != 0) {
 		int infoLogLength = -1;
 		glGetShaderiv( vertexShader, GL_INFO_LOG_LENGTH, &infoLogLength );
 		std::vector<char> vertexShaderErrorMessage( infoLogLength + 4 );
@@ -143,7 +143,7 @@ void ModernGDV::Shaders::ShaderSet::createShaders()
 	}
 
 	glGetShaderiv( fragmentShader, GL_COMPILE_STATUS, &result );
-	if (result != GL_TRUE) {
+	if (result != 0) {
 		int infoLogLength = -1;
 		glGetShaderiv( fragmentShader, GL_INFO_LOG_LENGTH, &infoLogLength );
 		std::vector<char> fragmentShaderErrorMessage( infoLogLength + 4 );
@@ -160,11 +160,11 @@ void ModernGDV::Shaders::ShaderSet::createShaderProgram()
 	glAttachShader( shaderProgram, vertexShader );
 	glLinkProgram( shaderProgram );
 
-	GLint result = GL_FALSE;
+	GLint result = 0;
 
 	//auf Fehler überprüfen, falls Fehler: Exception werfen
 	glGetProgramiv( shaderProgram, GL_LINK_STATUS, &result );
-	if (result != GL_TRUE) {
+	if (result != 0) {
 		int infoLogLength = -1;
 		glGetProgramiv( shaderProgram, GL_INFO_LOG_LENGTH, &infoLogLength );
 		if (infoLogLength < 1)
