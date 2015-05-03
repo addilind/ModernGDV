@@ -1,9 +1,11 @@
 #include "Ski.h"
 
 #include "../Primitives/Quad.h"
+#include "../Primitives/Triangle.h"
 
 using ModernGDV::Vertex;
 using Geometries::Primitives::Quad;
+using Geometries::Primitives::Tri;
 using glm::vec3;
 using glm::vec2;
 
@@ -27,70 +29,29 @@ Geometries::Robot::Ski::Ski(ModernGDV::Driver* mgdv)
 	Quad::Create(vertices, cuboidBottomFrontLeft, vec2(0.f, 0.f), cuboidBottomFrontRight, vec2(1.f, 0.f),
 		cuboidBottomBackRight, vec2(1.f, 1.f), cuboidBottomBackLeft, vec2(0.f, 1.f));				//Bodenfläche Quader
 
-	Quad::Create(vertices, cuboidTopFrontLeft, vec2(0.f, 0.f), cuboidTopFrontRight, vec2(1.f, 0.f),
-		cuboidBottomFrontRight, vec2(1.f, 1.f), cuboidBottomFrontLeft, vec2(0.f, 1.f));				//Seitenflächen Quader
 	Quad::Create(vertices, cuboidTopFrontRight, vec2(0.f, 0.f), cuboidTopBackRight, vec2(1.f, 0.f),
-		cuboidBottomBackRight, vec2(1.f, 1.f), cuboidBottomFrontRight, vec2(0.f, 1.f));
-	Quad::Create(vertices, cuboidTopBackRight, vec2(0.f, 0.f), cuboidTopBackLeft, vec2(1.f, 0.f),
-		cuboidBottomBackLeft, vec2(1.f, 1.f), cuboidBottomBackRight, vec2(0.f, 1.f));
+		cuboidBottomBackRight, vec2(1.f, 1.f), cuboidBottomFrontRight, vec2(0.f, 1.f));				//Rechts
 	Quad::Create(vertices, cuboidTopBackLeft, vec2(0.f, 0.f), cuboidTopFrontLeft, vec2(1.f, 0.f),
-		cuboidBottomFrontLeft, vec2(1.f, 1.f), cuboidBottomBackLeft, vec2(0.f, 1.f));
+		cuboidBottomFrontLeft, vec2(1.f, 1.f), cuboidBottomBackLeft, vec2(0.f, 1.f));				//Links
 
 	Quad::Create(vertices, cuboidTopFrontLeft, vec2(0.f, 1.f), cuboidTopBackLeft, vec2(0.f, 0.f),
 		cuboidTopBackRight, vec2(1.f, 0.f), cuboidTopFrontRight, vec2(1.f, 1.f));					//Oberseite Quader
 
 	//Ski Spitze vorne
-	vec3 fcuboidBottomFrontLeft(-0.035f, -0.005f, +0.80f);
-	vec3 fcuboidBottomFrontRight(+0.035f, -0.005f, +0.80f);
-	vec3 fcuboidBottomBackLeft(-0.075f, -0.01f, +0.70f);
-	vec3 fcuboidBottomBackRight(+0.075f, -0.01f, +0.70f);
+	vec3 frontTipLeft(-0.035f, +0.005f, +0.85f);
+	vec3 frontTipRight(+0.035f, +0.005f, +0.85f);
 
-	vec3 fcuboidTopFrontLeft(-0.035f, -0.005f, +0.80f);
-	vec3 fcuboidTopFrontRight(+0.035f, -0.005f, +0.80f);
-	vec3 fcuboidTopBackLeft(-0.075f, +0.0f, +0.70f);
-	vec3 fcuboidTopBackRight(+0.075f, +0.0f, +0.70f);
+	Quad::Create( vertices, cuboidTopFrontLeft, vec2( 0.f, 0.f ), cuboidTopFrontRight, vec2( 1.f, 0.f ),  //Oberseite
+		frontTipRight, vec2( 1.f, 1.f ), frontTipLeft, vec2( 0.f, 1.f ) );
+	Tri::Create( vertices, frontTipRight, vec2( 0.f, 0.5f ), cuboidTopFrontRight, vec2( 1.f, 0.f ), cuboidBottomFrontRight, vec2( 1.f, 1.f ) ); //Rechte Seite
+	Quad::Create( vertices, cuboidBottomFrontRight, vec2( 1.f, 0.f ), cuboidBottomFrontLeft, vec2(0.f, 0.f),
+		frontTipLeft, vec2( 0.f, 1.f ), frontTipRight, vec2( 1.f, 1.f ) );
+	Tri::Create( vertices, frontTipLeft, vec2( 0.f, 0.5f ), cuboidBottomFrontLeft, vec2( 1.f, 1.f ), cuboidTopFrontLeft, vec2( 1.f, 0.f ) ); //Linke Seite
 
-	Quad::Create(vertices, fcuboidBottomFrontLeft, vec2(0.f, 0.f), fcuboidBottomFrontRight, vec2(1.f, 0.f),
-		fcuboidBottomBackRight, vec2(1.f, 1.f), fcuboidBottomBackLeft, vec2(0.f, 1.f));				//Bodenfläche Quader
-
-	Quad::Create(vertices, fcuboidTopFrontLeft, vec2(0.f, 0.f), fcuboidTopFrontRight, vec2(1.f, 0.f),
-		fcuboidBottomFrontRight, vec2(1.f, 1.f), fcuboidBottomFrontLeft, vec2(0.f, 1.f));				//Seitenflächen Quader
-	Quad::Create(vertices, fcuboidTopFrontRight, vec2(0.f, 0.f), fcuboidTopBackRight, vec2(1.f, 0.f),
-		fcuboidBottomBackRight, vec2(1.f, 1.f), fcuboidBottomFrontRight, vec2(0.f, 1.f));
-	Quad::Create(vertices, fcuboidTopBackRight, vec2(0.f, 0.f), fcuboidTopBackLeft, vec2(1.f, 0.f),
-		fcuboidBottomBackLeft, vec2(1.f, 1.f), fcuboidBottomBackRight, vec2(0.f, 1.f));
-	Quad::Create(vertices, fcuboidTopBackLeft, vec2(0.f, 0.f), fcuboidTopFrontLeft, vec2(1.f, 0.f),
-		fcuboidBottomFrontLeft, vec2(1.f, 1.f), fcuboidBottomBackLeft, vec2(0.f, 1.f));
-
-	Quad::Create(vertices, fcuboidTopFrontLeft, vec2(0.f, 1.f), fcuboidTopBackLeft, vec2(0.f, 0.f),
-		fcuboidTopBackRight, vec2(1.f, 0.f), fcuboidTopFrontRight, vec2(1.f, 1.f));					//Oberseite Quader
 
 	//Ski Spitze hinten
-	vec3 bcuboidBottomFrontLeft(-0.075f, -0.01f, -0.70f);
-	vec3 bcuboidBottomFrontRight(+0.075f, -0.01f, -0.70f);
-	vec3 bcuboidBottomBackLeft(-0.035f, -0.005f, - 0.80f);
-	vec3 bcuboidBottomBackRight(+0.035f, -0.005f, -0.80f);
-
-	vec3 bcuboidTopFrontLeft(-0.075f, +0.0f, -0.70f);
-	vec3 bcuboidTopFrontRight(+0.075f, +0.0f, -0.70f);
-	vec3 bcuboidTopBackLeft(-0.035f, -0.005f, -0.80f);
-	vec3 bcuboidTopBackRight(+0.035f, -0.005f, -0.80f);
-
-	Quad::Create(vertices, bcuboidBottomFrontLeft, vec2(0.f, 0.f), bcuboidBottomFrontRight, vec2(1.f, 0.f),
-		bcuboidBottomBackRight, vec2(1.f, 1.f), bcuboidBottomBackLeft, vec2(0.f, 1.f));				//Bodenfläche Quader
-
-	Quad::Create(vertices, bcuboidTopFrontLeft, vec2(0.f, 0.f), bcuboidTopFrontRight, vec2(1.f, 0.f),
-		bcuboidBottomFrontRight, vec2(1.f, 1.f), bcuboidBottomFrontLeft, vec2(0.f, 1.f));				//Seitenflächen Quader
-	Quad::Create(vertices, bcuboidTopFrontRight, vec2(0.f, 0.f), bcuboidTopBackRight, vec2(1.f, 0.f),
-		bcuboidBottomBackRight, vec2(1.f, 1.f), bcuboidBottomFrontRight, vec2(0.f, 1.f));
-	Quad::Create(vertices, bcuboidTopBackRight, vec2(0.f, 0.f), bcuboidTopBackLeft, vec2(1.f, 0.f),
-		bcuboidBottomBackLeft, vec2(1.f, 1.f), bcuboidBottomBackRight, vec2(0.f, 1.f));
-	Quad::Create(vertices, bcuboidTopBackLeft, vec2(0.f, 0.f), bcuboidTopFrontLeft, vec2(1.f, 0.f),
-		bcuboidBottomFrontLeft, vec2(1.f, 1.f), bcuboidBottomBackLeft, vec2(0.f, 1.f));
-
-	Quad::Create(vertices, bcuboidTopFrontLeft, vec2(0.f, 1.f), bcuboidTopBackLeft, vec2(0.f, 0.f),
-		bcuboidTopBackRight, vec2(1.f, 0.f), bcuboidTopFrontRight, vec2(1.f, 1.f));					//Oberseite Quader
-
+	vec3 backTipLeft(-0.035f, +0.005f, -0.85f);
+	vec3 backTipRight(+0.035f, +0.005f, -0.85f);
 
 	vertexBuffer = mgdv->CreateVertexBuffer(vertices);
 
@@ -115,28 +76,14 @@ void Geometries::Robot::Ski::Render()
 
 	index = Quad::Draw(index); //Seitenflächen Quader
 	index = Quad::Draw(index);
-	index = Quad::Draw(index);
-	index = Quad::Draw(index);
+
+	index = Quad::Draw( index );//Oberseite Quader
 	//Ski Spitze vorne
 	index = Quad::Draw(index); //Oberseite Quader
-
-	index = Quad::Draw(index); //Bodenfläche Quader
-
+	index = Tri::Draw(index); //Rechte Seite
 	index = Quad::Draw(index); //Seitenflächen Quader
-	index = Quad::Draw(index);
-	index = Quad::Draw(index);
-	index = Quad::Draw(index);
-	//Ski Spitze hinten
-	index = Quad::Draw(index); //Oberseite Quader
+	index = Tri::Draw(index);//Linke Seite
 
-	index = Quad::Draw(index); //Bodenfläche Quader
-
-	index = Quad::Draw(index); //Seitenflächen Quader
-	index = Quad::Draw(index);
-	index = Quad::Draw(index);
-	index = Quad::Draw(index);
-
-	index = Quad::Draw(index); //Oberseite Quader
 
 	Vertex::ResetLayout();
 }
