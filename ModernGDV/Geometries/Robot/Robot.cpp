@@ -20,10 +20,12 @@ void Geometries::Robot::Robot::Render( const glm::mat4& transform )
 
 	glm::mat4 subtransform = transform; //Push
 
-	subtransform = glm::translate( subtransform, glm::vec3( 0.f, 1.15f, 0.f ) );
+	subtransform = glm::translate( subtransform, glm::vec3( 0.f, 1.0f, 0.f ) );
 	mgdv->ShaderLib.SetModel( subtransform );
 	neck.Render();
 	
+	subtransform = glm::translate(subtransform, glm::vec3(0.f, 0.15f, 0.f));
+	mgdv->ShaderLib.SetModel(subtransform);
 	head.Render();
 	
 	subtransform = transform;
@@ -45,11 +47,12 @@ void Geometries::Robot::Robot::Render( const glm::mat4& transform )
 
 	subtransform = transform; //Pop, Push
 
-	subtransform = glm::translate( subtransform, glm::vec3( -0.25f, 0.14f, 0.f ) ); //Linkes Hüftgelenk
+	subtransform = glm::translate( subtransform, glm::vec3( +0.25f, 0.14f, 0.f ) ); //Rechtes Hüftgelenk
+	subtransform = glm::rotate(subtransform, glm::pi<float>(), glm::vec3(0, 0, 1)); //Drehung Hüftgelenk
 	mgdv->ShaderLib.SetModel( subtransform );
 	thighJoint.Render();
 
-	subtransform = glm::translate( subtransform, glm::vec3( +0.2f, 0.15f, 0.f ) ); //Rechter Oberschenkel
+	subtransform = glm::rotate(subtransform, glm::pi<float>(), glm::vec3(0, 0, 1));  //Rechter Oberschenkel
 	mgdv->ShaderLib.SetModel( subtransform );
 	thigh.Render();
 
@@ -64,7 +67,7 @@ void Geometries::Robot::Robot::Render( const glm::mat4& transform )
 
 	subtransform = transform; //Pop, Push
 
-	subtransform = glm::translate( subtransform, glm::vec3( -0.375f, 0.95f, 0.f ) ); //Linkes Schultergelenk
+	subtransform = glm::translate( subtransform, glm::vec3( -0.425, 0.95f, 0.f ) ); //Linkes Schultergelenk
 	subtransform = glm::rotate( subtransform, static_cast<float>(glm::sin( glfwGetTime() )), glm::vec3( 1, 0, 0 ) );
 	mgdv->ShaderLib.SetModel( subtransform );
 	shoulderJoint.Render();
@@ -80,7 +83,7 @@ void Geometries::Robot::Robot::Render( const glm::mat4& transform )
 
 	subtransform = transform; //Pop
 
-	subtransform = glm::translate( subtransform, glm::vec3( +0.375f, 0.95f, 0.f ) ); //Rechtes Schultergelenk
+	subtransform = glm::translate( subtransform, glm::vec3( +0.425, 0.95f, 0.f ) ); //Rechtes Schultergelenk
 	subtransform = glm::rotate( subtransform, static_cast<float>(glm::sin( glfwGetTime() )), glm::vec3( 1, 0, 0 ) );
 	mgdv->ShaderLib.SetModel( subtransform );
 	shoulderJoint.Render();
