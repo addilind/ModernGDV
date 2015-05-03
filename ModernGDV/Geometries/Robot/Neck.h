@@ -10,14 +10,14 @@ namespace Geometries
 {
 	namespace Robot
 	{
-		class Head {
+		class Neck {
 		private:
 			GLuint vertexBuffer;
 			ModernGDV::Driver* mgdv;
 			GLuint texture;
 		public:
-			Head( ModernGDV::Driver* mgdv );
-			~Head();
+			Neck(ModernGDV::Driver* mgdv);
+			~Neck();
 
 			void Render();
 

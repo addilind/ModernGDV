@@ -9,6 +9,8 @@
 #include "Foot.h"
 #include "ShoulderJoint.h"
 #include "ThighJoint.h"
+#include "Head.h"
+#include "Neck.h"
 
 namespace Geometries
 {
@@ -25,6 +27,8 @@ namespace Geometries
 			Foot foot;
 			ShoulderJoint shoulderJoint;
 			ThighJoint thighJoint;
+			Head head;
+			Neck neck;
 		public:
 			explicit Robot( ModernGDV::Driver* mgdv );
 			~Robot();

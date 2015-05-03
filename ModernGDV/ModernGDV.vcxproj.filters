@@ -66,6 +66,9 @@
     <ClCompile Include="Geometries\Robot\ThighJoint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Geometries\Robot\Neck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="FragmentShader.glsl">
@@ -137,6 +140,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Geometries\Robot\ThighJoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometries\Robot\Neck.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

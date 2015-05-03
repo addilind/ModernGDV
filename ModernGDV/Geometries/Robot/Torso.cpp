@@ -36,15 +36,15 @@ Geometries::Robot::Torso::Torso( ModernGDV::Driver* mgdv )
 	vec3 truncatedPyramidTopBackRight	( +0.25f, +0.45f, -0.13f );
 	
 	
-	vec3 cuboidBottomFrontLeft(-0.30f, +0.45f, +0.15f);
-	vec3 cuboidBottomFrontRight(+0.30f, +0.45f, +0.15f);
-	vec3 cuboidBottomBackLeft(-0.30f, +0.45f, -0.15f);
-	vec3 cuboidBottomBackRight(+0.30f, +0.45f, -0.15f);
+	vec3 cuboidBottomFrontLeft(-0.35f, +0.45f, +0.15f);
+	vec3 cuboidBottomFrontRight(+0.35f, +0.45f, +0.15f);
+	vec3 cuboidBottomBackLeft(-0.35f, +0.45f, -0.15f);
+	vec3 cuboidBottomBackRight(+0.35f, +0.45f, -0.15f);
 
-	vec3 cuboidTopFrontLeft(-0.30f, +1.0f, +0.15f);
-	vec3 cuboidTopFrontRight(+0.30f, +1.0f, +0.15f);
-	vec3 cuboidTopBackLeft(-0.30f, +1.0f, -0.15f);
-	vec3 cuboidTopBackRight(+0.30f, +1.0f, -0.15f);
+	vec3 cuboidTopFrontLeft(-0.35f, +1.0f, +0.15f);
+	vec3 cuboidTopFrontRight(+0.35f, +1.0f, +0.15f);
+	vec3 cuboidTopBackLeft(-0.35f, +1.0f, -0.15f);
+	vec3 cuboidTopBackRight(+0.35f, +1.0f, -0.15f);
 	
 
 	Tri::Create( vertices, pyramidTop, vec2( 0.5f, 0.f ), pyramidBaseFrontLeft, vec2( 0.f, 1.f ), pyramidBaseFrontRight, vec2( 1.f, 1.f ) ); //Seitenflächen Pyramide

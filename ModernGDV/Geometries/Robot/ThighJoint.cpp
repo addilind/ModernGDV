@@ -14,15 +14,15 @@ Geometries::Robot::ThighJoint::ThighJoint(ModernGDV::Driver* mgdv)
 	std::vector<Vertex> vertices;
 
 	//Vorderquader
-	vec3 cuboidBottomFrontLeft(-0.075f, -0.05f, +0.1f);
-	vec3 cuboidBottomFrontRight(+0.10f, -0.05f, +0.1f);
-	vec3 cuboidBottomBackLeft(-0.075f, -0.05f, +0.075f);
-	vec3 cuboidBottomBackRight(+0.10f, -0.05f, +0.075f);
+	vec3 cuboidBottomFrontLeft(-0.0375f, -0.05f, +0.125f);
+	vec3 cuboidBottomFrontRight(+0.15f, -0.05f, +0.125f);
+	vec3 cuboidBottomBackLeft(-0.0375f, -0.05f, +0.075f);
+	vec3 cuboidBottomBackRight(+0.15f, -0.05f, +0.075f);
 
-	vec3 cuboidTopFrontLeft(-0.075f, +0.05f, +0.1f);
-	vec3 cuboidTopFrontRight(+0.10f, +0.05f, +0.1f);
-	vec3 cuboidTopBackLeft(-0.075f, +0.05f, +0.075f);
-	vec3 cuboidTopBackRight(+0.10f, +0.05f, +0.075f);
+	vec3 cuboidTopFrontLeft(-0.0375f, +0.05f, +0.125f);
+	vec3 cuboidTopFrontRight(+0.15f, +0.05f, +0.125f);
+	vec3 cuboidTopBackLeft(-0.0375f, +0.05f, +0.075f);
+	vec3 cuboidTopBackRight(+0.15f, +0.05f, +0.075f);
 
 	Quad::Create(vertices, cuboidBottomFrontLeft, vec2(0.f, 0.f), cuboidBottomFrontRight, vec2(1.f, 0.f),
 		cuboidBottomBackRight, vec2(1.f, 1.f), cuboidBottomBackLeft, vec2(0.f, 1.f));				//Bodenfläche Quader
@@ -40,15 +40,15 @@ Geometries::Robot::ThighJoint::ThighJoint(ModernGDV::Driver* mgdv)
 		cuboidTopBackRight, vec2(1.f, 0.f), cuboidTopFrontRight, vec2(1.f, 1.f));					//Oberseite Quader
 
 	//Hinterquader
-	vec3 bcuboidBottomFrontLeft(-0.075f, -0.05f, -0.075f);
-	vec3 bcuboidBottomFrontRight(+0.10f, -0.05f, -0.075f);
-	vec3 bcuboidBottomBackLeft(-0.075f, -0.05f, -0.10f);
-	vec3 bcuboidBottomBackRight(+0.10f, -0.05f, -0.10f);
+	vec3 bcuboidBottomFrontLeft(-0.0375f, -0.05f, -0.075f);
+	vec3 bcuboidBottomFrontRight(+0.15f, -0.05f, -0.075f);
+	vec3 bcuboidBottomBackLeft(-0.0375f, -0.05f, -0.125f);
+	vec3 bcuboidBottomBackRight(+0.15f, -0.05f, -0.125f);
 
-	vec3 bcuboidTopFrontLeft(-0.075f, +0.05f, -0.075f);
-	vec3 bcuboidTopFrontRight(+0.10f, +0.05f, -0.075f);
-	vec3 bcuboidTopBackLeft(-0.075f, +0.05f, -0.10f);
-	vec3 bcuboidTopBackRight(+0.10f, +0.05f, -0.10f);
+	vec3 bcuboidTopFrontLeft(-0.0375f, +0.05f, -0.075f);
+	vec3 bcuboidTopFrontRight(+0.15f, +0.05f, -0.075f);
+	vec3 bcuboidTopBackLeft(-0.0375f, +0.05f, -0.125f);
+	vec3 bcuboidTopBackRight(+0.15f, +0.05f, -0.125f);
 
 	Quad::Create(vertices, bcuboidBottomFrontLeft, vec2(0.f, 0.f), bcuboidBottomFrontRight, vec2(1.f, 0.f),
 		bcuboidBottomBackRight, vec2(1.f, 1.f), bcuboidBottomBackLeft, vec2(0.f, 1.f));				//Bodenfläche Quader
@@ -66,15 +66,15 @@ Geometries::Robot::ThighJoint::ThighJoint(ModernGDV::Driver* mgdv)
 		bcuboidTopBackRight, vec2(1.f, 0.f), bcuboidTopFrontRight, vec2(1.f, 1.f));					//Oberseite Quader
 
 	//Mittelquader
-	vec3 mcuboidBottomFrontLeft(+0.075f, -0.05f, +0.075f);
-	vec3 mcuboidBottomFrontRight(+0.10f, -0.05f, +0.075f);
-	vec3 mcuboidBottomBackLeft(+0.075f, -0.05f, -0.075f);
-	vec3 mcuboidBottomBackRight(+0.10f, -0.05f, -0.075f);
+	vec3 mcuboidBottomFrontLeft(+0.1f, -0.05f, +0.075f);
+	vec3 mcuboidBottomFrontRight(+0.15f, -0.05f, +0.075f);
+	vec3 mcuboidBottomBackLeft(+0.1f, -0.05f, -0.075f);
+	vec3 mcuboidBottomBackRight(+0.15f, -0.05f, -0.075f);
 
-	vec3 mcuboidTopFrontLeft(+0.075f, +0.05f, +0.075f);
-	vec3 mcuboidTopFrontRight(+0.10f, +0.05f, +0.075f);
-	vec3 mcuboidTopBackLeft(+0.075f, +0.05f, -0.075f);
-	vec3 mcuboidTopBackRight(+0.10f, +0.05f, -0.075f);
+	vec3 mcuboidTopFrontLeft(+0.1f, +0.05f, +0.075f);
+	vec3 mcuboidTopFrontRight(+0.15f, +0.05f, +0.075f);
+	vec3 mcuboidTopBackLeft(+0.1f, +0.05f, -0.075f);
+	vec3 mcuboidTopBackRight(+0.15f, +0.05f, -0.075f);
 
 	Quad::Create(vertices, mcuboidBottomFrontLeft, vec2(0.f, 0.f), mcuboidBottomFrontRight, vec2(1.f, 0.f),
 		mcuboidBottomBackRight, vec2(1.f, 1.f), mcuboidBottomBackLeft, vec2(0.f, 1.f));				//Bodenfläche Quader

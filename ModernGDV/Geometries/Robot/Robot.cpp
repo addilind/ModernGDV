@@ -1,7 +1,7 @@
 #include "Robot.h"
 
 Geometries::Robot::Robot::Robot( ModernGDV::Driver* mgdv )
-: torso(mgdv), thigh(mgdv), shank(mgdv), foot(mgdv), shoulderJoint(mgdv), thighJoint(mgdv)
+: torso(mgdv), thigh(mgdv), shank(mgdv), foot(mgdv), shoulderJoint(mgdv), thighJoint(mgdv), head(mgdv), neck(mgdv)
 {
 	this->mgdv = mgdv;
 }
@@ -15,9 +15,18 @@ void Geometries::Robot::Robot::Render()
 	mgdv->SetSpecularProperties( glm::vec3( 0.5f, 0.5f, 0.5f ), 50.f );
 	mgdv->PushTransform();
 	torso.Render();
+	//-----------------------
+	mgdv->SetTransform(glm::translate(*mgdv->Transform(), glm::vec3(0.f, 1.15f, 0.f)));
+	neck.Render();
+	//mgdv->ReloadTransform();
 
-	mgdv->SetTransform(glm::translate(*mgdv->Transform(), glm::vec3(-0.2f, 0.14f, 0.f))); //Linkes Oberschenkel Gelenk
-	mgdv->SetTransform(glm::rotate(*mgdv->Transform(), static_cast<float>(0.6f*glm::sin(glfwGetTime())), glm::vec3(1, 0, 0)));
+	//mgdv->SetTransform(glm::translate(*mgdv->Transform(), glm::vec3(0.f, 1.225f, 0.f)));
+	head.Render();
+
+	mgdv->ReloadTransform();
+	//-----------------------
+	mgdv->SetTransform(glm::translate(*mgdv->Transform(), glm::vec3(-0.25f, 0.14f, 0.f))); //Linkes Oberschenkel Gelenk
+	//mgdv->SetTransform(glm::rotate(*mgdv->Transform(), static_cast<float>(0.6f*glm::sin(glfwGetTime())), glm::vec3(1, 0, 0)));
 	thighJoint.Render();
 	
 	thigh.Render(); //Linker Oberschenkel
@@ -32,11 +41,10 @@ void Geometries::Robot::Robot::Render()
 	
 	mgdv->ReloadTransform();
 
-	mgdv->SetTransform(glm::translate(*mgdv->Transform(), glm::vec3(+0.2f, 0.15f, 0.f))); //Rechtes Oberschenkel Gelenk
+	mgdv->SetTransform(glm::translate(*mgdv->Transform(), glm::vec3(+0.25f, 0.14f, 0.f))); //Rechtes Oberschenkel Gelenk
 	mgdv->SetTransform(glm::rotate(*mgdv->Transform(), glm::pi<float>(), glm::vec3(0, 0, 1)));
 	thighJoint.Render();
 
-	//mgdv->SetTransform(glm::translate(*mgdv->Transform(), glm::vec3(+0.2f, 0.15f, 0.f))); //Rechter Oberschenkel
 	mgdv->SetTransform(glm::rotate(*mgdv->Transform(), glm::pi<float>(), glm::vec3(0, 0, 1)));
 	thigh.Render(); //Rechter Oberschenkel
 
@@ -49,8 +57,8 @@ void Geometries::Robot::Robot::Render()
 	
 	mgdv->ReloadTransform();
 
-	mgdv->SetTransform(glm::translate(*mgdv->Transform(), glm::vec3(-0.375f, 0.95f, 0.f))); //Linkes Armgelenk
-	mgdv->SetTransform(glm::rotate(*mgdv->Transform(), static_cast<float>(glm::sin(glfwGetTime())), glm::vec3(1, 0, 0)));
+	mgdv->SetTransform(glm::translate(*mgdv->Transform(), glm::vec3(-0.425f, 0.95f, 0.f))); //Linkes Armgelenk
+	//mgdv->SetTransform(glm::rotate(*mgdv->Transform(), static_cast<float>(glm::sin(glfwGetTime())), glm::vec3(1, 0, 0)));
 	shoulderJoint.Render();
 
 	mgdv->SetTransform(glm::rotate(*mgdv->Transform(), glm::pi<float>()*0.5f, glm::vec3(0, 1, 0))); //Linker Oberarm 90° gedreht
@@ -62,7 +70,7 @@ void Geometries::Robot::Robot::Render()
 
 	mgdv->ReloadTransform();
 
-	mgdv->SetTransform(glm::translate(*mgdv->Transform(), glm::vec3(+0.375f, 0.95f, 0.f))); //Rechtes Armgelenk
+	mgdv->SetTransform(glm::translate(*mgdv->Transform(), glm::vec3(+0.425f, 0.95f, 0.f))); //Rechtes Armgelenk
 	mgdv->SetTransform(glm::rotate(*mgdv->Transform(), static_cast<float>(glm::sin(glfwGetTime())), glm::vec3(1, 0, 0)));
 	shoulderJoint.Render();
 
