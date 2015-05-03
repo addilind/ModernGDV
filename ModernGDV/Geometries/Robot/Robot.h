@@ -8,6 +8,7 @@
 #include "Shank.h"
 #include "Foot.h"
 #include "ShoulderJoint.h"
+#include "ThighJoint.h"
 
 namespace Geometries
 {
@@ -23,6 +24,7 @@ namespace Geometries
 			Shank shank;
 			Foot foot;
 			ShoulderJoint shoulderJoint;
+			ThighJoint thighJoint;
 		public:
 			explicit Robot( ModernGDV::Driver* mgdv );
 			~Robot();

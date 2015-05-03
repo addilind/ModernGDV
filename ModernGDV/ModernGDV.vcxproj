@@ -103,6 +103,7 @@
     <ClCompile Include="Geometries\Robot\Thigh.cpp" />
     <ClCompile Include="Geometries\Robot\Shank.cpp" />
     <ClCompile Include="Geometries\Robot\Robot.cpp" />
+    <ClCompile Include="Geometries\Robot\ThighJoint.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="FragmentShader.glsl">
@@ -137,6 +138,7 @@
     <ClInclude Include="Geometries\Robot\Thigh.h" />
     <ClInclude Include="Geometries\Robot\Shank.h" />
     <ClInclude Include="Geometries\Robot\Robot.h" />
+    <ClInclude Include="Geometries\Robot\ThighJoint.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
