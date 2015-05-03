@@ -1,7 +1,7 @@
 #include "Robot.h"
 
 Geometries::Robot::Robot::Robot( ModernGDV::Driver* mgdv )
-	: torso( mgdv ), thigh( mgdv ), shank( mgdv ), foot( mgdv ), shoulderJoint( mgdv )
+	: torso(mgdv), thigh(mgdv), shank(mgdv), foot(mgdv), shoulderJoint(mgdv), thighJoint(mgdv), head(mgdv), neck(mgdv)
 {
 	this->mgdv = mgdv;
 }
@@ -19,8 +19,19 @@ void Geometries::Robot::Robot::Render( const glm::mat4& transform )
 	torso.Render();
 
 	glm::mat4 subtransform = transform; //Push
-	subtransform = glm::translate( subtransform, glm::vec3( -0.2f, 0.15f, 0.f ) ); //Linker Oberschenkel
-	subtransform = glm::rotate( subtransform, static_cast<float>(glm::sin( glfwGetTime() )), glm::vec3( 1, 0, 0 ) );
+
+	subtransform = glm::translate( subtransform, glm::vec3( 0.f, 1.15f, 0.f ) );
+	mgdv->ShaderLib.SetModel( subtransform );
+	neck.Render();
+	
+	head.Render();
+	
+	subtransform = transform;
+
+	subtransform = glm::translate( subtransform, glm::vec3( -0.25f, 0.14f, 0.f ) ); //Linkes Hüftgelenk
+	mgdv->ShaderLib.SetModel( subtransform );
+	thighJoint.Render();
+
 	mgdv->ShaderLib.SetModel( subtransform );
 	thigh.Render();
 
@@ -33,6 +44,10 @@ void Geometries::Robot::Robot::Render( const glm::mat4& transform )
 	foot.Render();
 
 	subtransform = transform; //Pop, Push
+
+	subtransform = glm::translate( subtransform, glm::vec3( -0.25f, 0.14f, 0.f ) ); //Linkes Hüftgelenk
+	mgdv->ShaderLib.SetModel( subtransform );
+	thighJoint.Render();
 
 	subtransform = glm::translate( subtransform, glm::vec3( +0.2f, 0.15f, 0.f ) ); //Rechter Oberschenkel
 	mgdv->ShaderLib.SetModel( subtransform );

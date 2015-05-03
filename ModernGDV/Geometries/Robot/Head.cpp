@@ -13,15 +13,15 @@ Geometries::Robot::Head::Head(ModernGDV::Driver* mgdv)
 {
 	std::vector<Vertex> vertices;
 	//Kopf
-	vec3 cuboidBottomFrontLeft(-0.12f, -0.0f, +0.1f);
-	vec3 cuboidBottomFrontRight(+0.12f, -0.0f, +0.1f);
-	vec3 cuboidBottomBackLeft(-0.12f, -0.0f, -0.1f);
-	vec3 cuboidBottomBackRight(+0.12f, -0.0f, -0.1f);
+	vec3 cuboidBottomFrontLeft(-0.12f, -0.0f, +0.12f);
+	vec3 cuboidBottomFrontRight(+0.12f, -0.0f, +0.12f);
+	vec3 cuboidBottomBackLeft(-0.12f, -0.0f, -0.12f);
+	vec3 cuboidBottomBackRight(+0.12f, -0.0f, -0.12f);
 
-	vec3 cuboidTopFrontLeft(-0.12f, +0.25f, +0.1f);
-	vec3 cuboidTopFrontRight(+0.12f, +0.25f, +0.1f);
-	vec3 cuboidTopBackLeft(-0.12f, +0.25f, -0.1f);
-	vec3 cuboidTopBackRight(+0.12f, +0.25f, -0.1f);
+	vec3 cuboidTopFrontLeft(-0.12f, +0.25f, +0.12f);
+	vec3 cuboidTopFrontRight(+0.12f, +0.25f, +0.12f);
+	vec3 cuboidTopBackLeft(-0.12f, +0.25f, -0.12f);
+	vec3 cuboidTopBackRight(+0.12f, +0.25f, -0.12f);
 
 	Quad::Create(vertices, cuboidBottomFrontLeft, vec2(0.f, 0.f), cuboidBottomFrontRight, vec2(1.f, 0.f),
 		cuboidBottomBackRight, vec2(1.f, 1.f), cuboidBottomBackLeft, vec2(0.f, 1.f));				//Bodenfläche Quader
@@ -39,13 +39,13 @@ Geometries::Robot::Head::Head(ModernGDV::Driver* mgdv)
 		cuboidTopBackRight, vec2(1.f, 0.f), cuboidTopFrontRight, vec2(1.f, 1.f));					//Oberseite Quader
 
 	//Kinn
-	vec3 kcuboidBottomFrontLeft(-0.09f, -0.095f, +0.1f);
-	vec3 kcuboidBottomFrontRight(+0.09f, -0.095f, +0.1f);
+	vec3 kcuboidBottomFrontLeft(-0.09f, -0.095f, +0.11f);
+	vec3 kcuboidBottomFrontRight(+0.09f, -0.095f, +0.11f);
 	vec3 kcuboidBottomBackLeft(-0.09f, -0.095f, +0.025f);
 	vec3 kcuboidBottomBackRight(+0.09f, -0.095f, +0.025f);
 
-	vec3 kcuboidTopFrontLeft(-0.09f, -0.0f, +0.1f);
-	vec3 kcuboidTopFrontRight(+0.09f, -0.0f, +0.1f);
+	vec3 kcuboidTopFrontLeft(-0.09f, -0.0f, +0.11f);
+	vec3 kcuboidTopFrontRight(+0.09f, -0.0f, +0.11f);
 	vec3 kcuboidTopBackLeft(-0.09f, -0.0f, +0.025f);
 	vec3 kcuboidTopBackRight(+0.09f, -0.0f, +0.025f);
 

@@ -14,7 +14,7 @@ namespace Geometries
 		private:
 			GLuint vertexBuffer;
 			ModernGDV::Driver* mgdv;
-			GLuint texture;
+			ModernGDV::Textures::Texture* texture;
 		public:
 			Neck(ModernGDV::Driver* mgdv);
 			~Neck();
