@@ -36,7 +36,7 @@ void main(void) {
 
 	float reflectionangle = clamp( dot( e, reflektionsrichtung ), 0, 1 );
 	
-	endColor = vec4(1,0,0,1);/*vec4(ambient +
+	endColor = vec4(ambient +
 		diffuse.rgb * lightColor * lightPower * entryangle / (lightDistance * lightDistance) +
-		specularColor * lightColor * lightPower * pow( reflectionangle, specularExponent ) / (lightDistance * lightDistance), diffuse.a);*/
+		specularColor * lightColor * lightPower * pow( reflectionangle, specularExponent ) / (lightDistance * lightDistance), diffuse.a);
 }

@@ -17,17 +17,17 @@ ModernGDV::Shaders::ShaderSet::ShaderSet( ShaderLibrary* lib, const std::string&
 
 ModernGDV::Shaders::ShaderSet::~ShaderSet()
 {
-	if (shaderProgram < 999U)
+/*	if (shaderProgram < 999U)
 		glDeleteProgram( shaderProgram );
 	if (fragmentShader < 999U)
 		glDeleteShader( fragmentShader );
 	if (vertexShader < 999U)
-		glDeleteShader( vertexShader );
+		glDeleteShader( vertexShader );*/
 }
 
 void ModernGDV::Shaders::ShaderSet::Bind()
 {
-	//glBindVertexArray( vertexArray );
+	glBindVertexArray( vertexArray );
 	glUseProgram( shaderProgram );
 
 	UploadModel();
@@ -129,13 +129,15 @@ void ModernGDV::Shaders::ShaderSet::createShaders()
 	glShaderSource( fragmentShader, 1, &fragmentShaderGLSLptr, nullptr );
 	glCompileShader( fragmentShader );
 
-	GLint result = 0;
+	GLint result = GL_FALSE;
 
 	//auf Fehler überprüfen, falls Fehler: Exception werfen
 	glGetShaderiv( vertexShader, GL_COMPILE_STATUS, &result );
-	if (result != 0) {
+	if (result != GL_TRUE) {
 		int infoLogLength = -1;
 		glGetShaderiv( vertexShader, GL_INFO_LOG_LENGTH, &infoLogLength );
+		if (infoLogLength < 1)
+			throw std::runtime_error( "Unable to compile VS, no error message" );
 		std::vector<char> vertexShaderErrorMessage( infoLogLength + 4 );
 		vertexShaderErrorMessage[0] = 'V'; vertexShaderErrorMessage[1] = 'S'; vertexShaderErrorMessage[2] = ':'; vertexShaderErrorMessage[3] = ' ';
 		glGetShaderInfoLog( vertexShader, infoLogLength, nullptr, &vertexShaderErrorMessage[4] );
@@ -143,9 +145,11 @@ void ModernGDV::Shaders::ShaderSet::createShaders()
 	}
 
 	glGetShaderiv( fragmentShader, GL_COMPILE_STATUS, &result );
-	if (result != 0) {
+	if (result != GL_TRUE) {
 		int infoLogLength = -1;
 		glGetShaderiv( fragmentShader, GL_INFO_LOG_LENGTH, &infoLogLength );
+		if (infoLogLength < 1)
+			throw std::runtime_error( "Unable to compile FS, no error message" );
 		std::vector<char> fragmentShaderErrorMessage( infoLogLength + 4 );
 		fragmentShaderErrorMessage[0] = 'F'; fragmentShaderErrorMessage[1] = 'S'; fragmentShaderErrorMessage[2] = ':'; fragmentShaderErrorMessage[3] = ' ';
 		glGetShaderInfoLog( fragmentShader, infoLogLength, nullptr, &fragmentShaderErrorMessage[4] );
@@ -164,7 +168,7 @@ void ModernGDV::Shaders::ShaderSet::createShaderProgram()
 
 	//auf Fehler überprüfen, falls Fehler: Exception werfen
 	glGetProgramiv( shaderProgram, GL_LINK_STATUS, &result );
-	if (result != 0) {
+	if (result != GL_TRUE) {
 		int infoLogLength = -1;
 		glGetProgramiv( shaderProgram, GL_INFO_LOG_LENGTH, &infoLogLength );
 		if (infoLogLength < 1)
@@ -173,6 +177,7 @@ void ModernGDV::Shaders::ShaderSet::createShaderProgram()
 		glGetProgramInfoLog( shaderProgram, infoLogLength, nullptr, &shaderProgramErrorMessage[0] );
 		throw std::runtime_error( &shaderProgramErrorMessage[0] );
 	}
+	glUseProgram( shaderProgram );
 }
 
 void ModernGDV::Shaders::ShaderSet::createVertexArray()

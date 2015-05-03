@@ -29,7 +29,7 @@ void ModernGDV::Camera::Render()
 
 void ModernGDV::Camera::Update( float deltaT )
 {
-	const float twopi = 2.f * glm::pi<float>();
+	const float twopi = glm::two_pi<float>();
 	const float heightbound = glm::pi<float>() * 0.499f;//Nicht ganz gerade von oben/unten
 	const float speedUpDown = 0.75f;
 	const float speedRightLeft = 1.f;

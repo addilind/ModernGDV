@@ -42,7 +42,7 @@ void MyApp::Render(  )
 
 	robot.Render(glm::mat4());
 
-	/*glDisable( GL_CULL_FACE ); //Lampe ist nicht immer korrekt
+	glDisable( GL_CULL_FACE ); //Lampe ist nicht immer korrekt
 	glBindBuffer( GL_ARRAY_BUFFER, lampvb );
 	ModernGDV::Vertex::SetLayout();
 	mgdv->ShaderLib.SetDiffuseTex( lamptex );
@@ -51,5 +51,5 @@ void MyApp::Render(  )
 	mgdv->ShaderLib.SetSpecularProperties( glm::vec3( 0 ), 1.f );
 	Quad::Draw( 0U );
 	Quad::Draw( 4U );
-	ModernGDV::Vertex::ResetLayout();*/
+	ModernGDV::Vertex::ResetLayout();
 }
