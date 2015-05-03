@@ -24,7 +24,7 @@ void main() {
 	position_world = (model * vec4( inPosition, 1.0f )).xyz;
 	vec4 position_cam = view * vec4( position_world, 1.0f );
 	gl_Position = proj * position_cam;
-	//gl_Position = model * vec4(inPosition, 1.0f);
+	gl_Position = vec4(inPosition, 1.0f);
 	
 	//gl_Position ist die vordefinierte Ausgabeeigenschaft für die Position.
 	//Um die Transformationen, die im C++-Teil zu einer Matrix berechnet wurden, anzuwenden, wird der Vertex mit der Matrix multipliziert.

@@ -63,14 +63,12 @@
     <ClCompile Include="Geometries\Robot\Robot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="FragmentShader.glsl">
+    <ClCompile Include="ModernGDV\Shaders\ShaderSet.cpp">
       <Filter>Source Files</Filter>
-    </None>
-    <None Include="VertexShader.glsl">
+    </ClCompile>
+    <ClCompile Include="ModernGDV\Shaders\ShaderLibrary.cpp">
       <Filter>Source Files</Filter>
-    </None>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyApp.h">
@@ -131,6 +129,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Geometries\Robot\Robot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModernGDV\Shaders\ShaderLibrary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModernGDV\Shaders\ShaderSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

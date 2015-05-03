@@ -5,6 +5,15 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ModernGDV", "ModernGDV\ModernGDV.vcxproj", "{002AE15C-DA4E-4DE8-9CA7-43BF61F18535}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{B1DDCF0F-6034-4BD9-94D9-E307CC00E310}"
+	ProjectSection(SolutionItems) = preProject
+		Data\default.fs.glsl = Data\default.fs.glsl
+		Data\default.vs.glsl = Data\default.vs.glsl
+		Data\lamp.dds = Data\lamp.dds
+		Data\skybox.dds = Data\skybox.dds
+		Data\test.dds = Data\test.dds
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32

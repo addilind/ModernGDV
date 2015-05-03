@@ -16,13 +16,14 @@ private:
 	Geometries::Robot::Robot robot;
 	ModernGDV::Camera camera;
 	GLuint lampvb;
-	GLuint lamptex;
+	ModernGDV::Textures::Texture* lamptex;
 
 public:
 	MyApp( std::vector<std::string> commandline, ModernGDV::Driver* mgdv );
 	virtual ~MyApp();
 
-	virtual void Render( float deltaT ) override;
+	virtual void Update( float deltaT ) override;
+	virtual void Render(  ) override;
 };
 
 #endif

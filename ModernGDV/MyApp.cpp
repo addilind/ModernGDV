@@ -29,22 +29,27 @@ MyApp::~MyApp()
 {
 }
 
-void MyApp::Render( float deltaT )
+void MyApp::Update(float deltaT)
 {
-	camera.Run( deltaT );
-	mgdv->SetLight( glm::vec3( 1.f*glm::sin( glfwGetTime() / 3.f ), 0.3f, 1.f*glm::cos( glfwGetTime() / 3.f ) ), glm::vec3(1.0f,0.9f,0.6f), 1.f, 0.3f );
+	camera.Update( deltaT );
+}
 
-	mgdv->ResetTransform();
-	robot.Render();
+void MyApp::Render(  )
+{
+	camera.Render();
+
+	mgdv->ShaderLib.SetLight( glm::vec3( 1.f*glm::sin( glfwGetTime() / 3.f ), 0.3f, 1.f*glm::cos( glfwGetTime() / 3.f ) ), glm::vec3(1.0f,0.9f,0.6f), 1.f, 0.3f );
+
+	/*robot.Render(glm::mat4());
 
 	glDisable( GL_CULL_FACE ); //Lampe ist nicht immer korrekt
 	glBindBuffer( GL_ARRAY_BUFFER, lampvb );
 	ModernGDV::Vertex::SetLayout();
-	mgdv->UseTexture( lamptex );
-	mgdv->SetTransform( glm::translate( glm::mat4(), glm::vec3( 1.f*glm::sin( glfwGetTime() / 3.f ), 0.3f, 1.f*glm::cos( glfwGetTime() / 3.f ) ) ) );
-	mgdv->SetLight( glm::vec3(0), glm::vec3( 1, 1, 1 ), 0.f, 1.f );//Dont light
-	mgdv->SetSpecularProperties( glm::vec3( 0 ), 1.f );
+	mgdv->ShaderLib.SetDiffuseTex( lamptex );
+	mgdv->ShaderLib.SetModel( glm::translate( glm::mat4(), glm::vec3( 1.f*glm::sin( glfwGetTime() / 3.f ), 0.3f, 1.f*glm::cos( glfwGetTime() / 3.f ) ) ) );
+	mgdv->ShaderLib.SetLight( glm::vec3( 0 ), glm::vec3( 1, 1, 1 ), 0.f, 1.f );//Dont light
+	mgdv->ShaderLib.SetSpecularProperties( glm::vec3( 0 ), 1.f );
 	Quad::Draw( 0U );
 	Quad::Draw( 4U );
-	ModernGDV::Vertex::ResetLayout();
+	ModernGDV::Vertex::ResetLayout();*/
 }

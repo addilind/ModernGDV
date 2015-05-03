@@ -23,7 +23,8 @@ namespace ModernGDV
 		Camera( Driver* mgdv );
 		~Camera();
 
-		void Run(float deltaT);
+		void Update( float deltaT );
+		void Render( );
 	private:
 		void updateViewMat();
 	};

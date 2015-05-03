@@ -27,7 +27,7 @@ namespace Geometries
 			explicit Robot( ModernGDV::Driver* mgdv );
 			~Robot();
 
-			void Render();
+			void Render(const glm::mat4& transform);
 		};
 	}
 }

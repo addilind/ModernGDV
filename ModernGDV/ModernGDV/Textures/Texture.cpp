@@ -55,8 +55,10 @@ ModernGDV::Textures::Texture::Texture(const std::string& filename) : glID(0U)
 
 	unsigned int blockSize = (format == GL_COMPRESSED_RGBA_S3TC_DXT1_EXT) ? 8 : 16;
 	unsigned int offset = 0;
-	unsigned int width = header.Width;
-	unsigned int height = header.Height;
+	width = header.Width;
+	height = header.Height;
+	texelwidth = 1.f / width;
+	texelheight = 1.f / height;
 
 	// Einzelne Bildversionen laden
 	for (unsigned int level = 0; level < header.MipMapCount; ++level)
@@ -79,7 +81,27 @@ ModernGDV::Textures::Texture::~Texture()
 {
 }
 
-GLuint ModernGDV::Textures::Texture::GetID() const
+unsigned int ModernGDV::Textures::Texture::GetWidth() const
+{
+	return width;
+}
+
+unsigned int ModernGDV::Textures::Texture::GetHeight() const
+{
+	return height;
+}
+
+float ModernGDV::Textures::Texture::GetTexelWidth() const
+{
+	return texelwidth;
+}
+
+float ModernGDV::Textures::Texture::GetTexelHeight() const
+{
+	return texelheight;
+}
+
+const GLuint ModernGDV::Textures::Texture::GetID() const
 {
 	return glID;
 }

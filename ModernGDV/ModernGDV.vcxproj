@@ -98,23 +98,13 @@
     <ClCompile Include="ModernGDV\Camera.cpp" />
     <ClCompile Include="ModernGDV\CCallbackWrapper.cpp" />
     <ClCompile Include="ModernGDV\ModernGDV.cpp" />
+    <ClCompile Include="ModernGDV\Shaders\ShaderLibrary.cpp" />
+    <ClCompile Include="ModernGDV\Shaders\ShaderSet.cpp" />
     <ClCompile Include="ModernGDV\Textures\Texture.cpp" />
     <ClCompile Include="MyApp.cpp" />
     <ClCompile Include="Geometries\Robot\Thigh.cpp" />
     <ClCompile Include="Geometries\Robot\Shank.cpp" />
     <ClCompile Include="Geometries\Robot\Robot.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="FragmentShader.glsl">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="VertexShader.glsl">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="FragmentShader.glsl" />
-    <None Include="VertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Geometries\Robot\ShoulderJoint.h" />
@@ -131,6 +121,8 @@
     <ClInclude Include="ModernGDV\MGDVApp.h" />
     <ClInclude Include="ModernGDV\ModernGDV.h" />
     <ClInclude Include="ModernGDV\OGLInc.h" />
+    <ClInclude Include="ModernGDV\Shaders\ShaderLibrary.h" />
+    <ClInclude Include="ModernGDV\Shaders\ShaderSet.h" />
     <ClInclude Include="ModernGDV\Textures\DDSDefs.h" />
     <ClInclude Include="ModernGDV\Textures\Texture.h" />
     <ClInclude Include="MyApp.h" />

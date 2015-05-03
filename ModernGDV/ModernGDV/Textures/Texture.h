@@ -12,11 +12,19 @@ namespace ModernGDV
 		{
 		private:
 			GLuint glID;
+			unsigned int width;
+			unsigned int height;
+			float texelwidth;
+			float texelheight;
 		public:
 			Texture( const std::string& filename );
 			~Texture();
 
-			GLuint GetID() const;
+			unsigned int GetWidth() const;
+			unsigned int GetHeight() const;
+			float GetTexelWidth() const;
+			float GetTexelHeight() const;
+			const GLuint GetID() const;
 			void Unload();
 		};
 	}
