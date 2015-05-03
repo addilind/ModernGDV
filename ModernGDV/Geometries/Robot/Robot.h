@@ -11,6 +11,7 @@
 #include "ThighJoint.h"
 #include "Head.h"
 #include "Neck.h"
+#include "Ski.h"
 
 namespace Geometries
 {
@@ -29,6 +30,7 @@ namespace Geometries
 			ThighJoint thighJoint;
 			Head head;
 			Neck neck;
+			Ski ski;
 		public:
 			explicit Robot( ModernGDV::Driver* mgdv );
 			~Robot();

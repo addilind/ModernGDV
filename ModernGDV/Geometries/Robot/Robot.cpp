@@ -1,7 +1,7 @@
 #include "Robot.h"
 
 Geometries::Robot::Robot::Robot( ModernGDV::Driver* mgdv )
-	: torso(mgdv), thigh(mgdv), shank(mgdv), foot(mgdv), shoulderJoint(mgdv), thighJoint(mgdv), head(mgdv), neck(mgdv)
+: torso(mgdv), thigh(mgdv), shank(mgdv), foot(mgdv), shoulderJoint(mgdv), thighJoint(mgdv), head(mgdv), neck(mgdv), ski(mgdv)
 {
 	this->mgdv = mgdv;
 }
@@ -45,6 +45,11 @@ void Geometries::Robot::Robot::Render( const glm::mat4& transform )
 	mgdv->ShaderLib.SetModel( subtransform );
 	foot.Render();
 
+	subtransform = glm::translate(subtransform, glm::vec3(0.f, -0.05f, 0.f)); //Linker Ski
+	subtransform = glm::scale(subtransform, glm::vec3(1.0f, 4.0f, 1.0f)); //zum Test, ob Spitzen passen
+	mgdv->ShaderLib.SetModel(subtransform);
+	ski.Render();
+
 	subtransform = transform; //Pop, Push
 
 	subtransform = glm::translate( subtransform, glm::vec3( +0.25f, 0.14f, 0.f ) ); //Rechtes Hüftgelenk
@@ -64,6 +69,11 @@ void Geometries::Robot::Robot::Render( const glm::mat4& transform )
 	subtransform = glm::translate( subtransform, glm::vec3( 0.f, -0.4f, 0.f ) ); //Rechter Fuß
 	mgdv->ShaderLib.SetModel( subtransform );
 	foot.Render();
+
+	subtransform = glm::translate(subtransform, glm::vec3(0.f, -0.05f, 0.f)); //Rechter Ski
+	subtransform = glm::scale(subtransform, glm::vec3(1.0f, 4.0f, 1.0f)); //zum Test, ob Spitzen passen
+	mgdv->ShaderLib.SetModel(subtransform);
+	ski.Render();
 
 	subtransform = transform; //Pop, Push
 
