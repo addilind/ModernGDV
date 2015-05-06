@@ -4,7 +4,7 @@
 using Geometries::Primitives::Quad;
 
 MyApp::MyApp( std::vector<std::string> commandline, ModernGDV::Driver* mgdv )
-	: mgdv(mgdv), robot(mgdv), camera(mgdv)
+	: mgdv(mgdv), robot(mgdv), camera(mgdv), terrain(mgdv, 512U)
 {
 	mgdv->SetProjectionOptions(45.0f, 100.f);
 
@@ -40,7 +40,10 @@ void MyApp::Render(  )
 
 	mgdv->ShaderLib.SetLight( glm::vec3( 1.f*glm::sin( glfwGetTime() / 3.f ), 0.3f, 1.f*glm::cos( glfwGetTime() / 3.f ) ), glm::vec3(1.0f,0.9f,0.6f), 1.f, 0.3f );
 
-	robot.Render(glm::mat4());
+
+	mgdv->ShaderLib.SetModel( glm::scale( glm::translate(glm::mat4(), glm::vec3(0,-5.f, 0)), glm::vec3(50.f, 5.f, 50.f) ) );
+	terrain.Render();
+	robot.Render( glm::mat4() );
 
 	glDisable( GL_CULL_FACE ); //Lampe ist nicht immer korrekt
 	glBindBuffer( GL_ARRAY_BUFFER, lampvb );

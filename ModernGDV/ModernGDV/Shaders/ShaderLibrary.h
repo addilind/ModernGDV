@@ -34,6 +34,8 @@ namespace ModernGDV
 			float specularExponent;
 
 			GLuint diffuseTexure;
+			GLuint heightTexure;
+			float terrainSegSize;
 
 		public:
 			friend ShaderSet;
@@ -49,8 +51,10 @@ namespace ModernGDV
 			void SetView( const glm::mat4& view );
 			void SetProj( const glm::mat4& proj );
 			void SetDiffuseTex( const Textures::Texture* texture );
+			void SetHeightTex( const Textures::Texture* texture );
 			void SetLight( const glm::vec3& position, const glm::vec3& color, const float& power, const float& ambient );
 			void SetSpecularProperties( const glm::vec3& specularColor, const float& specularExp = 5.0f );
+			void SetTerrainSegmentSize( const float& segmentSize );
 
 		private:
 		};

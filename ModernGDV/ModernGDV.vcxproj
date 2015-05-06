@@ -110,6 +110,7 @@
     <ClCompile Include="Geometries\Robot\ThighJoint.cpp" />
     <ClCompile Include="Geometries\Robot\Neck.cpp" />
     <ClCompile Include="Geometries\Robot\Ski.cpp" />
+    <ClCompile Include="Geometries\Terrain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Geometries\Robot\ShoulderJoint.h" />

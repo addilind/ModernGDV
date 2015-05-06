@@ -50,7 +50,7 @@ Geometries::Robot::Head::Head(ModernGDV::Driver* mgdv)
 	vec3 kcuboidTopBackRight(+0.09f, -0.0f, +0.025f);
 
 	Quad::Create(vertices, kcuboidBottomFrontLeft, vec2(0.25f, 0.875f), kcuboidBottomFrontRight, vec2(0.5f, 0.875f),
-		kcuboidBottomBackRight, vec2(0.5f, 0.75f), kcuboidBottomBackLeft, vec2(0.5f, 0.75f));				//Bodenfläche Quader
+		kcuboidBottomBackRight, vec2(0.5f, 0.75f), kcuboidBottomBackLeft, vec2(0.25f, 0.75f));				//Bodenfläche Quader
 
 	Quad::Create(vertices, kcuboidTopFrontLeft, vec2(0.f, 0.5f), kcuboidTopFrontRight, vec2(0.5f, 0.5f),
 		kcuboidBottomFrontRight, vec2(0.5f, 0.75f), kcuboidBottomFrontLeft, vec2(0.f, 0.75f));				//Seitenflächen Quader

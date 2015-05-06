@@ -4,7 +4,8 @@
 
 ModernGDV::Shaders::ShaderLibrary::ShaderLibrary()
 	: activeShader(0U), shaders(), shaderNames(), model(), normal(), projection(), view(),
-	lightPos(), lightColor(), lightPower(), ambient(), specularColor(), specularExponent(), diffuseTexure()
+	lightPos(), lightColor(), lightPower(), ambient(), specularColor(), specularExponent(),
+	diffuseTexure(0U), heightTexure(0U), terrainSegSize(1.f)
 {
 
 }
@@ -64,6 +65,12 @@ void ModernGDV::Shaders::ShaderLibrary::SetDiffuseTex(const Textures::Texture* t
 	shaders[activeShader].UploadTextures();
 }
 
+void ModernGDV::Shaders::ShaderLibrary::SetHeightTex(const Textures::Texture* texture)
+{
+	heightTexure = texture->GetID();
+	shaders[activeShader].UploadTerrainProperties();
+}
+
 void ModernGDV::Shaders::ShaderLibrary::SetLight(const glm::vec3& position, const glm::vec3& color, const float& power, const float& newAmbient)
 {
 	lightPos = position;
@@ -78,4 +85,10 @@ void ModernGDV::Shaders::ShaderLibrary::SetSpecularProperties(const glm::vec3& s
 	specularColor = specColor;
 	specularExponent = specExp;
 	shaders[activeShader].UploadSpecularProperties();
+}
+
+void ModernGDV::Shaders::ShaderLibrary::SetTerrainSegmentSize(const float& segmentSize)
+{
+	terrainSegSize = segmentSize;
+	shaders[activeShader].UploadTerrainProperties();
 }

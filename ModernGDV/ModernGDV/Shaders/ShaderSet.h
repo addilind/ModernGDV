@@ -23,12 +23,15 @@ namespace ModernGDV
 			GLuint shaderUniformView;
 			GLuint shaderUniformProj;
 			GLuint shaderUniformLightPos;
-			GLuint shaderUniformDiffuseTextureSampler;
 			GLuint shaderUniformLightColor;
 			GLuint shaderUniformLightPower;
 			GLuint shaderUniformAmbientLight;
 			GLuint shaderUniformSpecularColor;
 			GLuint shaderUniformSpecularExponent;
+			GLuint shaderUniformDiffuseTextureSampler;
+
+			GLuint shaderUniformHeightTextureSampler; //Terrain spezifisch
+			GLuint shaderUniformSegmentSize;    //Terrain spezifisch
 		public:
 			ShaderSet( ShaderLibrary* library, const std::string& name );
 			~ShaderSet();
@@ -42,6 +45,7 @@ namespace ModernGDV
 			void UploadTextures();
 			void UploadLight();
 			void UploadSpecularProperties();
+			void UploadTerrainProperties();
 
 		private:
 			std::vector<char> readShaderFile( const char* filename );

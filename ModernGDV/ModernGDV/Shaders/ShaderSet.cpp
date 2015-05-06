@@ -7,7 +7,8 @@ ModernGDV::Shaders::ShaderSet::ShaderSet( ShaderLibrary* lib, const std::string&
 	: name(name), library( lib ),
 	vertexShader( 999U ), fragmentShader( 999U ), shaderProgram( 999U ), vertexArray( 999U ),
 	shaderUniformModel( 999U ), shaderUniformNormal( 999U ), shaderUniformView( 999U ), shaderUniformProj( 999U ), shaderUniformLightPos( 999U ),
-	shaderUniformDiffuseTextureSampler( 999U ), shaderUniformLightColor( 999U ), shaderUniformLightPower( 999U ), shaderUniformAmbientLight( 999U ), shaderUniformSpecularColor( 999U )
+	shaderUniformLightColor( 999U ), shaderUniformLightPower( 999U ), shaderUniformAmbientLight( 999U ), shaderUniformSpecularColor( 999U ),
+	shaderUniformDiffuseTextureSampler( 999U ), shaderUniformHeightTextureSampler( 999U ), shaderUniformSegmentSize( 999U )
 {
 	createShaders();
 	createShaderProgram();
@@ -90,6 +91,18 @@ void ModernGDV::Shaders::ShaderSet::UploadSpecularProperties()
 		glUniform3f( shaderUniformSpecularColor, library->specularColor.x, library->specularColor.y, library->specularColor.z );
 	if (shaderUniformSpecularExponent < 999U)
 		glUniform1f( shaderUniformSpecularExponent, library->specularExponent );
+}
+
+void ModernGDV::Shaders::ShaderSet::UploadTerrainProperties()
+{
+	if (shaderUniformSegmentSize < 999U)
+		glUniform1f( shaderUniformSegmentSize, library->terrainSegSize );
+	if (shaderUniformHeightTextureSampler < 999U)
+	{
+		glActiveTexture( GL_TEXTURE2 );
+		glBindTexture( GL_TEXTURE_2D, library->heightTexure ); //Gegebene Textur in TEXTURE0-Slot einhängen
+		glUniform1i( shaderUniformHeightTextureSampler, 2 ); //TEXTURE0 als diffuseTexture verwenden
+	}
 }
 
 std::vector<char> ModernGDV::Shaders::ShaderSet::readShaderFile( const char* filename )
@@ -210,8 +223,6 @@ void ModernGDV::Shaders::ShaderSet::loadActiveUniforms()
 			shaderUniformProj = location;
 		else if (name == "lightPos")
 			shaderUniformLightPos = location;
-		else if (name == "diffuseTextureSampler")
-			shaderUniformDiffuseTextureSampler = location;
 		else if (name == "lightColor")
 			shaderUniformLightColor = location;
 		else if (name == "lightPower")
@@ -222,6 +233,12 @@ void ModernGDV::Shaders::ShaderSet::loadActiveUniforms()
 			shaderUniformSpecularColor = location;
 		else if (name == "specularExponent")
 			shaderUniformSpecularExponent = location;
+		else if (name == "heightTextureSampler")
+			shaderUniformHeightTextureSampler = location;
+		else if (name == "diffuseTextureSampler")
+			shaderUniformDiffuseTextureSampler = location;
+		else if (name == "segmentSize")
+			shaderUniformSegmentSize = location;
 		else
 			std::cout << "Warn: Unknown shader uniform '" << name << "'!" << std::endl;
 		

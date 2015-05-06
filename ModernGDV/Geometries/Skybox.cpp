@@ -12,6 +12,7 @@ Geometries::Skybox::Skybox( ModernGDV::Driver* mgdv )
 	: vertexBuffer( 0U ), mgdv( mgdv ), texture( nullptr )
 {
 	std::vector<Vertex> vertices;
+	texture = mgdv->GetTexture( "skybox" );
 
 	vec3 cubeBottomFrontLeft	( -1.f, -1.f, +1.f );
 	vec3 cubeBottomFrontRight	( +1.f, -1.f, +1.f );
@@ -24,8 +25,8 @@ Geometries::Skybox::Skybox( ModernGDV::Driver* mgdv )
 	vec3 cubeTopBackRight		( +1.f, +1.f, -1.f );
 
 	//Im Folgenden "Rückwärts", da der Würfel von innen betrachtet werden soll
-	const float halfx = 1.5f / 4096.f;
-	const float halfy = 1.5f / 2048.f;
+	const float halfx = 0.5f * texture->GetTexelWidth();
+	const float halfy = 0.5f * texture->GetTexelHeight();
 	Quad::Create( vertices, cubeBottomFrontLeft, vec2( 0.25f + halfx, 1.f - halfy ), cubeBottomBackLeft, vec2( 0.25f + halfx, 0.5f + halfy ),
 		cubeBottomBackRight, vec2( 0.5f - halfx, 0.5f + halfy ), cubeBottomFrontRight, vec2( 0.5f - halfx, 1.f - halfy ) );				//Bodenfläche Würfel
 
@@ -46,7 +47,6 @@ Geometries::Skybox::Skybox( ModernGDV::Driver* mgdv )
 
 	shaderID = mgdv->ShaderLib.GetShaderID( "default" );
 
-	texture = mgdv->GetTexture( "skybox" );
 }
 
 Geometries::Skybox::~Skybox()
