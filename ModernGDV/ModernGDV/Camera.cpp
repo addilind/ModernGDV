@@ -103,5 +103,5 @@ void ModernGDV::Camera::updateViewMat()
 	x = sin( sunXZAngle ) * xzRadius;
 	z = cos( sunXZAngle ) * xzRadius;
 
-	sunDirectionCam = glm::vec3(viewMat * glm::vec4(-x, -y, -z, 0.f));
+	sunDirectionCam = glm::vec3(viewMat * glm::vec4(x, y, z, 0.f));
 }

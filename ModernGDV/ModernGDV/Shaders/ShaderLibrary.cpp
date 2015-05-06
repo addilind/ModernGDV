@@ -82,7 +82,7 @@ void ModernGDV::Shaders::ShaderLibrary::SetLight(const glm::vec3& position, cons
 
 void ModernGDV::Shaders::ShaderLibrary::SetSun(const glm::vec3& dir, const glm::vec3& color)
 {
-	sunDirection = dir;
+	sunDirection = glm::normalize(dir);
 	sunColor = color;
 	shaders[activeShader].UploadSun();
 }

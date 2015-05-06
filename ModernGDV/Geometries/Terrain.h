@@ -15,5 +15,7 @@ namespace Geometries
 		~Terrain();
 
 		void Render();
+	private:
+		void setLayout();
 	};
 }

@@ -8,9 +8,9 @@ namespace ModernGDV {
 		float NX; float NY; float NZ;//Normalenvektor
 		float U; float V; //Texturkoordinaten
 		Vertex()
-			: X( 0.0f ), Y( 0.0f ), Z( 0.0f ), NX( 0.0f ), NY( 0.0f ), NZ( 0.0f ) {} //Standardkonstruktor
+			: X( 0.0f ), Y( 0.0f ), Z( 0.0f ), NX( 0.0f ), NY( 0.0f ), NZ( 0.0f ), U(0.0f), V(0.0f) {} //Standardkonstruktor
 		Vertex( const float& x, const float& y, const float& z, const float& nx, const float& ny, const float& nz, const float& u, const float& v )
-			: X( x ), Y( y ), Z( z ), NX( nx ), NY( ny ), NZ( nz ), U( u ), V( v )  {} //Position + Farbe
+			: X( x ), Y( y ), Z( z ), NX( nx ), NY( ny ), NZ( nz ), U( u ), V( v )  {} //Position, Normale, UV-Koordinaten
 		static void SetLayout()
 		{
 			glEnableVertexAttribArray( 0 ); //Der VertexShader hat 3 Inputs, die aktiviert 
@@ -43,6 +43,38 @@ namespace ModernGDV {
 			glDisableVertexAttribArray( 2 );
 		}
 	};
+	struct UVVertex { //Muss zu den Inputs im Vertex-Shader passen
+	public:
+		float X; float Y; float Z; //PositionsKoordinaten
+		float U; float V; //Texturkoordinaten
+		UVVertex()
+			: X( 0.0f ), Y( 0.0f ), Z( 0.0f ), U( 0.0f ), V( 0.0f ) {} //Standardkonstruktor
+		UVVertex( const float& x, const float& y, const float& z, const float& u, const float& v )
+			: X( x ), Y( y ), Z( z ), U( u ), V( v )  {} //Position + UV-Koordinaten
+		static void SetLayout()
+		{
+			glEnableVertexAttribArray( 0 ); //Der VertexShader hat 2 Inputs, die aktiviert 
+			glEnableVertexAttribArray( 1 );
+			glVertexAttribPointer(			//und beschrieben werden müssen
+				0,                  // Attribut 0 ist in unserem Shader die Position
+				3,                  // Positionen im MyVertex bestehen aus 3 Koordinaten
+				GL_FLOAT,           // und sind als Floats gespeichert
+				GL_FALSE,           // die float-werte sind nicht normalisiert
+				sizeof( UVVertex ), // zwischen zwei vertices liegen sizeof( UVVertex ) = 5 * sizeof( Float ) = 5 * 4 = 20 byte
+				nullptr            // Positionsinfos liegen an erster Stelle im Vertex
+				);
+			glVertexAttribPointer(
+				1,                  // Attribut 1 ist in unserem Shader die Texturkoordinaten
+				2, GL_FLOAT, GL_FALSE, sizeof( UVVertex ), // hier 2 nicht normalisierte floats 
+				(void*)(3 * sizeof( float )) //vor den Farbinfos müssen die Positionsdaten übersprungen werden, die 3 * sizeof( float ) byte groß sind
+				);
+		}
 
+		static void ResetLayout()
+		{
+			glDisableVertexAttribArray( 0 );
+			glDisableVertexAttribArray( 1 );
+		}
+	};
 #pragma pack(pop) //Beendet pack
 }

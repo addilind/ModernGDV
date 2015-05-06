@@ -2,7 +2,7 @@
 
 // Eigenschaften, die ein Eingabe-Vertex aufweisen soll
 in vec3 inPosition;	//Position
-in vec3 inNormal;	//Normale
+//in vec3 inNormal;	//Normale
 in vec2 inTexcoord; //Texturkoordinate
 
 // Eigenschaften, die ZUSÄTZLICH zur Position weitergegeben werden sollen (VertexShader MÜSSEN eine Position ausgeben, deshalb ist sie immer als Ausgabe "vordefiniert")
@@ -27,14 +27,35 @@ void main() {
 	
 	texcoord = inTexcoord + vec2(float(gl_InstanceID) * segmentSize,0);
 
-	vec4 position_model = vec4(inPosition, 1.0f) +
-		vec4(gl_InstanceID * segmentSize * 2, texture(heightTextureSampler, texcoord).x, 0.f, 0.0f);
+	float myheight = texture(heightTextureSampler, texcoord).x;
+
+	vec4 position_model = vec4(inPosition, 1.0f) + vec4(gl_InstanceID * segmentSize * 2, myheight, 0.f, 0.0f);
 
 	position_world = (model * position_model ).xyz;
 	vec4 position_cam = view * vec4( position_world, 1.0f );
 	gl_Position = proj * position_cam;
+
+	float heightNegX = texture( heightTextureSampler, texcoord - vec2( segmentSize, 0.f )).x;
+	float heightPosX = texture( heightTextureSampler, texcoord + vec2( segmentSize, 0.f )).x;
+	float heightNegZ = texture( heightTextureSampler, texcoord - vec2( 0.f, segmentSize )).x;
+	float heightPosZ = texture( heightTextureSampler, texcoord + vec2( 0.f, segmentSize )).x;
+
+	float heightNegXNegZ = texture( heightTextureSampler, texcoord + vec2( -segmentSize, -segmentSize ) ).x;
+	float heightNegXPosZ = texture( heightTextureSampler, texcoord + vec2( -segmentSize, segmentSize ) ).x;
+	float heightPosXNegZ = texture( heightTextureSampler, texcoord + vec2( segmentSize, -segmentSize ) ).x;
+	float heightPosXPosZ = texture( heightTextureSampler, texcoord + vec2( segmentSize, segmentSize ) ).x;
+
+	vec3 dirNegX = vec3( -segmentSize, heightNegX - myheight, 0.f );
+	vec3 dirPosX = vec3( +segmentSize, heightPosX - myheight, 0.f );
+	vec3 dirNegZ = vec3( 0.f, heightNegZ - myheight, -segmentSize );
+	vec3 dirPosZ = vec3( 0.f, heightPosZ - myheight, +segmentSize );
+
+	vec3 dirNegXNegZ = vec3( -segmentSize, heightNegXNegZ - myheight, -segmentSize );
+	vec3 dirNegXPosZ = vec3( -segmentSize, heightNegXPosZ - myheight, +segmentSize );
+	vec3 dirPosXNegZ = vec3( +segmentSize, heightPosXNegZ - myheight, -segmentSize );
+	vec3 dirPosXPosZ = vec3( +segmentSize, heightPosXPosZ - myheight, +segmentSize );
 	
-	normal_cam = normal * inNormal;
+	normal_cam = normal * (cross( dirNegZ, dirNegX ) + cross( dirPosZ, dirPosX ) + cross(dirPosXNegZ, dirNegXNegZ) + cross(dirNegXPosZ, dirPosXPosZ));
 	//Die Normale wird in das Kamerakoordinatensystem ueberfuehrt. (Siehe http://www.lighthouse3d.com/tutorials/glsl-tutorial/the-normal-matrix/ , warum nicht einfach view * world)
 
 	eyedir_cam = vec3(0,0,0) - position_cam.xyz;

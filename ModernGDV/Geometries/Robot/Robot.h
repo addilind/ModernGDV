@@ -31,6 +31,8 @@ namespace Geometries
 			Head head;
 			Neck neck;
 			Ski ski;
+
+
 		public:
 			explicit Robot( ModernGDV::Driver* mgdv );
 			~Robot();

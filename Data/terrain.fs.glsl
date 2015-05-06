@@ -37,9 +37,9 @@ void main(void) {
 
 	float reflectionangle = clamp( dot( e, reflect( -l, n ) ), 0, 1 );
 
-	float entryangleSun = clamp( dot( n, -sunDirection ), 0, 1 );
+	float entryangleSun = clamp( dot( n, sunDirection ), 0, 1 );
 
-	float reflectionangleSun = clamp( dot( e, reflect( sunDirection, n ) ), 0, 1 );
+	float reflectionangleSun = clamp( dot( e, reflect( -sunDirection, n ) ), 0, 1 );
 
 	endColor = vec4( ambient //Hintergrundbeleuchtung
 			+ diffuse.rgb * lightColor * lightPower * entryangle / (lightDistance * lightDistance) //Refraktion Lichtquelle
