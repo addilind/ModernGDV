@@ -11,6 +11,7 @@ namespace ModernGDV
 		class Texture
 		{
 		private:
+			size_t* instanceCounter;
 			GLuint glID;
 			unsigned int width;
 			unsigned int height;
@@ -18,6 +19,7 @@ namespace ModernGDV
 			float texelheight;
 		public:
 			Texture( const std::string& filename );
+			Texture( const Texture& source );
 			~Texture();
 
 			unsigned int GetWidth() const;
@@ -25,7 +27,6 @@ namespace ModernGDV
 			float GetTexelWidth() const;
 			float GetTexelHeight() const;
 			GLuint GetID() const;
-			void Unload();
 		};
 	}
 }

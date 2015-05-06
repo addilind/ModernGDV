@@ -3,7 +3,8 @@
 #include "DDSDefs.h"
 #include <vector>
 
-ModernGDV::Textures::Texture::Texture(const std::string& filename) : glID(0U)
+ModernGDV::Textures::Texture::Texture(const std::string& filename) :
+	instanceCounter( new size_t(1U) ), glID( 0U ), width( 0U ), height( 0U ), texelwidth( 0.f ), texelheight( 0.f )
 {
 	std::ifstream file( filename, std::ifstream::binary );
 	if (!file)
@@ -79,8 +80,20 @@ ModernGDV::Textures::Texture::Texture(const std::string& filename) : glID(0U)
 	height = header.Height;
 }
 
+ModernGDV::Textures::Texture::Texture(const Texture& source) :
+	instanceCounter(source.instanceCounter), glID(source.glID),
+	width(source.width), height(source.height), texelwidth(source.texelwidth), texelheight(source.texelheight)
+{
+	*instanceCounter = *instanceCounter + 1;
+}
+
 ModernGDV::Textures::Texture::~Texture()
 {
+	*instanceCounter = *instanceCounter - 1;
+	if (*instanceCounter > 0)
+		return;
+	glDeleteTextures( 1, &glID );
+	glID = 0;
 }
 
 unsigned int ModernGDV::Textures::Texture::GetWidth() const
@@ -106,10 +119,4 @@ float ModernGDV::Textures::Texture::GetTexelHeight() const
 GLuint ModernGDV::Textures::Texture::GetID() const
 {
 	return glID;
-}
-
-void ModernGDV::Textures::Texture::Unload()
-{
-	glDeleteTextures( 1, &glID );
-	glID = 0;
 }

@@ -17,14 +17,15 @@ namespace ModernGDV {
 	private:
 		bool glfwInitialized; //Flag, ob GLFW deinitialisiert werden muss
 		GLFWwindow *window; //Anzeigefenster
-
-
+		
 		float aspectRatio;
 		float fov;
 		float farDist;
 
 		std::map<std::string, Textures::Texture> textureCache;
 		App* app;
+
+		bool debugWireframe;
 	public:
 		Driver();
 		virtual ~Driver();
@@ -33,6 +34,7 @@ namespace ModernGDV {
 		void SetApp( App* application );
 
 		void FramebufferSizeChanged( GLFWwindow* window, int width, int height );
+		void KeyEvent( GLFWwindow* window, int key, int scancode, int action, int mods );
 
 		GLFWwindow* GetWindow();
 

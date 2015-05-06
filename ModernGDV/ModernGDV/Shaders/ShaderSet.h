@@ -10,6 +10,8 @@ namespace ModernGDV
 		class ShaderSet
 		{
 		private:
+			size_t* instanceCounter;
+
 			std::string name;
 			ShaderLibrary* library;
 
@@ -36,6 +38,7 @@ namespace ModernGDV
 			GLuint shaderUniformSegmentSize;    //Terrain spezifisch
 		public:
 			ShaderSet( ShaderLibrary* library, const std::string& name );
+			ShaderSet( const ShaderSet& source );
 			~ShaderSet();
 
 			void Bind();
@@ -50,6 +53,7 @@ namespace ModernGDV
 			void UploadSpecularProperties();
 			void UploadTerrainProperties();
 
+			std::string GetName() const;
 		private:
 			std::vector<char> readShaderFile( const char* filename );
 			void createShaders();

@@ -8,7 +8,8 @@
 ModernGDV::Driver::Driver()
 	: ShaderLib(), glfwInitialized( false ), window( nullptr ),
 	aspectRatio(4.f/3.f), fov(45.f), farDist(100.f),
-	textureCache(), app( nullptr )
+	textureCache(), app( nullptr ),
+	debugWireframe(false)
 {
 	if (!glfwInit()) //GLFW Initialisieren
 		throw std::runtime_error( "Cannot initialize GLFW" );
@@ -22,7 +23,6 @@ ModernGDV::Driver::Driver()
 		std::cout << "Window created" << std::endl;
 
 		ShaderLib.UseShader( ShaderLib.GetShaderID( "default" ) );
-		Callbacks::mgdvDriverInstance = this;
 
 		updateProj();
 
@@ -77,6 +77,26 @@ void ModernGDV::Driver::FramebufferSizeChanged(GLFWwindow* window, int width, in
 	updateProj();
 }
 
+void ModernGDV::Driver::KeyEvent(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	if (action == GLFW_PRESS)
+	{
+		switch (key)
+		{
+		case GLFW_KEY_F2:
+			debugWireframe = !debugWireframe;
+			if (debugWireframe)
+				glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+			else
+				glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+			break;
+		case GLFW_KEY_F5:
+			ShaderLib.ReloadShaders();
+			break;
+		}
+	}
+}
+
 GLFWwindow* ModernGDV::Driver::GetWindow()
 {
 	return window;
@@ -117,7 +137,9 @@ void ModernGDV::Driver::createWindow()
 	glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 0 );
 	glfwWindowHint( GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE );
 	window = glfwCreateWindow( 1024, 768, "GDV: Bastian Kreuzer (734877), Adrian Mueller (734922)", nullptr, nullptr ); //Fenster erstellen
+	glfwSetWindowUserPointer( window, this );
 	glfwSetFramebufferSizeCallback( window, Callbacks::glfwFramebufferSizeCallback );
+	glfwSetKeyCallback( window, Callbacks::glfwKeyCallback );
 
 	if (!window)
 		throw std::runtime_error( "Cannot create window" );
@@ -133,13 +155,13 @@ void ModernGDV::Driver::updateProj()
 
 void ModernGDV::Driver::deinit()
 {
-	for (auto tex = textureCache.begin(); tex != textureCache.end(); ++tex)
-		tex->second.Unload();
+	ShaderLib.UnloadShaders();
+	textureCache.clear();
+
 	if (window) {
 		glfwDestroyWindow( window ); //Fenster entladen, falls vorhanden
 		glfwPollEvents();
 	}
 	if (glfwInitialized)
 		glfwTerminate(); //GLFW beenden, falls initialisiert
-	Callbacks::mgdvDriverInstance = nullptr;
 }

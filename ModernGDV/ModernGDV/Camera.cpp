@@ -1,8 +1,8 @@
 #include "Camera.h"
 
 ModernGDV::Camera::Camera( Driver* mgdv )
-	:mgdv( mgdv ), skybox( mgdv ), lookAt( 0.f, 1.f, 0.f ), xzAngle( 0.f ), heightAngle( 0.f ), distance( 2.f ),
-	sunXZAngle( 2.7f ), sunHeight( 0.45f ), sunColor(  1.0f, 0.937f, 0.709f )
+	:mgdv( mgdv ), skybox( mgdv ), lookAt( 0.f, -1.f, 0.f ), xzAngle( 0.f ), heightAngle( 0.f ), distance( 2.f ),
+	sunXZAngle( 2.3f ), sunHeight( 0.45f ), sunColor(  1.0f, 0.937f, 0.709f )
 {
 	updateViewMat();
 }
@@ -99,9 +99,9 @@ void ModernGDV::Camera::updateViewMat()
 	viewMat = glm::lookAt( location, lookAt, up );
 
 	y = sin( sunHeight );
-	xzRadius = cos( heightAngle );
+	xzRadius = cos( sunHeight );
 	x = sin( sunXZAngle ) * xzRadius;
 	z = cos( sunXZAngle ) * xzRadius;
 
-	sunDirectionCam = glm::vec3(viewMat * glm::vec4(x, y, z, 0.f));
+	sunDirectionCam = glm::vec3( viewMat * glm::vec4( x, y, z, 0.f ) );
 }

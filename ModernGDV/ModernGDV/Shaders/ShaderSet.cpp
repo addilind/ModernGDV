@@ -4,10 +4,11 @@
 #include <fstream>
 
 ModernGDV::Shaders::ShaderSet::ShaderSet( ShaderLibrary* lib, const std::string& name )
-	: name(name), library( lib ),
+	: instanceCounter( new size_t( 1U ) ), name( name ), library( lib ),
 	vertexShader( 999U ), fragmentShader( 999U ), shaderProgram( 999U ), vertexArray( 999U ),
 	shaderUniformModel( 999U ), shaderUniformNormal( 999U ), shaderUniformView( 999U ), shaderUniformProj( 999U ), shaderUniformLightPos( 999U ),
 	shaderUniformLightColor( 999U ), shaderUniformLightPower( 999U ), shaderUniformAmbientLight( 999U ), shaderUniformSpecularColor( 999U ),
+	shaderUniformSpecularExponent( 999U ),
 	shaderUniformDiffuseTextureSampler(999U), shaderUniformSunDirection( 999U ), shaderUniformSunColor( 999U ),
 	shaderUniformHeightTextureSampler( 999U ), shaderUniformSegmentSize( 999U )
 {
@@ -17,14 +18,34 @@ ModernGDV::Shaders::ShaderSet::ShaderSet( ShaderLibrary* lib, const std::string&
 	loadActiveUniforms();
 }
 
+ModernGDV::Shaders::ShaderSet::ShaderSet(const ShaderSet& source)
+	: instanceCounter(source.instanceCounter), name( source.name ), library( source.library ),
+	vertexShader( source.vertexShader ), fragmentShader( source.fragmentShader ), shaderProgram( source.shaderProgram ), vertexArray( source.vertexArray ),
+	shaderUniformModel( source.shaderUniformModel ), shaderUniformNormal( source.shaderUniformNormal ), shaderUniformView( source.shaderUniformView ),
+	shaderUniformProj( source.shaderUniformProj ), shaderUniformLightPos( source.shaderUniformLightPos ),
+	shaderUniformLightColor( source.shaderUniformLightColor ), shaderUniformLightPower( source.shaderUniformLightPower ),
+	shaderUniformAmbientLight( source.shaderUniformAmbientLight ), shaderUniformSpecularColor( source.shaderUniformSpecularColor ),
+	shaderUniformSpecularExponent( source.shaderUniformSpecularExponent ),
+	shaderUniformDiffuseTextureSampler( source.shaderUniformDiffuseTextureSampler ), shaderUniformSunDirection( source.shaderUniformSunDirection ),
+	shaderUniformSunColor( source.shaderUniformSunColor ), shaderUniformHeightTextureSampler( source.shaderUniformHeightTextureSampler ),
+	shaderUniformSegmentSize( source.shaderUniformSegmentSize )
+{
+	*instanceCounter = 1 + *instanceCounter;
+}
+
 ModernGDV::Shaders::ShaderSet::~ShaderSet()
 {
-/*	if (shaderProgram < 999U)
+	*instanceCounter = *instanceCounter - 1;
+	if (*instanceCounter > 0)
+		return;
+
+	delete instanceCounter;
+	if (shaderProgram < 999U)
 		glDeleteProgram( shaderProgram );
 	if (fragmentShader < 999U)
 		glDeleteShader( fragmentShader );
 	if (vertexShader < 999U)
-		glDeleteShader( vertexShader );*/
+		glDeleteShader( vertexShader );
 }
 
 void ModernGDV::Shaders::ShaderSet::Bind()
@@ -114,6 +135,11 @@ void ModernGDV::Shaders::ShaderSet::UploadTerrainProperties()
 		glBindTexture( GL_TEXTURE_2D, library->heightTexure ); //Gegebene Textur in TEXTURE0-Slot einhängen
 		glUniform1i( shaderUniformHeightTextureSampler, 2 ); //TEXTURE0 als diffuseTexture verwenden
 	}
+}
+
+std::string ModernGDV::Shaders::ShaderSet::GetName() const
+{
+	return name;
 }
 
 std::vector<char> ModernGDV::Shaders::ShaderSet::readShaderFile( const char* filename )

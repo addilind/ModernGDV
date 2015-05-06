@@ -12,6 +12,24 @@ ModernGDV::Shaders::ShaderLibrary::ShaderLibrary()
 
 ModernGDV::Shaders::ShaderLibrary::~ShaderLibrary()
 {
+	UnloadShaders();
+}
+
+void ModernGDV::Shaders::ShaderLibrary::UnloadShaders()
+{
+	shaders.clear();
+	shaderNames.clear();
+	activeShader = 0U;
+}
+
+void ModernGDV::Shaders::ShaderLibrary::ReloadShaders()
+{
+	std::vector<std::string> names;
+	for (auto shader = shaders.begin(); shader != shaders.end(); ++shader)
+		names.push_back(shader->GetName() );
+	shaders.clear();
+	for (auto shader = names.begin(); shader != names.end(); ++shader)
+		shaders.push_back( ShaderSet( this, *shader ) );
 }
 
 void ModernGDV::Shaders::ShaderLibrary::UseShader(size_t shaderID)

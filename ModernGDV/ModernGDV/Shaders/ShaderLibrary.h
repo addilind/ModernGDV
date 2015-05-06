@@ -45,6 +45,8 @@ namespace ModernGDV
 
 			ShaderLibrary();
 			~ShaderLibrary();
+			void UnloadShaders();
+			void ReloadShaders();
 
 			void UseShader( size_t shaderID );
 			void ReapplyShader(  );
