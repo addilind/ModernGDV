@@ -14,7 +14,7 @@ void Geometries::Robot::Robot::Render( const glm::mat4& transform )
 {
 
 	mgdv->ShaderLib.UseShader( mgdv->ShaderLib.GetShaderID( "default" ) );
-	mgdv->ShaderLib.SetSpecularProperties( glm::vec3( 0.5f, 0.5f, 0.5f ), 50.f );
+	mgdv->ShaderLib.SetSpecularProperties( glm::vec3( 0.5f, 0.5f, 0.5f ), 10.f );
 	mgdv->ShaderLib.SetModel( transform );
 	torso.Render();
 

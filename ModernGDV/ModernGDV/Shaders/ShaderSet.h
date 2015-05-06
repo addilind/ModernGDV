@@ -29,6 +29,8 @@ namespace ModernGDV
 			GLuint shaderUniformSpecularColor;
 			GLuint shaderUniformSpecularExponent;
 			GLuint shaderUniformDiffuseTextureSampler;
+			GLuint shaderUniformSunDirection;
+			GLuint shaderUniformSunColor;
 
 			GLuint shaderUniformHeightTextureSampler; //Terrain spezifisch
 			GLuint shaderUniformSegmentSize;    //Terrain spezifisch
@@ -44,6 +46,7 @@ namespace ModernGDV
 			void UploadProj();
 			void UploadTextures();
 			void UploadLight();
+			void UploadSun();
 			void UploadSpecularProperties();
 			void UploadTerrainProperties();
 

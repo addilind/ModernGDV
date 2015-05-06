@@ -15,10 +15,15 @@ namespace ModernGDV
 		float heightAngle;
 		float distance;
 
+		float sunXZAngle;
+		float sunHeight;
+		glm::vec3 sunColor;
+
 		//Ergeben sich aus obigen Variablen, sollen aber nicht andauernd neu berechnet werden müssen:
 		glm::vec3 location;
 		glm::mat4 skyboxTransform;
 		glm::mat4 viewMat;
+		glm::vec3 sunDirectionCam;//Richtung der Lichtstrahlen im Kamerakoordinatensystem
 	public:
 		Camera( Driver* mgdv );
 		~Camera();

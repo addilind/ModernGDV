@@ -8,7 +8,8 @@ ModernGDV::Shaders::ShaderSet::ShaderSet( ShaderLibrary* lib, const std::string&
 	vertexShader( 999U ), fragmentShader( 999U ), shaderProgram( 999U ), vertexArray( 999U ),
 	shaderUniformModel( 999U ), shaderUniformNormal( 999U ), shaderUniformView( 999U ), shaderUniformProj( 999U ), shaderUniformLightPos( 999U ),
 	shaderUniformLightColor( 999U ), shaderUniformLightPower( 999U ), shaderUniformAmbientLight( 999U ), shaderUniformSpecularColor( 999U ),
-	shaderUniformDiffuseTextureSampler( 999U ), shaderUniformHeightTextureSampler( 999U ), shaderUniformSegmentSize( 999U )
+	shaderUniformDiffuseTextureSampler(999U), shaderUniformSunDirection( 999U ), shaderUniformSunColor( 999U ),
+	shaderUniformHeightTextureSampler( 999U ), shaderUniformSegmentSize( 999U )
 {
 	createShaders();
 	createShaderProgram();
@@ -36,7 +37,9 @@ void ModernGDV::Shaders::ShaderSet::Bind()
 	UploadProj();
 	UploadTextures();
 	UploadLight();
+	UploadSun();
 	UploadSpecularProperties();
+	UploadTerrainProperties();
 }
 
 void ModernGDV::Shaders::ShaderSet::Unbind()
@@ -83,6 +86,14 @@ void ModernGDV::Shaders::ShaderSet::UploadLight()
 		glUniform1f( shaderUniformLightPower, library->lightPower );
 	if (shaderUniformAmbientLight < 999U)
 		glUniform1f( shaderUniformAmbientLight, library->ambient );
+}
+
+void ModernGDV::Shaders::ShaderSet::UploadSun()
+{
+	if (shaderUniformSunDirection < 999U)
+		glUniform3f( shaderUniformSunDirection, library->sunDirection.x, library->sunDirection.y, library->sunDirection.z );
+	if (shaderUniformSunColor < 999U)
+		glUniform3f( shaderUniformSunColor, library->sunColor.x, library->sunColor.y, library->sunColor.z );
 }
 
 void ModernGDV::Shaders::ShaderSet::UploadSpecularProperties()
@@ -239,6 +250,10 @@ void ModernGDV::Shaders::ShaderSet::loadActiveUniforms()
 			shaderUniformDiffuseTextureSampler = location;
 		else if (name == "segmentSize")
 			shaderUniformSegmentSize = location;
+		else if (name == "sunDirection")
+			shaderUniformSunDirection = location;
+		else if (name == "sunColor")
+			shaderUniformSunColor = location;
 		else
 			std::cout << "Warn: Unknown shader uniform '" << name << "'!" << std::endl;
 		

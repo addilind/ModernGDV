@@ -33,6 +33,9 @@ namespace ModernGDV
 			glm::vec3 specularColor;
 			float specularExponent;
 
+			glm::vec3 sunDirection;
+			glm::vec3 sunColor;
+
 			GLuint diffuseTexure;
 			GLuint heightTexure;
 			float terrainSegSize;
@@ -53,6 +56,7 @@ namespace ModernGDV
 			void SetDiffuseTex( const Textures::Texture* texture );
 			void SetHeightTex( const Textures::Texture* texture );
 			void SetLight( const glm::vec3& position, const glm::vec3& color, const float& power, const float& ambient );
+			void SetSun( const glm::vec3& dir, const glm::vec3& color );
 			void SetSpecularProperties( const glm::vec3& specularColor, const float& specularExp = 5.0f );
 			void SetTerrainSegmentSize( const float& segmentSize );
 

@@ -80,6 +80,13 @@ void ModernGDV::Shaders::ShaderLibrary::SetLight(const glm::vec3& position, cons
 	shaders[activeShader].UploadLight();
 }
 
+void ModernGDV::Shaders::ShaderLibrary::SetSun(const glm::vec3& dir, const glm::vec3& color)
+{
+	sunDirection = dir;
+	sunColor = color;
+	shaders[activeShader].UploadSun();
+}
+
 void ModernGDV::Shaders::ShaderLibrary::SetSpecularProperties(const glm::vec3& specColor, const float& specExp)
 {
 	specularColor = specColor;

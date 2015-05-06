@@ -1,7 +1,8 @@
 #include "Camera.h"
 
 ModernGDV::Camera::Camera( Driver* mgdv )
-	:mgdv( mgdv ), skybox( mgdv ), lookAt( 0.f, 1.f, 0.f ), xzAngle( 0.f ), heightAngle( 0.f ), distance( 2.f )
+	:mgdv( mgdv ), skybox( mgdv ), lookAt( 0.f, 1.f, 0.f ), xzAngle( 0.f ), heightAngle( 0.f ), distance( 2.f ),
+	sunXZAngle( 2.7f ), sunHeight( 0.45f ), sunColor(  1.0f, 0.937f, 0.709f )
 {
 	updateViewMat();
 }
@@ -19,12 +20,14 @@ void ModernGDV::Camera::Render()
 	glDisable( GL_DEPTH_TEST ); //Z-Buffer deaktivieren, um Sky-Cube zu zeichnen
 
 	mgdv->ShaderLib.SetLight( glm::vec3( 0.f ), glm::vec3( 0.f ), 0.f, 1.f );//Beleuchtung für SkyBox deaktivieren
+	mgdv->ShaderLib.SetSun( glm::vec3( 0.f ), glm::vec3( 0.f ) );
 	mgdv->ShaderLib.SetSpecularProperties( glm::vec3( 0.f ), 1.f );
 
 	mgdv->ShaderLib.SetModel( skyboxTransform );
 	skybox.Render();
 
 	glEnable( GL_DEPTH_TEST ); //Z-Buffer aktivieren
+	mgdv->ShaderLib.SetSun( sunDirectionCam, sunColor );
 }
 
 void ModernGDV::Camera::Update( float deltaT )
@@ -94,4 +97,11 @@ void ModernGDV::Camera::updateViewMat()
 	location = glm::vec3( x, y, z ) + lookAt;
 	skyboxTransform = glm::translate( glm::mat4(), location );
 	viewMat = glm::lookAt( location, lookAt, up );
+
+	y = sin( sunHeight );
+	xzRadius = cos( heightAngle );
+	x = sin( sunXZAngle ) * xzRadius;
+	z = cos( sunXZAngle ) * xzRadius;
+
+	sunDirectionCam = glm::vec3(viewMat * glm::vec4(-x, -y, -z, 0.f));
 }
