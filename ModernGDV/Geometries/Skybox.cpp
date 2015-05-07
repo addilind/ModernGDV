@@ -25,7 +25,7 @@ Geometries::Skybox::Skybox( ModernGDV::Driver* mgdv )
 	vec3 cubeTopBackRight		( +1.f, +1.f, -1.f );
 
 	//Im Folgenden "Rückwärts", da der Würfel von innen betrachtet werden soll
-	const float halfx = 0.5f * texture->GetTexelWidth();
+	const float halfx = 0.5f * texture->GetTexelWidth(); //Kanten MÜSSEN unsichtbar bleiben, deshalb hier genaue Texturkoordinaten
 	const float halfy = 0.5f * texture->GetTexelHeight();
 	Quad::Create( vertices, cubeBottomFrontLeft, vec2( 0.25f + halfx, 1.f - halfy ), cubeBottomBackLeft, vec2( 0.25f + halfx, 0.5f + halfy ),
 		cubeBottomBackRight, vec2( 0.5f - halfx, 0.5f + halfy ), cubeBottomFrontRight, vec2( 0.5f - halfx, 1.f - halfy ) );				//Bodenfläche Würfel

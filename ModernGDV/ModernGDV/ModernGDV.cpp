@@ -112,7 +112,7 @@ void ModernGDV::Driver::SetProjectionOptions(const float& fov, const float& farP
 ModernGDV::Textures::Texture* ModernGDV::Driver::GetTexture( const std::string& filename )
 {
 	//Suche nach Datei in Texturcache
-	auto cacheEntry = textureCache.find( filename );
+	auto cacheEntry = textureCache.find( filename ); //Textur wird einmalig geladen, dann aus dem Cache
 	if (cacheEntry != textureCache.end())
 		return &cacheEntry->second; //Gib gefundene ID zurück
 

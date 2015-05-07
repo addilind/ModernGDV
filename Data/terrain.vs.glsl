@@ -27,7 +27,7 @@ void main() {
 	
 	texcoord = inTexcoord + vec2(float(gl_InstanceID) * segmentSize,0);
 
-	float myheight = texture(heightTextureSampler, texcoord).x;
+	float myheight = texture(heightTextureSampler, texcoord).x; // x Rotkanal Farbwert fuer Hoehe
 
 	vec4 position_model = vec4(inPosition, 1.0f) + vec4(gl_InstanceID * segmentSize * 2, myheight, 0.f, 0.0f);
 

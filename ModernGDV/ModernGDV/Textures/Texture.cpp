@@ -16,17 +16,16 @@ ModernGDV::Textures::Texture::Texture(const std::string& filename) :
 		throw std::runtime_error( "Invalid texture file, must be a DDS file using DXT1/3/5 compression!" );
 
 	DDS_HEADER header;
-	file.read( reinterpret_cast<char*>(&header), 124 );
+	file.read( reinterpret_cast<char*>(&header), sizeof(DDS_HEADER) );
 
-
-	if (header.MipMapCount < 1U)
-		header.MipMapCount = 1U;
+	if (header.MipMapCount < 1U) //Falls es keine MIPMAPs gibt ( =0)
+		header.MipMapCount = 1U; //Wie Bild mit nur 1 MIPMAP (=Originalauflösung) behandeln
 
 	/* Buffergröße errechnen: Falls die Textur vorberechnete MIPMAPs mitbringt, doppelt so viel Platz reservieren */
 	unsigned int bufsize = header.MipMapCount > 1 ? header.PitchOrLinearSize * 2 : header.PitchOrLinearSize;
-	std::vector<char> imageData( bufsize );
-	file.read( &imageData[0], bufsize );
-	auto byteRead = file.gcount(); //auto  nehm den typ der passt, 
+	std::vector<char> imageData( bufsize ); //char* imageData = new char[bufsize];
+	file.read( &imageData[0], bufsize ); //Maximal bufsize byte aus der Datei in den Vektor einlesen
+	auto byteRead = file.gcount(); //Gelesene byte abfragen, auto -> C++11 automatische Wahl des Typs 
 	imageData.resize( byteRead ); //Überflüssig reservierten Speicher freigeben + Wert zur BufferOverflow-Überprüfung setzen
 
 	file.close();
@@ -48,14 +47,14 @@ ModernGDV::Textures::Texture::Texture(const std::string& filename) :
 	}
 
 	// OpenGL-Textur erstellen
-	glGenTextures( 1, &glID );
-	glBindTexture( GL_TEXTURE_2D, glID );
-	glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0 );
+	glGenTextures( 1, &glID ); //Neue Textur erstellen (leer), neue TexturID wird in glID gespeichert
+	glBindTexture( GL_TEXTURE_2D, glID ); //Neu erstellte Textur verwenden/bearbeiten
+	glPixelStorei( GL_UNPACK_ALIGNMENT, 1 ); //DXT-Formate benötigen kein besonderes Speicheralignment
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0 ); //OpenGL mitteilen, wie viele MIPMAPs es gibt
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, header.MipMapCount - 1 );
 
-	unsigned int blockSize = (format == GL_COMPRESSED_RGBA_S3TC_DXT1_EXT) ? 8 : 16;
-	unsigned int offset = 0;
+	unsigned int blockSize = (format == GL_COMPRESSED_RGBA_S3TC_DXT1_EXT) ? 8 : 16; //Formatspezifisch
+	unsigned int offset = 0; //Wie viel byte haben wir schon gelesen, wo fängt das nächste MIPMAP-Level an
 	width = header.Width;
 	height = header.Height;
 	texelwidth = 1.f / width;

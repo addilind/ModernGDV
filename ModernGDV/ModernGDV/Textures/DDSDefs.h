@@ -5,7 +5,7 @@
 namespace ModernGDV
 {
 	namespace Textures
-	{
+	{ //Quelle: https://msdn.microsoft.com/en-us/library/windows/desktop/bb943991%28v=vs.85%29.aspx
 		struct DDS_PIXELFORMAT {
 			enum FourCC : uint32_t {
 				DXT1 = 0x31545844, // "DXT1" in ASCII
