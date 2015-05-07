@@ -7,3 +7,5 @@ Debug/ModernGDV.pdb
 ModernGDV/ModernGDV.vcxproj.user
 *.exp
 Release/build/
+*.lib
+*.pdb
