@@ -26,7 +26,7 @@ ModernGDV::Textures::Texture::Texture(const std::string& filename) :
 	unsigned int bufsize = header.MipMapCount > 1 ? header.PitchOrLinearSize * 2 : header.PitchOrLinearSize;
 	std::vector<char> imageData( bufsize );
 	file.read( &imageData[0], bufsize );
-	auto byteRead = file.gcount();
+	auto byteRead = file.gcount(); //auto  nehm den typ der passt, 
 	imageData.resize( byteRead ); //Überflüssig reservierten Speicher freigeben + Wert zur BufferOverflow-Überprüfung setzen
 
 	file.close();
@@ -62,12 +62,12 @@ ModernGDV::Textures::Texture::Texture(const std::string& filename) :
 	texelheight = 1.f / height;
 
 	// Einzelne Bildversionen laden
-	for (unsigned int level = 0; level < header.MipMapCount; ++level)
+	for (unsigned int level = 0; level < header.MipMapCount; ++level) //MipMaps 
 	{
 		unsigned int size = ((width + 3) / 4)*((height + 3) / 4)*blockSize;
 		if (offset + size > imageData.size())
 			throw std::runtime_error( "Texture contains too few data!" );
-		glCompressedTexImage2D( GL_TEXTURE_2D, level, format, width, height, 0, size, &imageData[offset] );
+		glCompressedTexImage2D( GL_TEXTURE_2D, level, format, width, height, 0, size, &imageData[offset] ); //auf Grafikkarte laden
 
 		offset += size;
 		width /= 2;
