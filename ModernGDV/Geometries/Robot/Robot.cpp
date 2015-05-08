@@ -9,16 +9,6 @@ Geometries::Robot::Robot::Robot( ModernGDV::Driver* mgdv )
 Geometries::Robot::Robot::~Robot()
 {
 }
-#include <iostream>
-void Geometries::Robot::Robot::setHeight(float h ){
-	float tmp = (0.45f*0.45f - 0.5f*0.5f - h*h) / (-2 * 0.5f*h);
-	std::cout << tmp << "\n";
-	float rotationLeftThigh = glm::acos( tmp);
-	float rotationLeftShank = glm::acos((h*h - 0.5f*0.5f - 0.45f*0.45f) / (-2 * 0.5f*0.45f));
-	float rotationRightThigh = glm::acos((0.45f*0.45f - 0.5f*0.5f - h*h) / (-2 * 0.5f*h));
-	float rotationRightShank = glm::acos((h*h - 0.5f*0.5f - 0.45f*0.45f) / (-2 * 0.5f*0.45f));
-	
-}
 
 void Geometries::Robot::Robot::Render( const glm::mat4& transform )
 {
@@ -41,26 +31,26 @@ void Geometries::Robot::Robot::Render( const glm::mat4& transform )
 	subtransform = transform;
 
 	subtransform = glm::translate( subtransform, glm::vec3( -0.25f, 0.14f, 0.f ) ); //Linkes Hüftgelenk
-	subtransform = glm::rotate(subtransform, -rotationLeftThigh, glm::vec3(1, 0, 0));
+	subtransform = glm::rotate( subtransform, rotationLeftLegThigh, glm::vec3( 1, 0, 0 ) );
 	mgdv->ShaderLib.SetModel( subtransform );
 	thighJoint.Render();
 
-	
-	
-	mgdv->ShaderLib.SetModel(subtransform);
+	subtransform = glm::rotate( subtransform, rotationLeftLegLateral, glm::vec3( 0, 0, 1 ) );
+	mgdv->ShaderLib.SetModel( subtransform );
 	thigh.Render();
 
 	subtransform = glm::translate( subtransform, glm::vec3( 0.f, -0.40f, 0.f ) ); //Linker Unterschenkel
-	subtransform = glm::rotate(subtransform, rotationLeftShank, glm::vec3(1, 0, 0));	
+	subtransform = glm::rotate(subtransform, rotationLeftLegShank, glm::vec3(1, 0, 0));	
 	mgdv->ShaderLib.SetModel( subtransform );
 	shank.Render();
 
 	subtransform = glm::translate( subtransform, glm::vec3( 0.f, -0.4f, 0.f ) ); //Linker Fuß
+	subtransform = glm::rotate( subtransform, rotationLeftLegFoot, glm::vec3( 1, 0, 0 ) );
 	mgdv->ShaderLib.SetModel( subtransform );
 	foot.Render();
 
 	subtransform = glm::translate(subtransform, glm::vec3(0.f, -0.05f, 0.f)); //Linker Ski
-	subtransform = glm::scale(subtransform, glm::vec3(1.0f, 4.0f, 1.0f)); //zum Test, ob Spitzen passen
+	//subtransform = glm::scale(subtransform, glm::vec3(1.0f, 4.0f, 1.0f)); //zum Test, ob Spitzen passen
 	mgdv->ShaderLib.SetModel(subtransform);
 	ski.Render();
 
@@ -120,4 +110,12 @@ void Geometries::Robot::Robot::Render( const glm::mat4& transform )
 	subtransform = glm::translate( subtransform, glm::vec3( 0.f, -0.40f, 0.f ) ); //Rechte Unterarm
 	mgdv->ShaderLib.SetModel( subtransform );
 	thigh.Render();
+}
+
+void Geometries::Robot::Robot::SetLeftLeg(const float& length, const float& rotationFront, const float& rotationLateral, const float& rotationFoot)
+{
+	rotationLeftLegLateral = - rotationLateral;
+	rotationLeftLegThigh = - glm::acos( (0.45f*0.45f - 0.5f*0.5f - length*length) / (-2 * 0.5f*length) ) + rotationFront;
+	rotationLeftLegShank = glm::pi<float>() - glm::acos( (length*length - 0.5f*0.5f - 0.45f*0.45f) / (-2 * 0.5f*0.45f) );
+	rotationLeftLegFoot = rotationFoot - rotationLeftLegThigh - rotationLeftLegShank;
 }

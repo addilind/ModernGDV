@@ -22,10 +22,14 @@ namespace Geometries
 		private:
 			ModernGDV::Driver* mgdv;
 			
-			float rotationLeftThigh;
-			float rotationLeftShank;
-			float rotationRightThigh;
-			float rotationRightShank;
+			float rotationLeftLegLateral;
+			float rotationLeftLegThigh;
+			float rotationLeftLegShank;
+			float rotationLeftLegFoot;
+			float rotationRightLegLateral;
+			float rotationRightLegThigh;
+			float rotationRightLegShank;
+			float rotationRightLegFoot;
 
 			Torso torso;
 			Thigh thigh;
@@ -43,7 +47,8 @@ namespace Geometries
 			~Robot();
 
 			void Render(const glm::mat4& transform);
-			void setHeight(float);
+
+			void SetLeftLeg(const float& length, const float& rotationFront, const float& rotationLateral, const float& rotationFoot );
 		};
 	}
 }
