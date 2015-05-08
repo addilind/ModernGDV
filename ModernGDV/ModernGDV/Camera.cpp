@@ -37,34 +37,55 @@ void ModernGDV::Camera::Update( float deltaT )
 	const float speedUpDown = 0.75f;
 	const float speedRightLeft = 1.f;
 	const float speedZoom = 2.f;
+	const float moveSpeed = 4.f;
 
 	bool dirty = false;
-	if (glfwGetKey( mgdv->GetWindow(), GLFW_KEY_UP ))
+	if (glfwGetKey(mgdv->GetWindow(), GLFW_KEY_UP))
 	{
 		heightAngle += speedUpDown * deltaT;
 		if (heightAngle > heightbound)
 			heightAngle = heightbound;
 		dirty = true;
 	}
-	if (glfwGetKey( mgdv->GetWindow(), GLFW_KEY_DOWN ))
+	if (glfwGetKey(mgdv->GetWindow(), GLFW_KEY_DOWN))
 	{
 		heightAngle -= speedUpDown * deltaT;
 		if (heightAngle < -heightbound)
 			heightAngle = -heightbound;
 		dirty = true;
 	}
-	if (glfwGetKey( mgdv->GetWindow(), GLFW_KEY_LEFT ))
+	if (glfwGetKey(mgdv->GetWindow(), GLFW_KEY_LEFT))
 	{
 		xzAngle -= speedRightLeft * deltaT;
 		if (xzAngle < 0.f)
 			xzAngle += twopi;
 		dirty = true;
 	}
-	if (glfwGetKey( mgdv->GetWindow(), GLFW_KEY_RIGHT ))
+	if (glfwGetKey(mgdv->GetWindow(), GLFW_KEY_RIGHT))
 	{
 		xzAngle += speedRightLeft * deltaT;
 		if (xzAngle >= twopi)
 			xzAngle -= twopi;
+		dirty = true;
+	}
+	if (glfwGetKey(mgdv->GetWindow(), GLFW_KEY_W))
+	{
+		lookAt += glm::vec3(moveSpeed * -1.f * deltaT * glm::sin(xzAngle), 0.f, moveSpeed* - 1.f * deltaT * glm::cos(xzAngle));
+		dirty = true;
+	}
+	if (glfwGetKey(mgdv->GetWindow(), GLFW_KEY_S))
+	{
+		lookAt += glm::vec3(moveSpeed * 1.f * deltaT * glm::sin(xzAngle), moveSpeed * 0.f, 1.f * deltaT * glm::cos(xzAngle));
+		dirty = true;
+	}
+	if (glfwGetKey(mgdv->GetWindow(), GLFW_KEY_A))
+	{
+		lookAt += glm::vec3(moveSpeed * -1.f * deltaT * glm::cos(xzAngle), 0.f, moveSpeed * 1.f * deltaT * glm::sin(xzAngle));
+		dirty = true;
+	}
+	if (glfwGetKey(mgdv->GetWindow(), GLFW_KEY_D))
+	{
+		lookAt += glm::vec3(moveSpeed * 1.f * deltaT * glm::cos(xzAngle), 0.f, moveSpeed * -1.f * deltaT * glm::sin(xzAngle));
 		dirty = true;
 	}
 	if (glfwGetKey( mgdv->GetWindow(), GLFW_KEY_PAGE_UP ))

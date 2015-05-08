@@ -32,15 +32,31 @@ MyApp::~MyApp()
 void MyApp::Update(float deltaT)
 {
 	camera.Update( deltaT );
+	robot.setHeight(0.5f +0.3*glm::sin(glfwGetTime() / 3.f));
 }
 
 void MyApp::Render(  )
 {
 	camera.Render();
+	mgdv->ShaderLib.SetLight(glm::vec3(1.f*glm::sin(glfwGetTime() / 3.f), 0.3f, 1.f*glm::cos(glfwGetTime() / 3.f)), glm::vec3(0.0f, 0.f, 1.f), 1.f, 0.3f);
 
-	mgdv->ShaderLib.SetModel( glm::scale( glm::translate( glm::mat4(), glm::vec3( 0, -5.f, 0 ) ), glm::vec3( 50.f, 5.f, 50.f ) ) );
+	mgdv->ShaderLib.SetModel(
+		glm::scale(
+		glm::rotate(
+		glm::translate(glm::mat4(), glm::vec3(0, -5.f, 0)),
+		-0.1f * -glm::pi<float>(), glm::vec3(1, 0, 0)),
+		glm::vec3(50.f, 5.f, 50.f)
+		));
 
-	mgdv->ShaderLib.SetLight( glm::vec3( 1.f*glm::sin( glfwGetTime() / 3.f ), 0.3f, 1.f*glm::cos( glfwGetTime() / 3.f ) ), glm::vec3( 0.0f, 0.f, 1.f ), 1.f, 0.3f );
+	terrain.Render();
+
+	mgdv->ShaderLib.SetModel(
+		glm::scale(
+		glm::rotate(
+		glm::translate(glm::mat4(), glm::vec3(0, -32.5f, +85.f)),
+		-0.1f * -glm::pi<float>(), glm::vec3(1, 0, 0)),
+		glm::vec3(50.f, 5.f, 50.f)
+		));
 
 	terrain.Render();
 
