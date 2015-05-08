@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include "OGLChecks.h"
 
 ModernGDV::Driver::Driver()
 	: ShaderLib(), glfwInitialized( false ), window( nullptr ),
@@ -21,6 +22,8 @@ ModernGDV::Driver::Driver()
 	{
 		createWindow();
 		std::cout << "Window created" << std::endl;
+
+		CheckRequiredOGLFeatures();
 
 		ShaderLib.UseShader( ShaderLib.GetShaderID( "default" ) );
 
@@ -145,6 +148,7 @@ void ModernGDV::Driver::createWindow()
 		throw std::runtime_error( "Cannot create window" );
 
 	glfwMakeContextCurrent( window ); //Fenster für alle zukünftigen OpenGL-Aufrufe als Ziel setzen
+	epoxy_handle_external_wglMakeCurrent();
 }
 
 void ModernGDV::Driver::updateProj()

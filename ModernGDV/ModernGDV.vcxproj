@@ -100,6 +100,7 @@
     <ClCompile Include="ModernGDV\Camera.cpp" />
     <ClCompile Include="ModernGDV\CCallbackWrapper.cpp" />
     <ClCompile Include="ModernGDV\ModernGDV.cpp" />
+    <ClCompile Include="ModernGDV\OGLChecks.cpp" />
     <ClCompile Include="ModernGDV\Shaders\ShaderLibrary.cpp" />
     <ClCompile Include="ModernGDV\Shaders\ShaderSet.cpp" />
     <ClCompile Include="ModernGDV\Textures\Texture.cpp" />
@@ -126,6 +127,7 @@
     <ClInclude Include="ModernGDV\MGDVVertex.h" />
     <ClInclude Include="ModernGDV\MGDVApp.h" />
     <ClInclude Include="ModernGDV\ModernGDV.h" />
+    <ClInclude Include="ModernGDV\OGLChecks.h" />
     <ClInclude Include="ModernGDV\OGLInc.h" />
     <ClInclude Include="ModernGDV\Shaders\ShaderLibrary.h" />
     <ClInclude Include="ModernGDV\Shaders\ShaderSet.h" />

@@ -75,7 +75,6 @@ void Geometries::Robot::Robot::Render( const glm::mat4& transform )
 	foot.Render();
 
 	subtransform = glm::translate(subtransform, glm::vec3(0.f, -0.05f, 0.f)); //Rechter Ski
-	subtransform = glm::scale(subtransform, glm::vec3(1.0f, 4.0f, 1.0f)); //zum Test, ob Spitzen passen
 	mgdv->ShaderLib.SetModel(subtransform);
 	ski.Render();
 
@@ -115,7 +114,7 @@ void Geometries::Robot::Robot::Render( const glm::mat4& transform )
 void Geometries::Robot::Robot::SetLeftLeg(const float& length, const float& rotationFront, const float& rotationLateral, const float& rotationFoot)
 {
 	rotationLeftLegLateral = - rotationLateral;
-	rotationLeftLegThigh = - glm::acos( (0.45f*0.45f - 0.5f*0.5f - length*length) / (-2 * 0.5f*length) ) + rotationFront;
+	rotationLeftLegThigh = - glm::acos( (0.45f*0.45f - 0.5f*0.5f - length*length) / (-2 * 0.5f*length) ) - rotationFront;
 	rotationLeftLegShank = glm::pi<float>() - glm::acos( (length*length - 0.5f*0.5f - 0.45f*0.45f) / (-2 * 0.5f*0.45f) );
 	rotationLeftLegFoot = rotationFoot - rotationLeftLegThigh - rotationLeftLegShank;
 }

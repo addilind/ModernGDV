@@ -16,15 +16,15 @@ Geometries::Robot::Ski::Ski(ModernGDV::Driver* mgdv)
 	std::vector<Vertex> vertices;
 
 	//Ski
-	vec3 cuboidBottomFrontLeft(-0.075f, -0.01f, +0.70f);
-	vec3 cuboidBottomFrontRight(+0.075f, -0.01f, +0.70f);
-	vec3 cuboidBottomBackLeft(-0.075f, -0.01f, -0.70f);
-	vec3 cuboidBottomBackRight(+0.075f, -0.01f, -0.70f);
+	vec3 cuboidBottomFrontLeft(-0.075f, -0.03f, +1.10f);
+	vec3 cuboidBottomFrontRight(+0.075f, -0.03f, +1.10f);
+	vec3 cuboidBottomBackLeft(-0.075f, -0.03f, -1.10f);
+	vec3 cuboidBottomBackRight(+0.075f, -0.03f, -1.10f);
 
-	vec3 cuboidTopFrontLeft(-0.075f, +0.0f, +0.70f);
-	vec3 cuboidTopFrontRight(+0.075f, +0.0f, +0.70f);
-	vec3 cuboidTopBackLeft(-0.075f, +0.0f, -0.70f);
-	vec3 cuboidTopBackRight(+0.075f, +0.0f, -0.70f);
+	vec3 cuboidTopFrontLeft( -0.075f, +0.0f, +1.10f );
+	vec3 cuboidTopFrontRight( +0.075f, +0.0f, +1.10f );
+	vec3 cuboidTopBackLeft( -0.075f, +0.0f, -1.10f );
+	vec3 cuboidTopBackRight( +0.075f, +0.0f, -1.10f );
 
 	Quad::Create(vertices, cuboidBottomFrontLeft, vec2(0.f, 0.f), cuboidBottomFrontRight, vec2(1.f, 0.f),
 		cuboidBottomBackRight, vec2(1.f, 1.f), cuboidBottomBackLeft, vec2(0.f, 1.f));				//Bodenfläche Quader
@@ -38,8 +38,8 @@ Geometries::Robot::Ski::Ski(ModernGDV::Driver* mgdv)
 		cuboidTopBackRight, vec2(1.f, 0.f), cuboidTopFrontRight, vec2(1.f, 1.f));					//Oberseite Quader
 
 	//Ski Spitze vorne
-	vec3 frontTipLeft(-0.035f, +0.005f, +0.85f);
-	vec3 frontTipRight(+0.035f, +0.005f, +0.85f);
+	vec3 frontTipLeft(-0.035f, +0.02f, +1.25f);
+	vec3 frontTipRight(+0.035f, +0.02f, +1.25f);
 
 	Quad::Create( vertices, cuboidTopFrontLeft, vec2( 0.f, 0.f ), cuboidTopFrontRight, vec2( 1.f, 0.f ),  //Oberseite
 		frontTipRight, vec2( 1.f, 1.f ), frontTipLeft, vec2( 0.f, 1.f ) );
@@ -50,8 +50,8 @@ Geometries::Robot::Ski::Ski(ModernGDV::Driver* mgdv)
 
 
 	//Ski Spitze hinten
-	vec3 backTipLeft(-0.035f, +0.005f, -0.85f);
-	vec3 backTipRight( +0.035f, +0.005f, -0.85f );
+	vec3 backTipLeft(-0.035f, +0.02f, -1.25f);
+	vec3 backTipRight( +0.035f, +0.02f, -1.25f );
 
 	Quad::Create( vertices, cuboidTopBackRight, vec2( 0.f, 0.f ), cuboidTopBackLeft, vec2( 1.f, 0.f ),  //Oberseite
 		backTipLeft, vec2( 1.f, 1.f ), backTipRight, vec2( 0.f, 1.f ) );

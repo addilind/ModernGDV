@@ -10,6 +10,7 @@
 int main( int argc, char** argv ) {
 	try {
 		std::cout << "ModernGDV Build " __DATE__ << std::endl; //Banner auf Konsole ausgeben
+		system( "pause" );
 
 		//Kommandozeilenparameter in vector lesen
 		std::vector<std::string> commandline;
