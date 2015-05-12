@@ -32,7 +32,8 @@ MyApp::~MyApp()
 void MyApp::Update(float deltaT)
 {
 	camera.Update( deltaT );
-	robot.SetLeftLeg( 0.60f + 0.35*glm::sin( glfwGetTime() ), 0.2f, 0.f, 0.1f*glm::pi<float>() );
+	robot.SetLeftLeg(0.60f + 0.35*glm::sin(glfwGetTime()), 0.2f, 0.f, 0.1f*glm::pi<float>());
+	robot.SetRightLeg(0.60f + 0.35*glm::sin(glfwGetTime()), 0.2f, 0.f, 0.1f*glm::pi<float>());
 }
 
 void MyApp::Render(  )
@@ -59,7 +60,7 @@ void MyApp::Render(  )
 		));
 
 	terrain.Render();
-
+	
 	robot.Render( glm::mat4() );
 
 	glDisable( GL_CULL_FACE ); //Lampe ist nicht immer korrekt

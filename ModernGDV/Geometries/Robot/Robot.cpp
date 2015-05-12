@@ -35,7 +35,7 @@ void Geometries::Robot::Robot::Render( const glm::mat4& transform )
 	mgdv->ShaderLib.SetModel( subtransform );
 	thighJoint.Render();
 
-	subtransform = glm::rotate( subtransform, rotationLeftLegLateral, glm::vec3( 0, 0, 1 ) );
+	subtransform = glm::rotate( subtransform, rotationLeftLegLateral, glm::vec3( 0, 0, 1 ) ); //Linker Oberschenkel
 	mgdv->ShaderLib.SetModel( subtransform );
 	thigh.Render();
 
@@ -57,20 +57,23 @@ void Geometries::Robot::Robot::Render( const glm::mat4& transform )
 	subtransform = transform; //Pop, Push
 
 	subtransform = glm::translate( subtransform, glm::vec3( +0.25f, 0.14f, 0.f ) ); //Rechtes Hüftgelenk
+	subtransform = glm::rotate(subtransform, rotationRightLegThigh, glm::vec3(1, 0, 0));
 	subtransform = glm::rotate(subtransform, glm::pi<float>(), glm::vec3(0, 0, 1)); //Drehung Hüftgelenk
 	mgdv->ShaderLib.SetModel( subtransform );
 	thighJoint.Render();
 
-	subtransform = glm::rotate(subtransform, glm::pi<float>(), glm::vec3(0, 0, 1));  //Rechter Oberschenkel
+	subtransform = glm::rotate(subtransform, glm::pi<float>(), glm::vec3(0, 0, 1)); //Drehung zurück für die restlichen Teile
+	subtransform = glm::rotate(subtransform, rotationRightLegLateral, glm::vec3(0, 0, 1));  //Rechter Oberschenkel
 	mgdv->ShaderLib.SetModel( subtransform );
 	thigh.Render();
 
 	subtransform = glm::translate( subtransform, glm::vec3( 0.f, -0.40f, 0.f ) ); //Rechter Unterschenkel
-	//subtransform = glm::rotate( subtransform, static_cast<float>(glm::cos( glfwGetTime() )), glm::vec3( 1, 0, 0 ) );
+	subtransform = glm::rotate(subtransform, rotationRightLegShank, glm::vec3(1, 0, 0));
 	mgdv->ShaderLib.SetModel( subtransform );
 	shank.Render();
 
 	subtransform = glm::translate( subtransform, glm::vec3( 0.f, -0.4f, 0.f ) ); //Rechter Fuß
+	subtransform = glm::rotate(subtransform, rotationRightLegFoot, glm::vec3(1, 0, 0));
 	mgdv->ShaderLib.SetModel( subtransform );
 	foot.Render();
 
@@ -117,4 +120,12 @@ void Geometries::Robot::Robot::SetLeftLeg(const float& length, const float& rota
 	rotationLeftLegThigh = - glm::acos( (0.45f*0.45f - 0.5f*0.5f - length*length) / (-2 * 0.5f*length) ) - rotationFront;
 	rotationLeftLegShank = glm::pi<float>() - glm::acos( (length*length - 0.5f*0.5f - 0.45f*0.45f) / (-2 * 0.5f*0.45f) );
 	rotationLeftLegFoot = rotationFoot - rotationLeftLegThigh - rotationLeftLegShank;
+}
+
+void Geometries::Robot::Robot::SetRightLeg(const float& length, const float& rotationFront, const float& rotationLateral, const float& rotationFoot)
+{
+	rotationRightLegLateral = -rotationLateral;
+	rotationRightLegThigh = -glm::acos((0.45f*0.45f - 0.5f*0.5f - length*length) / (-2 * 0.5f*length)) - rotationFront;
+	rotationRightLegShank = glm::pi<float>() - glm::acos((length*length - 0.5f*0.5f - 0.45f*0.45f) / (-2 * 0.5f*0.45f));
+	rotationRightLegFoot = rotationFoot - rotationRightLegThigh - rotationRightLegShank;
 }
