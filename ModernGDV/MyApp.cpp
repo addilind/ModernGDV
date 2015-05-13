@@ -32,8 +32,11 @@ MyApp::~MyApp()
 void MyApp::Update(float deltaT)
 {
 	camera.Update( deltaT );
-	robot.SetLeftLeg(0.60f + 0.35*glm::sin(glfwGetTime()), 0.2f, 0.f, 0.1f*glm::pi<float>());
-	robot.SetRightLeg(0.60f + 0.35*glm::sin(glfwGetTime()), 0.2f, 0.f, 0.1f*glm::pi<float>());
+	//robot.SetLeftLeg(0.60f + 0.35*glm::sin(glfwGetTime()), 0.2f, 0.f, 0.1f*glm::pi<float>());
+	robot.SetLeftLeg(0.80f + 0.1*glm::sin(glfwGetTime()), 0.1f, -0.25f + 0.25*glm::sin(glfwGetTime()), +0.5f);
+	robot.SetRightLeg(0.80f + 0.1*glm::sin(glfwGetTime()), 0.1f, -0.25f + 0.25*glm::sin(glfwGetTime()), +0.5f);
+
+	robot.SetLeftArm(1.2f, -0.f, -0.9f);
 }
 
 void MyApp::Render(  )
