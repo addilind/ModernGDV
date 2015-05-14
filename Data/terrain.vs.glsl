@@ -1,4 +1,4 @@
-#version 400
+#version 330
 
 // Eigenschaften, die ein Eingabe-Vertex aufweisen soll
 in vec3 inPosition;	//Position

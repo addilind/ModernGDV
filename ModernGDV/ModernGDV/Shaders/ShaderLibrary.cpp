@@ -55,6 +55,7 @@ size_t ModernGDV::Shaders::ShaderLibrary::GetShaderID(const std::string& name)
 
 	shaders.push_back( ShaderSet( this, name ) );
 	shaderNames.insert( std::pair<const std::string, size_t>( name, shaders.size() - 1U ) );
+	shaders[activeShader].Bind(); //Reload currently active shader
 	return shaders.size() - 1U;
 }
 

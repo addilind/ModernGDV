@@ -41,14 +41,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\glfw\include;..\epoxy\include;..\glm;$(IncludePath)</IncludePath>
-    <LibraryPath>..\epoxy\win32\lib;..\glfw\lib-vc2013;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\glfw\include;..\glm;$(IncludePath)</IncludePath>
+    <LibraryPath>..\glfw\lib-vc2013;$(LibraryPath)</LibraryPath>
     <IntDir>$(SolutionDir)$(Configuration)\build\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>..\glfw\include;..\epoxy\include;..\glm;$(IncludePath)</IncludePath>
-    <LibraryPath>..\epoxy\win32\lib;..\glfw\lib-vc2013;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\glfw\include;..\glm;$(IncludePath)</IncludePath>
+    <LibraryPath>..\glfw\lib-vc2013;$(LibraryPath)</LibraryPath>
     <IntDir>$(SolutionDir)$(Configuration)\build\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -63,7 +63,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3d.lib;libepoxy-0.lib;libepoxy.dll.a;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3d.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
@@ -85,7 +85,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glfw3.lib;libepoxy-0.lib;libepoxy.dll.a;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
     </Link>
@@ -100,7 +100,8 @@
     <ClCompile Include="ModernGDV\Camera.cpp" />
     <ClCompile Include="ModernGDV\CCallbackWrapper.cpp" />
     <ClCompile Include="ModernGDV\ModernGDV.cpp" />
-    <ClCompile Include="ModernGDV\OGLChecks.cpp" />
+    <ClCompile Include="ModernGDV\OGL\gl_core_3_3.c" />
+    <ClCompile Include="ModernGDV\OGL\wgl_core_3_3.c" />
     <ClCompile Include="ModernGDV\Shaders\ShaderLibrary.cpp" />
     <ClCompile Include="ModernGDV\Shaders\ShaderSet.cpp" />
     <ClCompile Include="ModernGDV\Textures\Texture.cpp" />
@@ -127,8 +128,9 @@
     <ClInclude Include="ModernGDV\MGDVVertex.h" />
     <ClInclude Include="ModernGDV\MGDVApp.h" />
     <ClInclude Include="ModernGDV\ModernGDV.h" />
-    <ClInclude Include="ModernGDV\OGLChecks.h" />
     <ClInclude Include="ModernGDV\OGLInc.h" />
+    <ClInclude Include="ModernGDV\OGL\gl_core_3_3.h" />
+    <ClInclude Include="ModernGDV\OGL\wgl_core_3_3.h" />
     <ClInclude Include="ModernGDV\Shaders\ShaderLibrary.h" />
     <ClInclude Include="ModernGDV\Shaders\ShaderSet.h" />
     <ClInclude Include="ModernGDV\Textures\DDSDefs.h" />

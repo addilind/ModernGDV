@@ -1,4 +1,4 @@
-#version 400
+#version 330
 
 // Eigenschaften, die der VertexShader zusätzlich zur Position übergeben hat
 in vec2 texcoord;				//Texturkoordinate

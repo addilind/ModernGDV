@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include "OGLChecks.h"
+#include <iomanip>
 
 ModernGDV::Driver::Driver()
 	: ShaderLib(), glfwInitialized( false ), window( nullptr ),
@@ -16,18 +16,14 @@ ModernGDV::Driver::Driver()
 		throw std::runtime_error( "Cannot initialize GLFW" );
 
 	glfwInitialized = true;
-	std::cout << "GLFW initialized" << std::endl;
+	Log( "DRVR", "GLFW initialized");
 
 	try
 	{
 		createWindow();
-		std::cout << "Window created" << std::endl;
-
-		CheckRequiredOGLFeatures();
+		Log( "DRVR", "Window created");
 
 		ShaderLib.UseShader( ShaderLib.GetShaderID( "default" ) );
-
-		updateProj();
 
 		glEnable( GL_SAMPLE_ALPHA_TO_COVERAGE );
 	}
@@ -37,7 +33,7 @@ ModernGDV::Driver::Driver()
 		throw;
 	}
 
-	std::cout << "ModernGDV Initialization finished" << std::endl;
+	Log( "DRVR", "ModernGDV Initialization finished");
 }
 
 ModernGDV::Driver::~Driver()
@@ -136,9 +132,12 @@ GLuint ModernGDV::Driver::CreateVertexBuffer( const std::vector<ModernGDV::Verte
 void ModernGDV::Driver::createWindow()
 {
 	glfwWindowHint( GLFW_SAMPLES, 4 ); // 4x Antialiasing
-	glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, 4 ); //OpenGL-Version 4.0 verwenden
-	glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 0 );
+	glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, 3 ); //OpenGL-Version 3.3 verwenden
+	glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 3 );
 	glfwWindowHint( GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE );
+#ifdef _DEBUG
+	glfwWindowHint( GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE );
+#endif
 	window = glfwCreateWindow( 1024, 768, "GDV: Bastian Kreuzer (734877), Adrian Mueller (734922)", nullptr, nullptr ); //Fenster erstellen
 	glfwSetWindowUserPointer( window, this );
 	glfwSetFramebufferSizeCallback( window, Callbacks::glfwFramebufferSizeCallback );
@@ -148,7 +147,11 @@ void ModernGDV::Driver::createWindow()
 		throw std::runtime_error( "Cannot create window" );
 
 	glfwMakeContextCurrent( window ); //Fenster für alle zukünftigen OpenGL-Aufrufe als Ziel setzen
-	epoxy_handle_external_wglMakeCurrent();
+	if (ogl_LoadFunctions() == ogl_LOAD_FAILED)
+		throw std::runtime_error( "ERROR: Unable to load required OpenGL-Functions" );
+
+	glEnable( GL_DEBUG_OUTPUT_SYNCHRONOUS_ARB );
+	glDebugMessageCallbackARB( &Callbacks::oglDebugMessage, this );
 }
 
 void ModernGDV::Driver::updateProj()
@@ -168,4 +171,9 @@ void ModernGDV::Driver::deinit()
 	}
 	if (glfwInitialized)
 		glfwTerminate(); //GLFW beenden, falls initialisiert
+}
+
+void ModernGDV::Log( const std::string& source, const std::string& message )
+{
+	std::async( [source, message]()->void{ std::clog << glfwGetTime() << "[" << source << "]: " << message << "\n"; } );
 }

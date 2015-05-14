@@ -6,11 +6,12 @@
 
 #include "ModernGDV/ModernGDV.h"
 #include "MyApp.h"
+#include <iomanip>
 
 int main( int argc, char** argv ) {
 	try {
 		std::cout << "ModernGDV Build " __DATE__ << std::endl; //Banner auf Konsole ausgeben
-		system( "pause" );
+		std::clog << std::setprecision( 4 );
 
 		//Kommandozeilenparameter in vector lesen
 		std::vector<std::string> commandline;

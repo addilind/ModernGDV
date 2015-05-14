@@ -32,13 +32,13 @@ namespace Geometries
 				vertices.push_back( ModernGDV::Vertex( posD.x, posD.y, posD.z, normalMid.x, normalMid.y, normalMid.z, uvD.x, uvD.y ) );
 			}
 
-			static inline void Draw( unsigned char indexA, unsigned char indexB, unsigned char indexC, unsigned char indexD )
+			static inline void Draw( uint16_t indexA, uint16_t indexB, uint16_t indexC, uint16_t indexD )
 			{
-				unsigned char indices[4] = { indexA, indexB, indexD, indexC };
-				glDrawElements( GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_BYTE, indices );
+				uint16_t indices[4] = { indexA, indexB, indexD, indexC };
+				glDrawElements( GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_SHORT, indices );
 			}
 
-			static inline unsigned char Draw( unsigned char startIndex )
+			static inline unsigned char Draw( uint16_t startIndex )
 			{
 				Draw( startIndex, startIndex + 1U, startIndex + 2U, startIndex + 3U );
 				return startIndex + 4U;
