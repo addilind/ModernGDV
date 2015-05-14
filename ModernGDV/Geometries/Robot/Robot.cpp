@@ -1,4 +1,5 @@
 #include "Robot.h"
+#include "Dimensions.h"
 
 Geometries::Robot::Robot::Robot( ModernGDV::Driver* mgdv )
 : torso(mgdv), thigh(mgdv), shank(mgdv), foot(mgdv), shoulderJoint(mgdv), thighJoint(mgdv), head(mgdv), neck(mgdv), ski(mgdv)
@@ -15,12 +16,16 @@ void Geometries::Robot::Robot::Render( const glm::mat4& transform )
 
 	mgdv->ShaderLib.UseShader( mgdv->ShaderLib.GetShaderID( "default" ) );
 	mgdv->ShaderLib.SetSpecularProperties( glm::vec3( 0.5f, 0.5f, 0.5f ), 10.f );
-	mgdv->ShaderLib.SetModel( transform );
-	torso.Render();
 
 	glm::mat4 subtransform = transform; //Push
 
-	subtransform = glm::translate( subtransform, glm::vec3( 0.f, 1.0f, 0.f ) );
+	//subtransform = glm::translate( subtransform, glm::vec3( 0.f, -0.14f, 0.f ) );
+	mgdv->ShaderLib.SetModel( subtransform );
+	torso.Render();
+
+	subtransform = transform; //Pop, Push
+
+	subtransform = glm::translate( subtransform, glm::vec3( 0.f, 0.860f, 0.f ) );
 	mgdv->ShaderLib.SetModel( subtransform );
 	neck.Render();
 	
@@ -28,13 +33,16 @@ void Geometries::Robot::Robot::Render( const glm::mat4& transform )
 	mgdv->ShaderLib.SetModel(subtransform);
 	head.Render();
 	
-	subtransform = transform;
+	subtransform = transform; //Pop, Push
 
-	subtransform = glm::translate( subtransform, glm::vec3( -0.25f, 0.14f, 0.f ) ); //Linkes Hüftgelenk
+	subtransform = glm::translate( subtransform, glm::vec3( -0.5f * Dim::TOR_SCB_WIDTH, 0.f, 0.f ) ); //Linkes Hüftgelenk
 	subtransform = glm::rotate( subtransform, rotationLeftLegThigh, glm::vec3( 1, 0, 0 ) );
+	subtransform = glm::rotate( subtransform, glm::pi<float>(), glm::vec3( 0, 1, 0 ) ); //Drehung Hüftgelenk
 	mgdv->ShaderLib.SetModel( subtransform );
 	thighJoint.Render();
+	subtransform = glm::rotate( subtransform, glm::pi<float>(), glm::vec3( 0, 1, 0 ) ); //Drehung zurück für die restlichen Teile
 
+	subtransform = glm::translate( subtransform, glm::vec3( -Dim::THJ_THIGH_LOC, 0.f, 0.f ) );
 	subtransform = glm::rotate( subtransform, rotationLeftLegLateral, glm::vec3( 0, 0, 1 ) ); //Linker Oberschenkel
 	mgdv->ShaderLib.SetModel( subtransform );
 	thigh.Render();
@@ -56,13 +64,12 @@ void Geometries::Robot::Robot::Render( const glm::mat4& transform )
 
 	subtransform = transform; //Pop, Push
 
-	subtransform = glm::translate( subtransform, glm::vec3( +0.25f, 0.14f, 0.f ) ); //Rechtes Hüftgelenk
+	subtransform = glm::translate( subtransform, glm::vec3( 0.5f * Dim::TOR_SCB_WIDTH, 0.f, 0.f ) ); //Rechtes Hüftgelenk
 	subtransform = glm::rotate(subtransform, rotationRightLegThigh, glm::vec3(1, 0, 0));
-	subtransform = glm::rotate(subtransform, glm::pi<float>(), glm::vec3(0, 0, 1)); //Drehung Hüftgelenk
 	mgdv->ShaderLib.SetModel( subtransform );
 	thighJoint.Render();
 
-	subtransform = glm::rotate(subtransform, glm::pi<float>(), glm::vec3(0, 0, 1)); //Drehung zurück für die restlichen Teile
+	subtransform = glm::translate( subtransform, glm::vec3( Dim::THJ_THIGH_LOC, 0.f, 0.f ) );
 	subtransform = glm::rotate(subtransform, rotationRightLegLateral, glm::vec3(0, 0, 1));  //Rechter Oberschenkel
 	mgdv->ShaderLib.SetModel( subtransform );
 	thigh.Render();
@@ -83,7 +90,7 @@ void Geometries::Robot::Robot::Render( const glm::mat4& transform )
 
 	subtransform = transform; //Pop, Push
 
-	subtransform = glm::translate( subtransform, glm::vec3( -0.425, 0.95f, 0.f ) ); //Linkes Schultergelenk
+	subtransform = glm::translate( subtransform, glm::vec3( -0.425, 0.81f, 0.f ) ); //Linkes Schultergelenk
 	subtransform = glm::rotate(subtransform, -rotationLeftArmFront, glm::vec3(1, 0, 0)); //rotationFront
 	mgdv->ShaderLib.SetModel( subtransform );
 	shoulderJoint.Render();
@@ -101,7 +108,7 @@ void Geometries::Robot::Robot::Render( const glm::mat4& transform )
 
 	subtransform = transform; //Pop
 
-	subtransform = glm::translate( subtransform, glm::vec3( +0.425, 0.95f, 0.f ) ); //Rechtes Schultergelenk
+	subtransform = glm::translate( subtransform, glm::vec3( +0.425, 0.81f, 0.f ) ); //Rechtes Schultergelenk
 	//subtransform = glm::rotate( subtransform, static_cast<float>(glm::sin( glfwGetTime() )), glm::vec3( 1, 0, 0 ) );
 	mgdv->ShaderLib.SetModel( subtransform );
 	shoulderJoint.Render();
@@ -137,4 +144,11 @@ void Geometries::Robot::Robot::SetLeftArm(const float& rotationFront, const floa
 	rotationLeftArmFront = rotationFront;
 	rotationLeftArmLateral = rotationLateral;
 	rotationLeftArmLower = rotationLowerArm;
+}
+
+void Geometries::Robot::Robot::SetTilt(const float& tilt)
+{
+	this->tilt = tilt;
+	float heightOuterThigh = maxLegLength * glm::cos( 1.1f * glm::abs(tilt) );
+	originHeight = heightOuterThigh - 0.25f * glm::sin( glm::abs( tilt ) );
 }

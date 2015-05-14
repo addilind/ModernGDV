@@ -6,7 +6,7 @@ using Geometries::Primitives::Quad;
 MyApp::MyApp( std::vector<std::string> commandline, ModernGDV::Driver* mgdv )
 	: mgdv(mgdv), robot(mgdv), camera(mgdv), terrain(mgdv, 320U)
 {
-	mgdv->SetProjectionOptions(45.0f, 100.f);
+	mgdv->SetProjectionOptions(45.0f, 500.f);
 
 	mgdv->SetApp( this );
 

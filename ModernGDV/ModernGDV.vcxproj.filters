@@ -170,5 +170,8 @@
     <ClInclude Include="ModernGDV\OGL\wgl_core_3_3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Geometries\Robot\Dimensions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -21,6 +21,12 @@ namespace Geometries
 		{
 		private:
 			ModernGDV::Driver* mgdv;
+
+			float tilt;
+			float orientation;
+			float frontTilt;
+			float maxLegLength;
+			float originHeight;
 			
 			float rotationLeftLegLateral;
 			float rotationLeftLegThigh;
@@ -30,7 +36,6 @@ namespace Geometries
 			float rotationRightLegThigh;
 			float rotationRightLegShank;
 			float rotationRightLegFoot;
-
 			float rotationLeftArmFront;
 			float rotationLeftArmLateral;
 			float rotationLeftArmLower;
@@ -54,8 +59,9 @@ namespace Geometries
 
 			void SetLeftLeg(const float& length, const float& rotationFront, const float& rotationLateral, const float& rotationFoot );
 			void SetRightLeg(const float& length, const float& rotationFront, const float& rotationLateral, const float& rotationFoot);
-
 			void SetLeftArm(const float& rotationFront, const float& rotationLateral, const float& rotationLowerArm);
+
+			void SetTilt( const float& tilt );
 		};
 	}
 }

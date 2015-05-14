@@ -1,6 +1,7 @@
 #include "ThighJoint.h"
 
 #include "../Primitives/Quad.h"
+#include "Dimensions.h"
 
 using ModernGDV::Vertex;
 using Geometries::Primitives::Quad;
@@ -9,87 +10,75 @@ using glm::vec2;
 
 
 Geometries::Robot::ThighJoint::ThighJoint(ModernGDV::Driver* mgdv)
-: mgdv(mgdv), vertexBuffer(0U), texture(0U)
+: mgdv(mgdv), vertexBuffer(0U), texture(nullptr)
 {
 	std::vector<Vertex> vertices;
 
 	//Vorderquader
-	vec3 cuboidBottomFrontLeft(-0.0375f, -0.05f, +0.125f);
-	vec3 cuboidBottomFrontRight(+0.15f, -0.05f, +0.125f);
-	vec3 cuboidBottomBackLeft(-0.0375f, -0.05f, +0.075f);
-	vec3 cuboidBottomBackRight(+0.15f, -0.05f, +0.075f);
+	vec3 fCuboidBottomFrontLeft		( +0.0f,			-0.5f * Dim::THJ_HEIGHT, +0.5 * Dim::THJ_DEPTH );
+	vec3 fCuboidBottomFrontRight	( Dim::THJ_WIDTH,	-0.5f * Dim::THJ_HEIGHT, +0.5 * Dim::THJ_DEPTH );
+	vec3 fCuboidBottomBackLeft		( +0.0f,			-0.5f * Dim::THJ_HEIGHT, +0.5 * Dim::THJ_IDEPTH );
+	vec3 fCuboidBottomBackRight		( Dim::THJ_WIDTH,	-0.5f * Dim::THJ_HEIGHT, +0.5 * Dim::THJ_IDEPTH );
+	vec3 fCuboidTopFrontLeft		( +0.0f,			+0.5f * Dim::THJ_HEIGHT, +0.5 * Dim::THJ_DEPTH );
+	vec3 fCuboidTopFrontRight		( Dim::THJ_WIDTH,	+0.5f * Dim::THJ_HEIGHT, +0.5 * Dim::THJ_DEPTH );
+	vec3 fCuboidTopBackLeft			( +0.0f,			+0.5f * Dim::THJ_HEIGHT, +0.5 * Dim::THJ_IDEPTH );
+	vec3 fCuboidTopBackRight		( Dim::THJ_WIDTH,	+0.5f * Dim::THJ_HEIGHT, +0.5 * Dim::THJ_IDEPTH );
 
-	vec3 cuboidTopFrontLeft(-0.0375f, +0.05f, +0.125f);
-	vec3 cuboidTopFrontRight(+0.15f, +0.05f, +0.125f);
-	vec3 cuboidTopBackLeft(-0.0375f, +0.05f, +0.075f);
-	vec3 cuboidTopBackRight(+0.15f, +0.05f, +0.075f);
-
-	Quad::Create(vertices, cuboidBottomFrontLeft, vec2(0.f, 0.f), cuboidBottomFrontRight, vec2(1.f, 0.f),
-		cuboidBottomBackRight, vec2(1.f, 1.f), cuboidBottomBackLeft, vec2(0.f, 1.f));				//Bodenfläche Quader
-
-	Quad::Create(vertices, cuboidTopFrontLeft, vec2(0.f, 0.f), cuboidTopFrontRight, vec2(1.f, 0.f),
-		cuboidBottomFrontRight, vec2(1.f, 1.f), cuboidBottomFrontLeft, vec2(0.f, 1.f));				//Seitenflächen Quader
-	Quad::Create(vertices, cuboidTopFrontRight, vec2(0.f, 0.f), cuboidTopBackRight, vec2(1.f, 0.f),
-		cuboidBottomBackRight, vec2(1.f, 1.f), cuboidBottomFrontRight, vec2(0.f, 1.f));
-	Quad::Create(vertices, cuboidTopBackRight, vec2(0.f, 0.f), cuboidTopBackLeft, vec2(1.f, 0.f),
-		cuboidBottomBackLeft, vec2(1.f, 1.f), cuboidBottomBackRight, vec2(0.f, 1.f));
-	Quad::Create(vertices, cuboidTopBackLeft, vec2(0.f, 0.f), cuboidTopFrontLeft, vec2(1.f, 0.f),
-		cuboidBottomFrontLeft, vec2(1.f, 1.f), cuboidBottomBackLeft, vec2(0.f, 1.f));
-
-	Quad::Create(vertices, cuboidTopFrontLeft, vec2(0.f, 1.f), cuboidTopBackLeft, vec2(0.f, 0.f),
-		cuboidTopBackRight, vec2(1.f, 0.f), cuboidTopFrontRight, vec2(1.f, 1.f));					//Oberseite Quader
 
 	//Hinterquader
-	vec3 bcuboidBottomFrontLeft(-0.0375f, -0.05f, -0.075f);
-	vec3 bcuboidBottomFrontRight(+0.15f, -0.05f, -0.075f);
-	vec3 bcuboidBottomBackLeft(-0.0375f, -0.05f, -0.125f);
-	vec3 bcuboidBottomBackRight(+0.15f, -0.05f, -0.125f);
-
-	vec3 bcuboidTopFrontLeft(-0.0375f, +0.05f, -0.075f);
-	vec3 bcuboidTopFrontRight(+0.15f, +0.05f, -0.075f);
-	vec3 bcuboidTopBackLeft(-0.0375f, +0.05f, -0.125f);
-	vec3 bcuboidTopBackRight(+0.15f, +0.05f, -0.125f);
-
-	Quad::Create(vertices, bcuboidBottomFrontLeft, vec2(0.f, 0.f), bcuboidBottomFrontRight, vec2(1.f, 0.f),
-		bcuboidBottomBackRight, vec2(1.f, 1.f), bcuboidBottomBackLeft, vec2(0.f, 1.f));				//Bodenfläche Quader
-
-	Quad::Create(vertices, bcuboidTopFrontLeft, vec2(0.f, 0.f), bcuboidTopFrontRight, vec2(1.f, 0.f),
-		bcuboidBottomFrontRight, vec2(1.f, 1.f), bcuboidBottomFrontLeft, vec2(0.f, 1.f));				//Seitenflächen Quader
-	Quad::Create(vertices, bcuboidTopFrontRight, vec2(0.f, 0.f), bcuboidTopBackRight, vec2(1.f, 0.f),
-		bcuboidBottomBackRight, vec2(1.f, 1.f), bcuboidBottomFrontRight, vec2(0.f, 1.f));
-	Quad::Create(vertices, bcuboidTopBackRight, vec2(0.f, 0.f), bcuboidTopBackLeft, vec2(1.f, 0.f),
-		bcuboidBottomBackLeft, vec2(1.f, 1.f), bcuboidBottomBackRight, vec2(0.f, 1.f));
-	Quad::Create(vertices, bcuboidTopBackLeft, vec2(0.f, 0.f), bcuboidTopFrontLeft, vec2(1.f, 0.f),
-		bcuboidBottomFrontLeft, vec2(1.f, 1.f), bcuboidBottomBackLeft, vec2(0.f, 1.f));
-
-	Quad::Create(vertices, bcuboidTopFrontLeft, vec2(0.f, 1.f), bcuboidTopBackLeft, vec2(0.f, 0.f),
-		bcuboidTopBackRight, vec2(1.f, 0.f), bcuboidTopFrontRight, vec2(1.f, 1.f));					//Oberseite Quader
+	vec3 bCuboidBottomFrontLeft		( +0.0f,			-0.5f * Dim::THJ_HEIGHT, -0.5 * Dim::THJ_IDEPTH );
+	vec3 bCuboidBottomFrontRight	( Dim::THJ_WIDTH,	-0.5f * Dim::THJ_HEIGHT, -0.5 * Dim::THJ_IDEPTH );
+	vec3 bCuboidBottomBackLeft		( +0.0f,			-0.5f * Dim::THJ_HEIGHT, -0.5 * Dim::THJ_DEPTH );
+	vec3 bCuboidBottomBackRight		( Dim::THJ_WIDTH,	-0.5f * Dim::THJ_HEIGHT, -0.5 * Dim::THJ_DEPTH );
+	vec3 bCuboidTopFrontLeft		( +0.0f,			+0.5f * Dim::THJ_HEIGHT, -0.5 * Dim::THJ_IDEPTH );
+	vec3 bCuboidTopFrontRight		( Dim::THJ_WIDTH,	+0.5f * Dim::THJ_HEIGHT, -0.5 * Dim::THJ_IDEPTH );
+	vec3 bCuboidTopBackLeft			( +0.0f,			+0.5f * Dim::THJ_HEIGHT, -0.5 * Dim::THJ_DEPTH );
+	vec3 bCuboidTopBackRight		( Dim::THJ_WIDTH,	+0.5f * Dim::THJ_HEIGHT, -0.5 * Dim::THJ_DEPTH );
 
 	//Mittelquader
-	vec3 mcuboidBottomFrontLeft(+0.1f, -0.05f, +0.075f);
-	vec3 mcuboidBottomFrontRight(+0.15f, -0.05f, +0.075f);
-	vec3 mcuboidBottomBackLeft(+0.1f, -0.05f, -0.075f);
-	vec3 mcuboidBottomBackRight(+0.15f, -0.05f, -0.075f);
+	vec3 mCuboidBottomFrontLeft		( +0.0f,			-0.5f * Dim::THJ_HEIGHT, +0.5 * Dim::THJ_IDEPTH );
+	vec3 mCuboidBottomFrontRight	( Dim::THJ_IWIDTH,	-0.5f * Dim::THJ_HEIGHT, +0.5 * Dim::THJ_IDEPTH );
+	vec3 mCuboidBottomBackLeft		( +0.0f,			-0.5f * Dim::THJ_HEIGHT, -0.5 * Dim::THJ_IDEPTH );
+	vec3 mCuboidBottomBackRight		( Dim::THJ_IWIDTH,	-0.5f * Dim::THJ_HEIGHT, -0.5 * Dim::THJ_IDEPTH );
+	vec3 mCuboidTopFrontLeft		( +0.0f,			+0.5f * Dim::THJ_HEIGHT, +0.5 * Dim::THJ_IDEPTH );
+	vec3 mCuboidTopFrontRight		( Dim::THJ_IWIDTH,	+0.5f * Dim::THJ_HEIGHT, +0.5 * Dim::THJ_IDEPTH );
+	vec3 mCuboidTopBackLeft			( +0.0f,			+0.5f * Dim::THJ_HEIGHT, -0.5 * Dim::THJ_IDEPTH );
+	vec3 mCuboidTopBackRight		( Dim::THJ_IWIDTH,	+0.5f * Dim::THJ_HEIGHT, -0.5 * Dim::THJ_IDEPTH );
 
-	vec3 mcuboidTopFrontLeft(+0.1f, +0.05f, +0.075f);
-	vec3 mcuboidTopFrontRight(+0.15f, +0.05f, +0.075f);
-	vec3 mcuboidTopBackLeft(+0.1f, +0.05f, -0.075f);
-	vec3 mcuboidTopBackRight(+0.15f, +0.05f, -0.075f);
+	Quad::Create( vertices, fCuboidBottomFrontLeft, vec2( 0.f, 0.f ), fCuboidBottomFrontRight, vec2( 1.f, 0.f ),
+		fCuboidBottomBackRight, vec2( 1.f, 1.f ), fCuboidBottomBackLeft, vec2( 0.f, 1.f ) );
+	Quad::Create( vertices, fCuboidTopFrontLeft, vec2( 0.f, 0.f ), fCuboidTopFrontRight, vec2( 1.f, 0.f ),
+		fCuboidBottomFrontRight, vec2( 1.f, 1.f ), fCuboidBottomFrontLeft, vec2( 0.f, 1.f ) );
+	Quad::Create( vertices, fCuboidTopFrontRight, vec2( 0.f, 0.f ), fCuboidTopBackRight, vec2( 1.f, 0.f ),
+		fCuboidBottomBackRight, vec2( 1.f, 1.f ), fCuboidBottomFrontRight, vec2( 0.f, 1.f ) );
+	Quad::Create( vertices, fCuboidTopBackRight, vec2( 0.f, 0.f ), fCuboidTopBackLeft, vec2( 1.f, 0.f ),
+		fCuboidBottomBackLeft, vec2( 1.f, 1.f ), fCuboidBottomBackRight, vec2( 0.f, 1.f ) );
+	Quad::Create( vertices, fCuboidTopBackLeft, vec2( 0.f, 0.f ), fCuboidTopFrontLeft, vec2( 1.f, 0.f ),
+		fCuboidBottomFrontLeft, vec2( 1.f, 1.f ), fCuboidBottomBackLeft, vec2( 0.f, 1.f ) );
+	Quad::Create( vertices, fCuboidTopFrontLeft, vec2( 0.f, 1.f ), fCuboidTopBackLeft, vec2( 0.f, 0.f ),
+		fCuboidTopBackRight, vec2( 1.f, 0.f ), fCuboidTopFrontRight, vec2( 1.f, 1.f ) );
 
-	Quad::Create(vertices, mcuboidBottomFrontLeft, vec2(0.f, 0.f), mcuboidBottomFrontRight, vec2(1.f, 0.f),
-		mcuboidBottomBackRight, vec2(1.f, 1.f), mcuboidBottomBackLeft, vec2(0.f, 1.f));				//Bodenfläche Quader
+	Quad::Create( vertices, mCuboidBottomFrontLeft, vec2( 0.f, 0.f ), mCuboidBottomFrontRight, vec2( 1.f, 0.f ),
+		mCuboidBottomBackRight, vec2( 1.f, 1.f ), mCuboidBottomBackLeft, vec2( 0.f, 1.f ) );
+	Quad::Create( vertices, mCuboidTopFrontRight, vec2( 0.f, 0.f ), mCuboidTopBackRight, vec2( 1.f, 0.f ),
+		mCuboidBottomBackRight, vec2( 1.f, 1.f ), mCuboidBottomFrontRight, vec2( 0.f, 1.f ) );
+	Quad::Create( vertices, mCuboidTopBackLeft, vec2( 0.f, 0.f ), mCuboidTopFrontLeft, vec2( 1.f, 0.f ),
+		mCuboidBottomFrontLeft, vec2( 1.f, 1.f ), mCuboidBottomBackLeft, vec2( 0.f, 1.f ) );
+	Quad::Create( vertices, mCuboidTopFrontLeft, vec2( 0.f, 1.f ), mCuboidTopBackLeft, vec2( 0.f, 0.f ),
+		mCuboidTopBackRight, vec2( 1.f, 0.f ), mCuboidTopFrontRight, vec2( 1.f, 1.f ) );
 
-	Quad::Create(vertices, mcuboidTopFrontLeft, vec2(0.f, 0.f),mcuboidTopFrontRight, vec2(1.f, 0.f),
-		mcuboidBottomFrontRight, vec2(1.f, 1.f), mcuboidBottomFrontLeft, vec2(0.f, 1.f));				//Seitenflächen Quader
-	Quad::Create(vertices, mcuboidTopFrontRight, vec2(0.f, 0.f), mcuboidTopBackRight, vec2(1.f, 0.f),
-		mcuboidBottomBackRight, vec2(1.f, 1.f), mcuboidBottomFrontRight, vec2(0.f, 1.f));
-	Quad::Create(vertices, mcuboidTopBackRight, vec2(0.f, 0.f), mcuboidTopBackLeft, vec2(1.f, 0.f),
-		mcuboidBottomBackLeft, vec2(1.f, 1.f), mcuboidBottomBackRight, vec2(0.f, 1.f));
-	Quad::Create(vertices, mcuboidTopBackLeft, vec2(0.f, 0.f), mcuboidTopFrontLeft, vec2(1.f, 0.f),
-		mcuboidBottomFrontLeft, vec2(1.f, 1.f), mcuboidBottomBackLeft, vec2(0.f, 1.f));
-
-	Quad::Create(vertices, mcuboidTopFrontLeft, vec2(0.f, 1.f), mcuboidTopBackLeft, vec2(0.f, 0.f),
-		mcuboidTopBackRight, vec2(1.f, 0.f), mcuboidTopFrontRight, vec2(1.f, 1.f));					//Oberseite Quader
+	Quad::Create( vertices, bCuboidBottomFrontLeft, vec2( 0.f, 0.f ), bCuboidBottomFrontRight, vec2( 1.f, 0.f ),
+		bCuboidBottomBackRight, vec2( 1.f, 1.f ), bCuboidBottomBackLeft, vec2( 0.f, 1.f ) );
+	Quad::Create( vertices, bCuboidTopFrontLeft, vec2( 0.f, 0.f ), bCuboidTopFrontRight, vec2( 1.f, 0.f ),
+		bCuboidBottomFrontRight, vec2( 1.f, 1.f ), bCuboidBottomFrontLeft, vec2( 0.f, 1.f ) );
+	Quad::Create( vertices, bCuboidTopFrontRight, vec2( 0.f, 0.f ), bCuboidTopBackRight, vec2( 1.f, 0.f ),
+		bCuboidBottomBackRight, vec2( 1.f, 1.f ), bCuboidBottomFrontRight, vec2( 0.f, 1.f ) );
+	Quad::Create( vertices, bCuboidTopBackRight, vec2( 0.f, 0.f ), bCuboidTopBackLeft, vec2( 1.f, 0.f ),
+		bCuboidBottomBackLeft, vec2( 1.f, 1.f ), bCuboidBottomBackRight, vec2( 0.f, 1.f ) );
+	Quad::Create( vertices, bCuboidTopBackLeft, vec2( 0.f, 0.f ), bCuboidTopFrontLeft, vec2( 1.f, 0.f ),
+		bCuboidBottomFrontLeft, vec2( 1.f, 1.f ), bCuboidBottomBackLeft, vec2( 0.f, 1.f ) );
+	Quad::Create( vertices, bCuboidTopFrontLeft, vec2( 0.f, 1.f ), bCuboidTopBackLeft, vec2( 0.f, 0.f ),
+		bCuboidTopBackRight, vec2( 1.f, 0.f ), bCuboidTopFrontRight, vec2( 1.f, 1.f ) );
 
 
 	vertexBuffer = mgdv->CreateVertexBuffer(vertices);
@@ -111,33 +100,24 @@ void Geometries::Robot::ThighJoint::Render()
 	mgdv->ShaderLib.SetDiffuseTex(texture);
 	unsigned char index = 0U;
 
-	index = Quad::Draw(index); //Bodenfläche Quader
-
-	index = Quad::Draw(index); //Seitenflächen Quader
+	index = Quad::Draw(index);
+	index = Quad::Draw(index);
+	index = Quad::Draw(index);
 	index = Quad::Draw(index);
 	index = Quad::Draw(index);
 	index = Quad::Draw(index);
 
-	index = Quad::Draw(index); //Oberseite Quader
-
-
-	index = Quad::Draw(index); //Bodenfläche Quader
-
-	index = Quad::Draw(index); //Seitenflächen Quader
+	index = Quad::Draw(index);
 	index = Quad::Draw(index);
 	index = Quad::Draw(index);
 	index = Quad::Draw(index);
 
-	index = Quad::Draw(index); //Oberseite Quader
-
-	index = Quad::Draw(index); //Bodenfläche Quader
-
-	index = Quad::Draw(index); //Seitenflächen Quader
 	index = Quad::Draw(index);
 	index = Quad::Draw(index);
 	index = Quad::Draw(index);
-
-	index = Quad::Draw(index); //Oberseite Quader
+	index = Quad::Draw(index);
+	index = Quad::Draw(index);
+	index = Quad::Draw(index);
 
 	Vertex::ResetLayout();
 }

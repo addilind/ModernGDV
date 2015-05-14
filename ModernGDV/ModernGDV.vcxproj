@@ -115,6 +115,7 @@
     <ClCompile Include="Geometries\Terrain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Geometries\Robot\Dimensions.h" />
     <ClInclude Include="Geometries\Robot\ShoulderJoint.h" />
     <ClInclude Include="Geometries\Robot\Foot.h" />
     <ClInclude Include="Geometries\Primitives\Quad.h" />

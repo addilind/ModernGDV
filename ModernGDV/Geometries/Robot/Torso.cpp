@@ -2,6 +2,7 @@
 
 #include "../Primitives/Triangle.h"
 #include "../Primitives/Quad.h"
+#include "Dimensions.h"
 
 using ModernGDV::Vertex;
 using Geometries::Primitives::Quad;
@@ -14,37 +15,37 @@ Geometries::Robot::Torso::Torso( ModernGDV::Driver* mgdv )
 {
 	std::vector<Vertex> vertices;
 
-	vec3 pyramidTop				( +0.00f, +0.00f, +0.00f );
-	vec3 pyramidBaseFrontLeft	( -0.10f, +0.10f, +0.08f );
-	vec3 pyramidBaseFrontRight	( +0.10f, +0.10f, +0.08f );
-	vec3 pyramidBaseBackLeft	( -0.10f, +0.10f, -0.08f );
-	vec3 pyramidBaseBackRight	( +0.10f, +0.10f, -0.08f );
+	vec3 pyramidTop				( +0.00f, Dim::TOR_LOWEST, +0.00f );
+	vec3 pyramidBaseFrontLeft	( -0.5f * Dim::TOR_PYR_WIDTH, Dim::TOR_LOWEST + Dim::TOR_PYR_HEIGHT, +0.5f * Dim::TOR_PYR_DEPTH );
+	vec3 pyramidBaseFrontRight	( +0.5f * Dim::TOR_PYR_WIDTH, Dim::TOR_LOWEST + Dim::TOR_PYR_HEIGHT, +0.5f * Dim::TOR_PYR_DEPTH );
+	vec3 pyramidBaseBackLeft	( -0.5f * Dim::TOR_PYR_WIDTH, Dim::TOR_LOWEST + Dim::TOR_PYR_HEIGHT, -0.5f * Dim::TOR_PYR_DEPTH );
+	vec3 pyramidBaseBackRight	( +0.5f * Dim::TOR_PYR_WIDTH, Dim::TOR_LOWEST + Dim::TOR_PYR_HEIGHT, -0.5f * Dim::TOR_PYR_DEPTH );
 
-	vec3 smCuboidTopFrontLeft	( -0.10f, +0.25f, +0.10f );
-	vec3 smCuboidTopFrontRight	( +0.10f, +0.25f, +0.10f );
-	vec3 smCuboidTopBackLeft	( -0.10f, +0.25f, -0.10f );
-	vec3 smCuboidTopBackRight	( +0.10f, +0.25f, -0.10f );
+	vec3 smCuboidTopFrontLeft	( -0.5f * Dim::TOR_SCB_WIDTH, Dim::TOR_LOWEST + Dim::TOR_PYR_HEIGHT + Dim::TOR_SCB_HEIGHT, +0.5f * Dim::TOR_SCB_DEPTH );
+	vec3 smCuboidTopFrontRight	( +0.5f * Dim::TOR_SCB_WIDTH, Dim::TOR_LOWEST + Dim::TOR_PYR_HEIGHT + Dim::TOR_SCB_HEIGHT, +0.5f * Dim::TOR_SCB_DEPTH );
+	vec3 smCuboidTopBackLeft	( -0.5f * Dim::TOR_SCB_WIDTH, Dim::TOR_LOWEST + Dim::TOR_PYR_HEIGHT + Dim::TOR_SCB_HEIGHT, -0.5f * Dim::TOR_SCB_DEPTH );
+	vec3 smCuboidTopBackRight	( +0.5f * Dim::TOR_SCB_WIDTH, Dim::TOR_LOWEST + Dim::TOR_PYR_HEIGHT + Dim::TOR_SCB_HEIGHT, -0.5f * Dim::TOR_SCB_DEPTH );
 
-	vec3 truncatedPyramidBottomFrontLeft	( -0.20f, +0.25f, +0.12f );
-	vec3 truncatedPyramidBottomFrontRight	( +0.20f, +0.25f, +0.12f );
-	vec3 truncatedPyramidBottomBackLeft		( -0.20f, +0.25f, -0.12f );
-	vec3 truncatedPyramidBottomBackRight	( +0.20f, +0.25f, -0.12f );
+	vec3 truncatedPyramidBottomFrontLeft	( -0.5f * Dim::TOR_TPR_BWIDTH, Dim::TOR_LOWEST + Dim::TOR_PYR_HEIGHT + Dim::TOR_SCB_HEIGHT, +0.5f * Dim::TOR_TPR_BDEPTH );
+	vec3 truncatedPyramidBottomFrontRight	( +0.5f * Dim::TOR_TPR_BWIDTH, Dim::TOR_LOWEST + Dim::TOR_PYR_HEIGHT + Dim::TOR_SCB_HEIGHT, +0.5f * Dim::TOR_TPR_BDEPTH );
+	vec3 truncatedPyramidBottomBackLeft		( -0.5f * Dim::TOR_TPR_BWIDTH, Dim::TOR_LOWEST + Dim::TOR_PYR_HEIGHT + Dim::TOR_SCB_HEIGHT, -0.5f * Dim::TOR_TPR_BDEPTH );
+	vec3 truncatedPyramidBottomBackRight	( +0.5f * Dim::TOR_TPR_BWIDTH, Dim::TOR_LOWEST + Dim::TOR_PYR_HEIGHT + Dim::TOR_SCB_HEIGHT, -0.5f * Dim::TOR_TPR_BDEPTH );
 
-	vec3 truncatedPyramidTopFrontLeft	( -0.25f, +0.45f, +0.13f );
-	vec3 truncatedPyramidTopFrontRight	( +0.25f, +0.45f, +0.13f );
-	vec3 truncatedPyramidTopBackLeft	( -0.25f, +0.45f, -0.13f );
-	vec3 truncatedPyramidTopBackRight	( +0.25f, +0.45f, -0.13f );
+	vec3 truncatedPyramidTopFrontLeft	( -0.5f * Dim::TOR_TPR_TWIDTH, Dim::TOR_LOWEST + Dim::TOR_PYR_HEIGHT + Dim::TOR_SCB_HEIGHT + Dim::TOR_TPR_HEIGHT, +0.5f * Dim::TOR_TPR_TDEPTH );
+	vec3 truncatedPyramidTopFrontRight	( +0.5f * Dim::TOR_TPR_TWIDTH, Dim::TOR_LOWEST + Dim::TOR_PYR_HEIGHT + Dim::TOR_SCB_HEIGHT + Dim::TOR_TPR_HEIGHT, +0.5f * Dim::TOR_TPR_TDEPTH );
+	vec3 truncatedPyramidTopBackLeft	( -0.5f * Dim::TOR_TPR_TWIDTH, Dim::TOR_LOWEST + Dim::TOR_PYR_HEIGHT + Dim::TOR_SCB_HEIGHT + Dim::TOR_TPR_HEIGHT, -0.5f * Dim::TOR_TPR_TDEPTH );
+	vec3 truncatedPyramidTopBackRight	( +0.5f * Dim::TOR_TPR_TWIDTH, Dim::TOR_LOWEST + Dim::TOR_PYR_HEIGHT + Dim::TOR_SCB_HEIGHT + Dim::TOR_TPR_HEIGHT, -0.5f * Dim::TOR_TPR_TDEPTH );
 	
 	
-	vec3 cuboidBottomFrontLeft(-0.35f, +0.45f, +0.15f);
-	vec3 cuboidBottomFrontRight(+0.35f, +0.45f, +0.15f);
-	vec3 cuboidBottomBackLeft(-0.35f, +0.45f, -0.15f);
-	vec3 cuboidBottomBackRight(+0.35f, +0.45f, -0.15f);
+	vec3 cuboidBottomFrontLeft	( -0.5f * Dim::TOR_BCB_WIDTH, Dim::TOR_LOWEST + Dim::TOR_PYR_HEIGHT + Dim::TOR_SCB_HEIGHT + Dim::TOR_TPR_HEIGHT, +0.5f * Dim::TOR_BCB_DEPTH );
+	vec3 cuboidBottomFrontRight	( +0.5f * Dim::TOR_BCB_WIDTH, Dim::TOR_LOWEST + Dim::TOR_PYR_HEIGHT + Dim::TOR_SCB_HEIGHT + Dim::TOR_TPR_HEIGHT, +0.5f * Dim::TOR_BCB_DEPTH );
+	vec3 cuboidBottomBackLeft	( -0.5f * Dim::TOR_BCB_WIDTH, Dim::TOR_LOWEST + Dim::TOR_PYR_HEIGHT + Dim::TOR_SCB_HEIGHT + Dim::TOR_TPR_HEIGHT, -0.5f * Dim::TOR_BCB_DEPTH );
+	vec3 cuboidBottomBackRight	( +0.5f * Dim::TOR_BCB_WIDTH, Dim::TOR_LOWEST + Dim::TOR_PYR_HEIGHT + Dim::TOR_SCB_HEIGHT + Dim::TOR_TPR_HEIGHT, -0.5f * Dim::TOR_BCB_DEPTH );
 
-	vec3 cuboidTopFrontLeft(-0.35f, +1.0f, +0.15f);
-	vec3 cuboidTopFrontRight(+0.35f, +1.0f, +0.15f);
-	vec3 cuboidTopBackLeft(-0.35f, +1.0f, -0.15f);
-	vec3 cuboidTopBackRight(+0.35f, +1.0f, -0.15f);
+	vec3 cuboidTopFrontLeft	( -0.5f * Dim::TOR_BCB_WIDTH, Dim::TOR_LOWEST + Dim::TOR_PYR_HEIGHT + Dim::TOR_SCB_HEIGHT + Dim::TOR_TPR_HEIGHT + Dim::TOR_BCB_HEIGHT, +0.5f * Dim::TOR_BCB_DEPTH );
+	vec3 cuboidTopFrontRight( +0.5f * Dim::TOR_BCB_WIDTH, Dim::TOR_LOWEST + Dim::TOR_PYR_HEIGHT + Dim::TOR_SCB_HEIGHT + Dim::TOR_TPR_HEIGHT + Dim::TOR_BCB_HEIGHT, +0.5f * Dim::TOR_BCB_DEPTH );
+	vec3 cuboidTopBackLeft	( -0.5f * Dim::TOR_BCB_WIDTH, Dim::TOR_LOWEST + Dim::TOR_PYR_HEIGHT + Dim::TOR_SCB_HEIGHT + Dim::TOR_TPR_HEIGHT + Dim::TOR_BCB_HEIGHT, -0.5f * Dim::TOR_BCB_DEPTH );
+	vec3 cuboidTopBackRight	( +0.5f * Dim::TOR_BCB_WIDTH, Dim::TOR_LOWEST + Dim::TOR_PYR_HEIGHT + Dim::TOR_SCB_HEIGHT + Dim::TOR_TPR_HEIGHT + Dim::TOR_BCB_HEIGHT, -0.5f * Dim::TOR_BCB_DEPTH );
 	
 
 	Tri::Create( vertices, pyramidTop, vec2( 0.5f, 0.f ), pyramidBaseFrontLeft, vec2( 0.f, 1.f ), pyramidBaseFrontRight, vec2( 1.f, 1.f ) ); //Seitenflächen Pyramide
@@ -59,7 +60,6 @@ Geometries::Robot::Torso::Torso( ModernGDV::Driver* mgdv )
 	/*********************************************************************************************************************/
 	Quad::Create( vertices, truncatedPyramidBottomFrontLeft, vec2( 0.f, 0.f ), truncatedPyramidBottomFrontRight, vec2( 1.f, 0.f ),
 		truncatedPyramidBottomBackRight, vec2( 1.f, 1.f ), truncatedPyramidBottomBackLeft, vec2( 0.f, 1.f ) );		//Bodenfläche Pyramidenstumpf
-
 	Quad::Create( vertices, truncatedPyramidTopFrontLeft, vec2( 0.f, 0.f ), truncatedPyramidTopFrontRight, vec2( 1.f, 0.f ),
 		truncatedPyramidBottomFrontRight, vec2( 1.f, 1.f ), truncatedPyramidBottomFrontLeft, vec2( 0.f, 1.f ) );	//Seitenflächen Pyramidenstumpf
 	Quad::Create( vertices, truncatedPyramidTopFrontRight, vec2( 0.f, 0.f ), truncatedPyramidTopBackRight, vec2( 1.f, 0.f ),
@@ -71,7 +71,6 @@ Geometries::Robot::Torso::Torso( ModernGDV::Driver* mgdv )
 	/*********************************************************************************************************************/
 	Quad::Create( vertices, cuboidBottomFrontLeft, vec2( 0.f, 0.f ), cuboidBottomFrontRight, vec2( 1.f, 0.f ),
 		cuboidBottomBackRight, vec2(1.f, 1.f), cuboidBottomBackLeft, vec2(0.f, 1.f));				//Bodenfläche Quader
-	
 	Quad::Create(vertices, cuboidTopFrontLeft, vec2(0.f, 0.f), cuboidTopFrontRight, vec2(1.f, 0.f),
 		cuboidBottomFrontRight, vec2(1.f, 1.f), cuboidBottomFrontLeft, vec2(0.f, 1.f));				//Seitenflächen Quader
 	Quad::Create(vertices, cuboidTopFrontRight, vec2(0.f, 0.f), cuboidTopBackRight, vec2(1.f, 0.f),
@@ -80,7 +79,6 @@ Geometries::Robot::Torso::Torso( ModernGDV::Driver* mgdv )
 		cuboidBottomBackLeft, vec2(1.f, 1.f), cuboidBottomBackRight, vec2(0.f, 1.f));
 	Quad::Create(vertices, cuboidTopBackLeft, vec2(0.f, 0.f), cuboidTopFrontLeft, vec2(1.f, 0.f),
 		cuboidBottomFrontLeft, vec2(1.f, 1.f), cuboidBottomBackLeft, vec2(0.f, 1.f));
-	
 	Quad::Create(vertices, cuboidTopFrontLeft, vec2(0.f, 1.f), cuboidTopBackLeft, vec2(0.f, 0.f),
 		cuboidTopBackRight, vec2(1.f, 0.f), cuboidTopFrontRight, vec2(1.f, 1.f));					//Oberseite Quader
 
