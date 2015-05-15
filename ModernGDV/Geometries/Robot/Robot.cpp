@@ -3,7 +3,7 @@
 
 Geometries::Robot::Robot::Robot( ModernGDV::Driver* mgdv )
 	: torso( mgdv ), thigh( mgdv ), shank( mgdv ), foot( mgdv ), shoulderJoint( mgdv ), thighJoint( mgdv ), head( mgdv ), neck( mgdv ), ski( mgdv ),
-	maxLegLength( 0.8f )
+	maxLegLength(0.8f), frontTilt(0.2f)
 {
 	this->mgdv = mgdv;
 }
@@ -15,7 +15,19 @@ Geometries::Robot::Robot::~Robot()
 void Geometries::Robot::Robot::Render(  )
 {
 
-	glm::mat4 transform = glm::rotate( glm::translate( glm::mat4(), glm::vec3( 0, originHeight, 0 ) ), tilt, glm::vec3( 0, 0, 1 ) );
+	glm::mat4 transform =
+		glm::rotate(
+			glm::rotate(
+				glm::rotate(
+					glm::translate(
+						glm::mat4(),
+						position + glm::vec3( 0, originHeight, 0 ) ),
+					orientation,
+					glm::vec3( 0, 1, 0 ) ),
+				frontTilt,
+				glm::vec3(1, 0, 0) ),
+			tilt,
+			glm::vec3( 0, 0, 1 ) );
 
 	mgdv->ShaderLib.UseShader( mgdv->ShaderLib.GetShaderID( "default" ) );
 	mgdv->ShaderLib.SetSpecularProperties( glm::vec3( 0.5f, 0.5f, 0.5f ), 10.f );
@@ -168,13 +180,23 @@ void Geometries::Robot::Robot::SetTilt( const float& tilt )
 
 	if (tilt > 0)
 	{ //Nach rechts neigen
-		SetLeftLeg( maxLegLength, 0, 1.1f * glm::abs( tilt ), +0.5f ); //Auﬂen
-		SetRightLeg( lengthInnerLeg, 0, 0.9f * glm::abs( tilt ), +0.5f ); //Innen
+		SetLeftLeg( maxLegLength, 0, 1.1f * glm::abs( tilt ), +0.2f ); //Auﬂen
+		SetRightLeg( lengthInnerLeg, 0, 0.9f * glm::abs( tilt ), +0.2f ); //Innen
 	}
 	else
 	{
-		SetRightLeg( maxLegLength, 0, -1.1f * glm::abs( tilt ), +0.5f ); //Auﬂen
-		SetLeftLeg( lengthInnerLeg, 0, -0.9f * glm::abs( tilt ), +0.5f ); //Innen
+		SetRightLeg( maxLegLength, 0, -1.1f * glm::abs( tilt ), +0.2f ); //Auﬂen
+		SetLeftLeg( lengthInnerLeg, 0, -0.9f * glm::abs( tilt ), +0.2f ); //Innen
 	}
 
+}
+
+void Geometries::Robot::Robot::SetOrientation(const float& orient)
+{
+	orientation = orient;
+}
+
+void Geometries::Robot::Robot::SetPosition(const glm::vec3& pos)
+{
+	position = pos;
 }

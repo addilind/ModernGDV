@@ -32,7 +32,9 @@ MyApp::~MyApp()
 void MyApp::Update(float deltaT)
 {
 	camera.Update( deltaT );
-	robot.SetTilt(glm::sin(glfwGetTime())*0.5f);
+	robot.SetTilt( glm::sin( glfwGetTime() )*0.4f );
+	robot.SetOrientation( glm::cos( glfwGetTime() + 0.5f )*-0.9f );
+	robot.SetPosition( glm::vec3( glm::sin( glfwGetTime() ) * -5.0f, 2.38f - glm::abs( glm::sin( glfwGetTime() ) )*0.2, 0 ) );
 
 	robot.SetLeftArm(1.2f, -0.f, -0.9f);
 }
@@ -40,13 +42,16 @@ void MyApp::Update(float deltaT)
 void MyApp::Render(  )
 {
 	camera.Render();
-	mgdv->ShaderLib.SetLight(glm::vec3(1.f*glm::sin(glfwGetTime() / 3.f), 0.3f, 1.f*glm::cos(glfwGetTime() / 3.f)), glm::vec3(0.0f, 0.f, 1.f), 1.f, 0.3f);
+	mgdv->ShaderLib.SetLight(glm::vec3(1.f*glm::sin(glfwGetTime() / 3.f), 5.3f, 1.f*glm::cos(glfwGetTime() / 3.f)), glm::vec3(0.0f, 0.f, 1.f), 1.f, 0.3f);
 
 	mgdv->ShaderLib.SetModel(
 		glm::scale(
-		glm::rotate(
-		glm::translate(glm::mat4(), glm::vec3(0, -5.f, 0)),
-		-0.1f * -glm::pi<float>(), glm::vec3(1, 0, 0)),
+			glm::translate(
+				glm::rotate(
+					glm::mat4(),
+					-0.1f * -glm::pi<float>(),
+					glm::vec3(1, 0, 0) ),
+			glm::vec3( 0, 0.f, 100.f - glm::mod(static_cast<float>(glfwGetTime())*4.f, 190.f ) ) ),
 		glm::vec3(50.f, 5.f, 50.f)
 		));
 
@@ -54,11 +59,14 @@ void MyApp::Render(  )
 
 	mgdv->ShaderLib.SetModel(
 		glm::scale(
+		glm::translate(
 		glm::rotate(
-		glm::translate(glm::mat4(), glm::vec3(0, -32.5f, +85.f)),
-		-0.1f * -glm::pi<float>(), glm::vec3(1, 0, 0)),
-		glm::vec3(50.f, 5.f, 50.f)
-		));
+		glm::mat4(),
+		-0.1f * -glm::pi<float>(),
+		glm::vec3( 1, 0, 0 ) ),
+		glm::vec3( 0, 0.f, 100.f - glm::mod( static_cast<float>(glfwGetTime())*4.f + 95.f, 190.f ) ) ),
+		glm::vec3( 50.f, 5.f, 50.f )
+		) );
 
 	terrain.Render();
 	
@@ -68,7 +76,7 @@ void MyApp::Render(  )
 	glBindBuffer( GL_ARRAY_BUFFER, lampvb );
 	ModernGDV::Vertex::SetLayout();
 	mgdv->ShaderLib.SetDiffuseTex( lamptex );
-	mgdv->ShaderLib.SetModel( glm::translate( glm::mat4(), glm::vec3( 1.f*glm::sin( glfwGetTime() / 3.f ), 0.3f, 1.f*glm::cos( glfwGetTime() / 3.f ) ) ) );
+	mgdv->ShaderLib.SetModel( glm::translate( glm::mat4(), glm::vec3( 1.f*glm::sin( glfwGetTime() / 3.f ), 5.3f, 1.f*glm::cos( glfwGetTime() / 3.f ) ) ) );
 	mgdv->ShaderLib.SetLight( glm::vec3( 0 ), glm::vec3( 1, 1, 1 ), 0.f, 1.f );//Dont light
 	mgdv->ShaderLib.SetSpecularProperties( glm::vec3( 0 ), 1.f );
 	Quad::Draw( 0U );

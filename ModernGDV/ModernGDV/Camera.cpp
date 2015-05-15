@@ -1,7 +1,7 @@
 #include "Camera.h"
 
 ModernGDV::Camera::Camera( Driver* mgdv )
-	:mgdv( mgdv ), skybox( mgdv ), lookAt( 0.f, -1.f, 0.f ), xzAngle( 0.f ), heightAngle( 0.f ), distance( 2.f ),
+	:mgdv( mgdv ), skybox( mgdv ), lookAt( 0.f, 4.f, 0.f ), xzAngle( 0.f ), heightAngle( 0.f ), distance( 2.f ),
 	sunXZAngle( 2.3f ), sunHeight( 0.45f ), sunColor(  1.0f, 0.937f, 0.709f )
 {
 	updateViewMat();

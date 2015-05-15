@@ -22,6 +22,8 @@ namespace Geometries
 		private:
 			ModernGDV::Driver* mgdv;
 
+			glm::vec3 position;
+
 			float tilt;
 			float orientation;
 			float frontTilt;
@@ -62,6 +64,8 @@ namespace Geometries
 			void SetLeftArm(const float& rotationFront, const float& rotationLateral, const float& rotationLowerArm);
 
 			void SetTilt( const float& tilt );
+			void SetOrientation( const float& orient );
+			void SetPosition( const glm::vec3& pos );
 		};
 	}
 }
