@@ -1,6 +1,7 @@
 #include "Shank.h"
 
 #include "../Primitives/Quad.h"
+#include "Dimensions.h"
 
 using ModernGDV::Vertex;
 using Geometries::Primitives::Quad;
@@ -14,15 +15,24 @@ Geometries::Robot::Shank::Shank(ModernGDV::Driver* mgdv)
 	std::vector<Vertex> vertices;
 
 	//Unterschenkel linke Seite
-	vec3 lCuboidBottomFrontLeft(-0.15f, -0.45f, +0.08f);
-	vec3 lCuboidBottomFrontRight(-0.075f, -0.45f, +0.08f);
-	vec3 lCuboidBottomBackLeft(-0.15f, -0.45f, -0.08f);
-	vec3 lCuboidBottomBackRight(-0.075f, -0.45f, -0.08f);
+	vec3 lCuboidBottomFrontLeft	( -0.5f * Dim::SNK_WIDTH,	-1.f * Dim::SNK_HEIGHT, +0.5f * Dim::SNK_DEPTH);
+	vec3 lCuboidBottomFrontRight( -0.5f * Dim::SNK_IWIDTH,	-1.f * Dim::SNK_HEIGHT, +0.5f * Dim::SNK_DEPTH );
+	vec3 lCuboidBottomBackLeft	( -0.5f * Dim::SNK_WIDTH,	-1.f * Dim::SNK_HEIGHT, -0.5f * Dim::SNK_DEPTH );
+	vec3 lCuboidBottomBackRight	( -0.5f * Dim::SNK_IWIDTH,	-1.f * Dim::SNK_HEIGHT, -0.5f * Dim::SNK_DEPTH );
+	vec3 lCuboidTopFrontLeft	( -0.5f * Dim::SNK_WIDTH,		  Dim::SNK_SHEIGHT, +0.5f * Dim::SNK_DEPTH );
+	vec3 lCuboidTopFrontRight	( -0.5f * Dim::SNK_IWIDTH,		  Dim::SNK_SHEIGHT, +0.5f * Dim::SNK_DEPTH );
+	vec3 lCuboidTopBackLeft		( -0.5f * Dim::SNK_WIDTH,		  Dim::SNK_SHEIGHT, -0.5f * Dim::SNK_DEPTH );
+	vec3 lCuboidTopBackRight	( -0.5f * Dim::SNK_IWIDTH,		  Dim::SNK_SHEIGHT, -0.5f * Dim::SNK_DEPTH );
 
-	vec3 lCuboidTopFrontLeft(-0.15f, +0.05f, +0.08f);
-	vec3 lCuboidTopFrontRight(-0.075f, +0.05f, +0.08f);
-	vec3 lCuboidTopBackLeft(-0.15f, +0.05f, -0.08f);
-	vec3 lCuboidTopBackRight(-0.075f, +0.05f, -0.08f);
+	//Unterschenkel rechte Seite
+	vec3 rCuboidBottomFrontLeft	( +0.5f * Dim::SNK_IWIDTH,	-1.f * Dim::SNK_HEIGHT, +0.5f * Dim::SNK_DEPTH );
+	vec3 rCuboidBottomFrontRight( +0.5f * Dim::SNK_WIDTH,	-1.f * Dim::SNK_HEIGHT, +0.5f * Dim::SNK_DEPTH );
+	vec3 rCuboidBottomBackLeft	( +0.5f * Dim::SNK_IWIDTH,	-1.f * Dim::SNK_HEIGHT, -0.5f * Dim::SNK_DEPTH );
+	vec3 rCuboidBottomBackRight	( +0.5f * Dim::SNK_WIDTH,	-1.f * Dim::SNK_HEIGHT, -0.5f * Dim::SNK_DEPTH );
+	vec3 rCuboidTopFrontLeft	( +0.5f * Dim::SNK_IWIDTH,		  Dim::SNK_SHEIGHT, +0.5f * Dim::SNK_DEPTH );
+	vec3 rCuboidTopFrontRight	( +0.5f * Dim::SNK_WIDTH,		  Dim::SNK_SHEIGHT, +0.5f * Dim::SNK_DEPTH );
+	vec3 rCuboidTopBackLeft		( +0.5f * Dim::SNK_IWIDTH,		  Dim::SNK_SHEIGHT, -0.5f * Dim::SNK_DEPTH );
+	vec3 rCuboidTopBackRight	( +0.5f * Dim::SNK_WIDTH,		  Dim::SNK_SHEIGHT, -0.5f * Dim::SNK_DEPTH );
 
 	//Bodenfläche Quader
 	Quad::Create(vertices, lCuboidBottomFrontLeft, vec2(0.f, 0.f), lCuboidBottomFrontRight, vec2(1.f, 0.f),
@@ -40,16 +50,6 @@ Geometries::Robot::Shank::Shank(ModernGDV::Driver* mgdv)
 	Quad::Create(vertices, lCuboidTopFrontLeft, vec2(0.f, 1.f), lCuboidTopBackLeft, vec2(0.f, 0.f),
 		lCuboidTopBackRight, vec2(1.f, 0.f), lCuboidTopFrontRight, vec2(1.f, 1.f));
 
-	//Unterschenkel rechte Seite
-	vec3 rCuboidBottomFrontLeft(+0.075f, -0.45f, +0.08f);
-	vec3 rCuboidBottomFrontRight(+0.15f, -0.45f, +0.08f);
-	vec3 rCuboidBottomBackLeft(+0.075f, -0.45f, -0.08f);
-	vec3 rCuboidBottomBackRight(+0.15f, -0.45f, -0.08f);
-
-	vec3 rCuboidTopFrontLeft(+0.075f, +0.05f, +0.08f);
-	vec3 rCuboidTopFrontRight(+0.15f, +0.05f, +0.08f);
-	vec3 rCuboidTopBackLeft(+0.075f, +0.05f, -0.08f);
-	vec3 rCuboidTopBackRight(+0.15f, +0.05f, -0.08f);
 
 	//Bodenfläche Quader
 	Quad::Create(vertices, rCuboidBottomFrontLeft, vec2(0.f, 0.f), rCuboidBottomFrontRight, vec2(1.f, 0.f),

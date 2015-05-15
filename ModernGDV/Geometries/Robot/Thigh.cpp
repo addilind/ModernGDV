@@ -1,6 +1,7 @@
 #include "Thigh.h"
 
 #include "../Primitives/Quad.h"
+#include "Dimensions.h"
 
 using ModernGDV::Vertex;
 using Geometries::Primitives::Quad;
@@ -13,19 +14,17 @@ Geometries::Robot::Thigh::Thigh(ModernGDV::Driver* mgdv)
 {
 	std::vector<Vertex> vertices;
 
-	vec3 cuboidBottomFrontLeft(-0.075f, -0.50f, +0.075f);
-	vec3 cuboidBottomFrontRight(+0.075f, -0.50f, +0.075f);
-	vec3 cuboidBottomBackLeft(-0.075f, -0.50f, -0.075f);
-	vec3 cuboidBottomBackRight(+0.075f, -0.50f, -0.075f);
-
-	vec3 cuboidTopFrontLeft(-0.075f, +0.05f, +0.075f);
-	vec3 cuboidTopFrontRight(+0.075f, +0.05f, +0.075f);
-	vec3 cuboidTopBackLeft(-0.075f, +0.05f, -0.075f);
-	vec3 cuboidTopBackRight(+0.075f, +0.05f, -0.075f);
+	vec3 cuboidBottomFrontLeft	( -0.5f * Dim::THG_WIDTH, -1.f * Dim::THG_HEIGHT, +0.5f * Dim::THG_DEPTH );
+	vec3 cuboidBottomFrontRight	( +0.5f * Dim::THG_WIDTH, -1.f * Dim::THG_HEIGHT, +0.5f * Dim::THG_DEPTH );
+	vec3 cuboidBottomBackLeft	( -0.5f * Dim::THG_WIDTH, -1.f * Dim::THG_HEIGHT, -0.5f * Dim::THG_DEPTH );
+	vec3 cuboidBottomBackRight	( +0.5f * Dim::THG_WIDTH, -1.f * Dim::THG_HEIGHT, -0.5f * Dim::THG_DEPTH );
+	vec3 cuboidTopFrontLeft		( -0.5f * Dim::THG_WIDTH,		Dim::THG_SHEIGHT, +0.5f * Dim::THG_DEPTH );
+	vec3 cuboidTopFrontRight	( +0.5f * Dim::THG_WIDTH,		Dim::THG_SHEIGHT, +0.5f * Dim::THG_DEPTH );
+	vec3 cuboidTopBackLeft		( -0.5f * Dim::THG_WIDTH,		Dim::THG_SHEIGHT, -0.5f * Dim::THG_DEPTH );
+	vec3 cuboidTopBackRight		( +0.5f * Dim::THG_WIDTH,		Dim::THG_SHEIGHT, -0.5f * Dim::THG_DEPTH );
 
 	Quad::Create(vertices, cuboidBottomFrontLeft, vec2(0.f, 0.f), cuboidBottomFrontRight, vec2(1.f, 0.f),
 		cuboidBottomBackRight, vec2(1.f, 1.f), cuboidBottomBackLeft, vec2(0.f, 1.f));				//Bodenfläche Quader
-	
 	Quad::Create(vertices, cuboidTopFrontLeft, vec2(0.f, 0.f), cuboidTopFrontRight, vec2(1.f, 0.f),
 		cuboidBottomFrontRight, vec2(1.f, 1.f), cuboidBottomFrontLeft, vec2(0.f, 1.f));				//Seitenflächen Quader
 	Quad::Create(vertices, cuboidTopFrontRight, vec2(0.f, 0.f), cuboidTopBackRight, vec2(1.f, 0.f),
@@ -34,7 +33,6 @@ Geometries::Robot::Thigh::Thigh(ModernGDV::Driver* mgdv)
 		cuboidBottomBackLeft, vec2(1.f, 1.f), cuboidBottomBackRight, vec2(0.f, 1.f));
 	Quad::Create(vertices, cuboidTopBackLeft, vec2(0.f, 0.f), cuboidTopFrontLeft, vec2(1.f, 0.f),
 		cuboidBottomFrontLeft, vec2(1.f, 1.f), cuboidBottomBackLeft, vec2(0.f, 1.f));
-	
 	Quad::Create(vertices, cuboidTopFrontLeft, vec2(0.f, 1.f), cuboidTopBackLeft, vec2(0.f, 0.f),
 		cuboidTopBackRight, vec2(1.f, 0.f), cuboidTopFrontRight, vec2(1.f, 1.f));					//Oberseite Quader
 

@@ -22,7 +22,22 @@ namespace Geometries
 			static const float TOR_BCB_DEPTH = 0.30f;
 
 			//THIGH
+			static const float THG_HEIGHT = 0.50f;
+			static const float THG_SHEIGHT = 0.05f; //Small height (going upwards)
+			static const float THG_WIDTH = 0.15f;
 			static const float THG_DEPTH = 0.15f;
+
+			//SHANK
+			static const float SNK_HEIGHT = 0.45f;
+			static const float SNK_SHEIGHT = 0.05f; //Small height (going upwards)
+			static const float SNK_WIDTH = 0.30f;
+			static const float SNK_IWIDTH = THG_WIDTH; //Inner width
+			static const float SNK_DEPTH = 0.16f;
+
+			//FOOT
+			static const float FOT_HEIGHT = 0.1f;
+			static const float FOT_WIDTH = SNK_IWIDTH;
+			static const float FOT_DEPTH = 0.48f;
 
 			//THIGH JOINT
 			static const float THJ_HEIGHT = 0.1f;

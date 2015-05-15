@@ -55,7 +55,7 @@ namespace Geometries
 			explicit Robot( ModernGDV::Driver* mgdv );
 			~Robot();
 
-			void Render(const glm::mat4& transform);
+			void Render();
 
 			void SetLeftLeg(const float& length, const float& rotationFront, const float& rotationLateral, const float& rotationFoot );
 			void SetRightLeg(const float& length, const float& rotationFront, const float& rotationLateral, const float& rotationFoot);
