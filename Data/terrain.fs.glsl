@@ -46,5 +46,5 @@ void main(void) {
 			+ specularColor * lightColor * lightPower * pow( reflectionangle, specularExponent ) / (lightDistance * lightDistance) //Spiegelung Lichtquelle
 			+ diffuse.rgb * sunColor * entryangleSun //Refraktion Sonne
 			+ specularColor * sunColor * pow( reflectionangleSun, specularExponent ) //Spiegelung Sonne
-		, diffuse.a );
+		, diffuse.a * clamp(0.2f*(100.f-length(position_world)) , 0, 1) );
 }

@@ -15,6 +15,7 @@ private:
 	ModernGDV::Driver* mgdv;
 
 	Geometries::Robot::Robot robot;
+	Geometries::Robot::Robot robot2;
 	ModernGDV::Camera camera;
 	GLuint lampvb;
 	ModernGDV::Textures::Texture* lamptex;

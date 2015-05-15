@@ -180,13 +180,13 @@ void Geometries::Robot::Robot::SetTilt( const float& tilt )
 
 	if (tilt > 0)
 	{ //Nach rechts neigen
-		SetLeftLeg( maxLegLength, 0, 1.1f * glm::abs( tilt ), +0.2f ); //Auﬂen
-		SetRightLeg( lengthInnerLeg, 0, 0.9f * glm::abs( tilt ), +0.2f ); //Innen
+		SetLeftLeg( maxLegLength, 0, 1.1f * glm::abs( tilt ), +0.17f ); //Auﬂen
+		SetRightLeg( lengthInnerLeg, 0, 0.9f * glm::abs( tilt ), +0.17f ); //Innen
 	}
 	else
 	{
-		SetRightLeg( maxLegLength, 0, -1.1f * glm::abs( tilt ), +0.2f ); //Auﬂen
-		SetLeftLeg( lengthInnerLeg, 0, -0.9f * glm::abs( tilt ), +0.2f ); //Innen
+		SetRightLeg( maxLegLength, 0, -1.1f * glm::abs( tilt ), +0.17f ); //Auﬂen
+		SetLeftLeg( lengthInnerLeg, 0, -0.9f * glm::abs( tilt ), +0.17f ); //Innen
 	}
 
 }
