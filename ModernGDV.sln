@@ -12,6 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{B1DDCF0F-6
 		Data\kopf.dds = Data\kopf.dds
 		Data\lamp.dds = Data\lamp.dds
 		Data\skybox.dds = Data\skybox.dds
+		Data\snow.dds = Data\snow.dds
 		Data\terrain.fs.glsl = Data\terrain.fs.glsl
 		Data\terrain.vs.glsl = Data\terrain.vs.glsl
 		Data\test.dds = Data\test.dds

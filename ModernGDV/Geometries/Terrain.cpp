@@ -43,7 +43,7 @@ void Geometries::Terrain::Render()
 	glBindBuffer( GL_ARRAY_BUFFER, vertexBuffer );
 	UVVertex::SetLayout();
 
-	glDrawArraysInstanced( GL_TRIANGLE_STRIP, 0U, (segs + 1U)*2U, segs); // segs +1*2 wegen linien bzw. *2 wegen Punkten 
+	glDrawArraysInstanced( GL_TRIANGLE_STRIP, 0U, (segs + 1U)*2U, segs); // segs +1*2 wegen linien bzw. *2 wegen Punkten - Anzahl der Punkte übergeben
 
 	UVVertex::ResetLayout();
 }

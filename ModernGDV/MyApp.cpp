@@ -32,9 +32,9 @@ MyApp::~MyApp()
 void MyApp::Update(float deltaT)
 {
 	camera.Update( deltaT );
-	robot.SetTilt( glm::sin( glfwGetTime() )*0.4f );
-	robot.SetOrientation( glm::cos( glfwGetTime() + 0.5f )*-0.9f );
-	robot.SetPosition( glm::vec3( glm::sin( glfwGetTime() ) * -5.0f, 2.4f - glm::abs( glm::sin( glfwGetTime() ) )*0.25, 0 ) );
+	robot.SetTilt( glm::sin( glfwGetTime() )*0.4f ); //Seitenneigung
+	robot.SetOrientation( glm::cos( glfwGetTime() + 0.5f )*-0.9f ); //Drehung y-Achse
+	robot.SetPosition( glm::vec3( glm::sin( glfwGetTime() ) * -5.0f, 2.4f - glm::abs( glm::sin( glfwGetTime() ) )*0.25, 0 ) ); //Rechts Links
 
 	robot.SetLeftArm( 1.2f, -0.f, -0.9f );
 

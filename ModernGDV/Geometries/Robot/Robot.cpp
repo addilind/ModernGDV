@@ -108,6 +108,8 @@ void Geometries::Robot::Robot::Render(  )
 	mgdv->ShaderLib.SetModel( subtransform );
 	ski.Render();
 
+	//================================================ Linker Arm
+
 	subtransform = transform; //Pop, Push
 
 	subtransform = glm::translate( subtransform, glm::vec3( -0.425, 0.81f, 0.f ) ); //Linkes Schultergelenk
@@ -126,6 +128,8 @@ void Geometries::Robot::Robot::Render(  )
 	mgdv->ShaderLib.SetModel( subtransform );
 	thigh.Render();
 
+	//================================================ Rechter Arm
+
 	subtransform = transform; //Pop
 
 	subtransform = glm::translate( subtransform, glm::vec3( +0.425, 0.81f, 0.f ) ); //Rechtes Schultergelenk
@@ -137,7 +141,7 @@ void Geometries::Robot::Robot::Render(  )
 	mgdv->ShaderLib.SetModel( subtransform );
 	shank.Render();
 
-	subtransform = glm::translate( subtransform, glm::vec3( 0.f, -0.40f, 0.f ) ); //Rechte Unterarm
+	subtransform = glm::translate( subtransform, glm::vec3( 0.f, -0.40f, 0.f ) ); //Rechter Unterarm
 	mgdv->ShaderLib.SetModel( subtransform );
 	thigh.Render();
 }
@@ -155,7 +159,7 @@ void Geometries::Robot::Robot::SetLeftLeg( const float& length, const float& rot
 void Geometries::Robot::Robot::SetRightLeg( const float& length, const float& rotationFront, const float& rotationLateral, const float& rotationFoot )
 {
 	rotationRightLegLateral = -rotationLateral;
-	static const float effectiveShank = (Dim::SNK_HEIGHT - 0.5f * Dim::FOT_HEIGHT);
+	static const float effectiveShank = (Dim::SNK_HEIGHT - 0.5f * Dim::FOT_HEIGHT); //Länge vom Bein ohne Gelenküberschneidung
 	static const float effectiveTigh = (Dim::THG_HEIGHT - Dim::THG_SHEIGHT);
 	rotationRightLegThigh = -glm::acos( (effectiveShank * effectiveShank - effectiveTigh * effectiveTigh - length*length) / (-2 * effectiveTigh * length) ) - rotationFront;
 	rotationRightLegShank = glm::pi<float>() - glm::acos( (length*length - effectiveTigh*effectiveTigh - effectiveShank*effectiveShank) / (-2 * effectiveTigh*effectiveShank) );
@@ -172,8 +176,8 @@ void Geometries::Robot::Robot::SetLeftArm( const float& rotationFront, const flo
 void Geometries::Robot::Robot::SetTilt( const float& tilt )
 {
 	this->tilt = -tilt;
-	float heightOuterThigh = maxLegLength * glm::cos( 1.1f * glm::abs( tilt ) );
-	float xDiffTigh = 0.5f * Dim::TOR_SCB_WIDTH + Dim::THJ_THIGH_LOC;
+	float heightOuterThigh = maxLegLength * glm::cos( 1.1f * glm::abs( tilt ) ); //Höhe von äußerer Hüfte
+	float xDiffTigh = 0.5f * Dim::TOR_SCB_WIDTH + Dim::THJ_THIGH_LOC; //Dreick zeichnen
 	originHeight = heightOuterThigh - xDiffTigh * glm::sin( glm::abs( tilt ) );
 	float heightInnerThigh = originHeight - xDiffTigh * glm::sin( glm::abs( tilt ) );
 	float lengthInnerLeg = heightInnerThigh / glm::cos( 0.9 * glm::abs( tilt ) );

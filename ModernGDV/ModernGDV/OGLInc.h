@@ -10,7 +10,7 @@
 #include <future>
 #include <iostream>
 #define _DEBUG
-namespace ModernGDV
+namespace ModernGDV //inkludiert alle Bibs
 {
 	void Log( const std::string& source, const std::string& message );
 }

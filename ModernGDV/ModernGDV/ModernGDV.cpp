@@ -55,7 +55,7 @@ void ModernGDV::Driver::Run()
 		app->Update( static_cast<float>( now - lastTime ) );
 		lastTime = now;
 
-		app->Render(  );
+		app->Render();
 
 		glfwSwapBuffers( window ); //Gezeichnetes auf den Monitor bringen
 		glfwPollEvents(); //Tastendrücke, Mausbewegungen, Meldungen vom Betriebssystem etc. verarbeiten
@@ -76,7 +76,7 @@ void ModernGDV::Driver::FramebufferSizeChanged(GLFWwindow* window, int width, in
 	updateProj();
 }
 
-void ModernGDV::Driver::KeyEvent(GLFWwindow* window, int key, int scancode, int action, int mods)
+void ModernGDV::Driver::KeyEvent(GLFWwindow* window, int key, int scancode, int action, int mods) //erst CallbackWrapper dann hier
 {
 	if (action == GLFW_PRESS)
 	{
