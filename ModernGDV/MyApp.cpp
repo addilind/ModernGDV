@@ -37,6 +37,7 @@ void MyApp::Update(float deltaT)
 	robot.SetPosition( glm::vec3( glm::sin( glfwGetTime() ) * -5.0f, 2.4f - glm::abs( glm::sin( glfwGetTime() ) )*0.25, 0 ) ); //Rechts Links
 
 	robot.SetLeftArm( 1.2f, -0.f, -0.9f );
+	robot.SetRightArm(1.2f, -0.f, +0.9f);
 
 	double timediff = 1.5;
 
@@ -47,6 +48,7 @@ void MyApp::Update(float deltaT)
 		-4.f ) );
 
 	robot2.SetLeftArm( 1.2f, -0.f, -0.9f );
+	robot2.SetRightArm(1.2f, -0.f, +0.9f);
 }
 
 void MyApp::Render(  )

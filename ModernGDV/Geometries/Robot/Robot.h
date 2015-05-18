@@ -41,6 +41,9 @@ namespace Geometries
 			float rotationLeftArmFront;
 			float rotationLeftArmLateral;
 			float rotationLeftArmLower;
+			float rotationRightArmFront;
+			float rotationRightArmLateral;
+			float rotationRightArmLower;
 
 			Torso torso;
 			Thigh thigh;
@@ -62,6 +65,7 @@ namespace Geometries
 			void SetLeftLeg(const float& length, const float& rotationFront, const float& rotationLateral, const float& rotationFoot );
 			void SetRightLeg(const float& length, const float& rotationFront, const float& rotationLateral, const float& rotationFoot);
 			void SetLeftArm(const float& rotationFront, const float& rotationLateral, const float& rotationLowerArm);
+			void SetRightArm(const float& rotationFront, const float& rotationLateral, const float& rotationLowerArm);
 
 			void SetTilt( const float& tilt );
 			void SetOrientation( const float& orient );
