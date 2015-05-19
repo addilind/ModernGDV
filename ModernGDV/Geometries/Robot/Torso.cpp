@@ -85,7 +85,7 @@ Geometries::Robot::Torso::Torso( ModernGDV::Driver* mgdv )
 
 	vertexBuffer = mgdv->CreateVertexBuffer(vertices);
 
-	texture = mgdv->GetTexture( "test" );
+	texture = mgdv->GetTexture( "blubb" );
 }
 
 Geometries::Robot::Torso::~Torso()
