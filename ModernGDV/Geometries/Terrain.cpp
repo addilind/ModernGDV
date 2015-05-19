@@ -36,7 +36,7 @@ void Geometries::Terrain::Render()
 	mgdv->ShaderLib.UseShader( shader );
 
 	mgdv->ShaderLib.SetDiffuseTex( mgdv->GetTexture( "snow" ) );
-	mgdv->ShaderLib.SetHeightTex( mgdv->GetTexture( "test_hmap" ) );
+	mgdv->ShaderLib.SetHeightTex( mgdv->GetTexture( "hmap" ) );
 	mgdv->ShaderLib.SetTerrainSegmentSize( 1.f / segs );
 	mgdv->ShaderLib.SetSpecularProperties(vec3(0.f), 1.f);
 

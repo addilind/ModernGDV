@@ -63,7 +63,7 @@ void MyApp::Render(  )
 					glm::mat4(),
 					-0.1f * -glm::pi<float>(),
 					glm::vec3(1, 0, 0) ),
-			glm::vec3( 0, 0.f, 150.f - glm::mod(static_cast<float>(glfwGetTime())*4.f, 285.f ) ) ),
+			glm::vec3( 0, 0.f, 150.f - glm::mod(static_cast<float>(glfwGetTime())*4.f, 300.f ) ) ),
 		glm::vec3(50.f, 5.f, 50.f)
 		));
 
@@ -76,7 +76,7 @@ void MyApp::Render(  )
 		glm::mat4(),
 		-0.1f * -glm::pi<float>(),
 		glm::vec3( 1, 0, 0 ) ),
-		glm::vec3( 0, 0.f, 150.f - glm::mod( static_cast<float>(glfwGetTime())*4.f + 95.f, 285.f ) ) ),
+		glm::vec3( 0, 0.f, 150.f - glm::mod( static_cast<float>(glfwGetTime())*4.f + 100.f, 300.f ) ) ),
 		glm::vec3( 50.f, 5.f, 50.f )
 		) );
 
@@ -89,7 +89,7 @@ void MyApp::Render(  )
 		glm::mat4(),
 		-0.1f * -glm::pi<float>(),
 		glm::vec3( 1, 0, 0 ) ),
-		glm::vec3( 0, 0.f, 150.f - glm::mod( static_cast<float>(glfwGetTime())*4.f + 190.f, 285.f ) ) ),
+		glm::vec3( 0, 0.f, 150.f - glm::mod( static_cast<float>(glfwGetTime())*4.f + 200.f, 300.f ) ) ),
 		glm::vec3( 50.f, 5.f, 50.f )
 		) );
 
