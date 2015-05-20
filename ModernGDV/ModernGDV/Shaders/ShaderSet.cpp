@@ -10,7 +10,7 @@ ModernGDV::Shaders::ShaderSet::ShaderSet( ShaderLibrary* lib, const std::string&
 	shaderUniformLightColor( 999U ), shaderUniformLightPower( 999U ), shaderUniformAmbientLight( 999U ), shaderUniformSpecularColor( 999U ),
 	shaderUniformSpecularExponent( 999U ),
 	shaderUniformDiffuseTextureSampler(999U), shaderUniformSunDirection( 999U ), shaderUniformSunColor( 999U ),
-	shaderUniformHeightTextureSampler( 999U ), shaderUniformSegmentSize( 999U )
+	shaderUniformHeightTextureSampler(999U), shaderUniformSegmentSize(999U), shaderUniformFadeDist(999U)
 {
 	createShaders();
 	createShaderProgram();
@@ -28,7 +28,7 @@ ModernGDV::Shaders::ShaderSet::ShaderSet(const ShaderSet& source)
 	shaderUniformSpecularExponent( source.shaderUniformSpecularExponent ),
 	shaderUniformDiffuseTextureSampler( source.shaderUniformDiffuseTextureSampler ), shaderUniformSunDirection( source.shaderUniformSunDirection ),
 	shaderUniformSunColor( source.shaderUniformSunColor ), shaderUniformHeightTextureSampler( source.shaderUniformHeightTextureSampler ),
-	shaderUniformSegmentSize( source.shaderUniformSegmentSize )
+	shaderUniformSegmentSize( source.shaderUniformSegmentSize ), shaderUniformFadeDist( source.shaderUniformFadeDist )
 {
 	*instanceCounter = 1 + *instanceCounter;
 }
@@ -132,9 +132,11 @@ void ModernGDV::Shaders::ShaderSet::UploadTerrainProperties()
 	if (shaderUniformHeightTextureSampler < 999U)
 	{
 		glActiveTexture( GL_TEXTURE2 );
-		glBindTexture( GL_TEXTURE_2D, library->heightTexure ); //Gegebene Textur in TEXTURE0-Slot einhängen
-		glUniform1i( shaderUniformHeightTextureSampler, 2 ); //TEXTURE0 als diffuseTexture verwenden
+		glBindTexture( GL_TEXTURE_2D, library->heightTexure ); //Gegebene Textur in TEXTURE2-Slot einhängen
+		glUniform1i( shaderUniformHeightTextureSampler, 2 ); //TEXTURE2 als heightTexture verwenden
 	}
+	if (shaderUniformFadeDist < 999U)
+		glUniform1f( shaderUniformFadeDist, library->terrainFadeDist );
 }
 
 std::string ModernGDV::Shaders::ShaderSet::GetName() const
@@ -280,6 +282,8 @@ void ModernGDV::Shaders::ShaderSet::loadActiveUniforms()
 			shaderUniformSunDirection = location;
 		else if (name == "sunColor")
 			shaderUniformSunColor = location;
+		else if (name == "fadeDistance")
+			shaderUniformFadeDist = location;
 		else
 			std::cout << "Warn: Unknown shader uniform '" << name << "'!" << std::endl;
 		

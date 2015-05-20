@@ -1,9 +1,12 @@
 #pragma once
 #include "../ModernGDV/ModernGDV.h"
 #include "../ModernGDV/MGDVVertex.h"
+#include "TerrainSet.h"
 
 namespace Geometries
 {
+	class TerrainSet;
+
 	class Terrain
 	{
 		GLuint vertexBuffer;
@@ -14,7 +17,7 @@ namespace Geometries
 		Terrain(ModernGDV::Driver* mgdv, unsigned int segments);
 		~Terrain();
 
-		void Render();
+		void Render(const TerrainSet& set);
 	private:
 		void setLayout();
 	};

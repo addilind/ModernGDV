@@ -39,6 +39,7 @@ namespace ModernGDV
 			GLuint diffuseTexure;
 			GLuint heightTexure;
 			float terrainSegSize;
+			float terrainFadeDist;
 
 		public:
 			friend ShaderSet;
@@ -61,6 +62,7 @@ namespace ModernGDV
 			void SetSun( const glm::vec3& dir, const glm::vec3& color );
 			void SetSpecularProperties( const glm::vec3& specularColor, const float& specularExp = 5.0f );
 			void SetTerrainSegmentSize( const float& segmentSize );
+			void SetTerrainFadeDistance( const float& distance );
 
 		private:
 		};

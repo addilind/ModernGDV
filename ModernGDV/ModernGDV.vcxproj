@@ -113,6 +113,7 @@
     <ClCompile Include="Geometries\Robot\Neck.cpp" />
     <ClCompile Include="Geometries\Robot\Ski.cpp" />
     <ClCompile Include="Geometries\Terrain.cpp" />
+    <ClCompile Include="Geometries\TerrainSet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Geometries\Robot\Dimensions.h" />
@@ -143,6 +144,7 @@
     <ClInclude Include="Geometries\Robot\ThighJoint.h" />
     <ClInclude Include="Geometries\Robot\Neck.h" />
     <ClInclude Include="Geometries\Robot\Ski.h" />
+    <ClInclude Include="Geometries\TerrainSet.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

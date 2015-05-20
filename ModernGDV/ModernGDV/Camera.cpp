@@ -1,7 +1,7 @@
 #include "Camera.h"
 
 ModernGDV::Camera::Camera( Driver* mgdv )
-	:mgdv( mgdv ), skybox( mgdv ), lookAt( 0.f, 4.f, 0.f ), xzAngle( 0.f ), heightAngle( 0.f ), distance( 2.f ),
+	:mgdv( mgdv ), skybox( mgdv ), lookAt( 0.f, 4.f, 0.f ), xzAngle( 0.f ), heightAngle( 0.f ), distance( 5.f ),
 	sunXZAngle( 2.3f ), sunHeight( 0.45f ), sunColor(  1.0f, 0.937f, 0.709f )
 {
 	updateViewMat();
@@ -37,7 +37,7 @@ void ModernGDV::Camera::Update( float deltaT )
 	const float speedUpDown = 0.75f;
 	const float speedRightLeft = 1.f;
 	const float speedZoom = 2.f;
-	const float moveSpeed = 4.f;
+	const float moveSpeed = 10.f;
 
 	bool dirty = false;
 	if (glfwGetKey(mgdv->GetWindow(), GLFW_KEY_UP))
@@ -75,7 +75,7 @@ void ModernGDV::Camera::Update( float deltaT )
 	}
 	if (glfwGetKey(mgdv->GetWindow(), GLFW_KEY_S))
 	{
-		lookAt += glm::vec3(moveSpeed * 1.f * deltaT * glm::sin(xzAngle), moveSpeed * 0.f, 1.f * deltaT * glm::cos(xzAngle));
+		lookAt += glm::vec3( moveSpeed * 1.f * deltaT * glm::sin( xzAngle ), 0.f, moveSpeed * 1.f * deltaT * glm::cos( xzAngle ) );
 		dirty = true;
 	}
 	if (glfwGetKey(mgdv->GetWindow(), GLFW_KEY_A))

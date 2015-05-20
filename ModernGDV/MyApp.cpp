@@ -4,7 +4,8 @@
 using Geometries::Primitives::Quad;
 
 MyApp::MyApp( std::vector<std::string> commandline, ModernGDV::Driver* mgdv )
-	: mgdv(mgdv), robot(mgdv), robot2(mgdv), camera(mgdv), terrain(mgdv, 320U)
+	: mgdv(mgdv), robot(mgdv), robot2(mgdv), camera(mgdv), terrain(mgdv, 320U),
+	terrain_slope("snow", "hmap", 200.f, mgdv) //von -200 bis +200 ist immer Terrain sichtbar(4Segmente a 100), selbst wenn das letzte Segment gerade springt
 {
 	mgdv->SetProjectionOptions(45.0f, 500.f);
 
@@ -56,44 +57,7 @@ void MyApp::Render(  )
 	camera.Render();
 	mgdv->ShaderLib.SetLight(glm::vec3(1.f*glm::sin(glfwGetTime() / 3.f), 5.3f, 1.f*glm::cos(glfwGetTime() / 3.f)), glm::vec3(0.0f, 0.f, 1.f), 1.f, 0.3f);
 
-	mgdv->ShaderLib.SetModel(
-		glm::scale(
-			glm::translate(
-				glm::rotate(
-					glm::mat4(),
-					-0.1f * -glm::pi<float>(),
-					glm::vec3(1, 0, 0) ),
-			glm::vec3( 0, 0.f, 150.f - glm::mod(static_cast<float>(glfwGetTime())*4.f, 300.f ) ) ),
-		glm::vec3(50.f, 5.f, 50.f)
-		));
-
-	terrain.Render();
-
-	mgdv->ShaderLib.SetModel(
-		glm::scale(
-		glm::translate(
-		glm::rotate(
-		glm::mat4(),
-		-0.1f * -glm::pi<float>(),
-		glm::vec3( 1, 0, 0 ) ),
-		glm::vec3( 0, 0.f, 150.f - glm::mod( static_cast<float>(glfwGetTime())*4.f + 100.f, 300.f ) ) ),
-		glm::vec3( 50.f, 5.f, 50.f )
-		) );
-
-	terrain.Render();
-
-	mgdv->ShaderLib.SetModel(
-		glm::scale(
-		glm::translate(
-		glm::rotate(
-		glm::mat4(),
-		-0.1f * -glm::pi<float>(),
-		glm::vec3( 1, 0, 0 ) ),
-		glm::vec3( 0, 0.f, 150.f - glm::mod( static_cast<float>(glfwGetTime())*4.f + 200.f, 300.f ) ) ),
-		glm::vec3( 50.f, 5.f, 50.f )
-		) );
-
-	terrain.Render();
+	drawSlope();
 	
 	robot.Render();
 	robot2.Render();
@@ -108,4 +72,21 @@ void MyApp::Render(  )
 	Quad::Draw( 0U );
 	Quad::Draw( 4U );
 	ModernGDV::Vertex::ResetLayout();
+}
+
+void MyApp::drawSlope()
+{
+	static const size_t pieces = 5;
+	glm::mat4 transform = 	glm::rotate( glm::mat4(), 0.1f * glm::pi<float>(), glm::vec3( 1, 0, 0 ) );
+	for (size_t i = 0; i < pieces; ++i)
+	{
+		glm::mat4 pieceTransform =
+			glm::scale(
+				glm::translate(
+					transform,
+					glm::vec3( 0, 0.f, pieces * 50.f - glm::mod( static_cast<float>(glfwGetTime())*4.f + i*100.f, pieces * 100.f ) ) ),
+				glm::vec3( 50.f, 5.f, 50.f ) );
+		mgdv->ShaderLib.SetModel( pieceTransform );
+		terrain.Render(terrain_slope);
+	}
 }

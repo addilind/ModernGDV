@@ -19,6 +19,7 @@ uniform vec3 specularColor;
 uniform float specularExponent;
 uniform vec3 sunDirection; //Richtung zur Sonne im Kamerakoordinatensystem
 uniform vec3 sunColor;
+uniform float fadeDistance;
 
 //diese Funktion wird für jeden Pixel, der in einem durch die Vertices definierten Dreieck liegt einzeln aufgerufen - auf der Grafikkarte
 void main(void) {
@@ -46,5 +47,5 @@ void main(void) {
 			+ specularColor * lightColor * lightPower * pow( reflectionangle, specularExponent ) / (lightDistance * lightDistance) //Spiegelung Lichtquelle
 			+ diffuse.rgb * sunColor * entryangleSun //Refraktion Sonne
 			+ specularColor * sunColor * pow( reflectionangleSun, specularExponent ) //Spiegelung Sonne
-		, diffuse.a * clamp(0.2f*(100.f-length(position_world)) , 0, 1) );
+		, diffuse.a * clamp(0.2f*(fadeDistance-length(position_world)) , 0, 1) );
 }

@@ -118,3 +118,9 @@ void ModernGDV::Shaders::ShaderLibrary::SetTerrainSegmentSize(const float& segme
 	terrainSegSize = segmentSize;
 	shaders[activeShader].UploadTerrainProperties();
 }
+
+void ModernGDV::Shaders::ShaderLibrary::SetTerrainFadeDistance(const float& distance)
+{
+	terrainFadeDist = distance;
+	shaders[activeShader].UploadTerrainProperties();
+}

@@ -87,6 +87,9 @@
     <ClCompile Include="ModernGDV\OGL\gl_core_3_3.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Geometries\TerrainSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyApp.h">
@@ -171,6 +174,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Geometries\Robot\Dimensions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometries\TerrainSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

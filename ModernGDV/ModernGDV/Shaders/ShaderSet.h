@@ -34,8 +34,9 @@ namespace ModernGDV
 			GLuint shaderUniformSunDirection;
 			GLuint shaderUniformSunColor;
 
-			GLuint shaderUniformHeightTextureSampler; //Terrain spezifisch
-			GLuint shaderUniformSegmentSize;    //Terrain spezifisch
+			GLuint shaderUniformHeightTextureSampler;	//Terrain spezifisch
+			GLuint shaderUniformSegmentSize;			//Terrain spezifisch
+			GLuint shaderUniformFadeDist;				//Terrain spezifisch		
 		public:
 			ShaderSet( ShaderLibrary* library, const std::string& name );
 			ShaderSet( const ShaderSet& source );

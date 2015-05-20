@@ -20,6 +20,8 @@ private:
 	GLuint lampvb;
 	ModernGDV::Textures::Texture* lamptex;
 	Geometries::Terrain terrain;
+	Geometries::TerrainSet terrain_slope;
+	//Geometries::TerrainSet terrain_bgmountain;
 
 public:
 	MyApp( std::vector<std::string> commandline, ModernGDV::Driver* mgdv );
@@ -27,6 +29,8 @@ public:
 
 	virtual void Update( float deltaT ) override;
 	virtual void Render(  ) override;
+private:
+	void drawSlope();
 };
 
 #endif

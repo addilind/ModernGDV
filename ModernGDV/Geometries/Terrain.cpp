@@ -31,14 +31,12 @@ Geometries::Terrain::~Terrain()
 {
 }
 
-void Geometries::Terrain::Render()
+void Geometries::Terrain::Render( const TerrainSet& set )
 {
 	mgdv->ShaderLib.UseShader( shader );
-
-	mgdv->ShaderLib.SetDiffuseTex( mgdv->GetTexture( "snow" ) );
-	mgdv->ShaderLib.SetHeightTex( mgdv->GetTexture( "hmap" ) );
+	set.ApplyShaderSettings();
 	mgdv->ShaderLib.SetTerrainSegmentSize( 1.f / segs );
-	mgdv->ShaderLib.SetSpecularProperties(vec3(0.f), 1.f);
+	mgdv->ShaderLib.SetSpecularProperties(vec3(0.5f), 1.f);
 
 	glBindBuffer( GL_ARRAY_BUFFER, vertexBuffer );
 	UVVertex::SetLayout();
