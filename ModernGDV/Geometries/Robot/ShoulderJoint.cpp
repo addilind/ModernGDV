@@ -41,7 +41,7 @@ Geometries::Robot::ShoulderJoint::ShoulderJoint( ModernGDV::Driver* mgdv )
 
 	vertexBuffer = mgdv->CreateVertexBuffer(vertices);
 
-	texture = mgdv->GetTexture("test");
+	texture = mgdv->GetTexture("Joint");
 
 
 }

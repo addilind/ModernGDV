@@ -72,21 +72,21 @@ Geometries::Robot::Torso::Torso( ModernGDV::Driver* mgdv )
 	/*********************************************************************************************************************/
 	Quad::Create( vertices, cuboidBottomFrontLeft, vec2( 0.f, 0.f ), cuboidBottomFrontRight, vec2( 1.f, 0.f ),
 		cuboidBottomBackRight, vec2(1.f, 30.f/70.f), cuboidBottomBackLeft, vec2(0.f, 30.f/70.f));				//Bodenfläche Quader
-	Quad::Create(vertices, cuboidTopFrontLeft, vec2(0.f, 0.f), cuboidTopFrontRight, vec2(1.f, 0.f),
-		cuboidBottomFrontRight, vec2(1.f, 55.f/70.f), cuboidBottomFrontLeft, vec2(0.f, 55.f/70.f));				//Seitenflächen Quader
-	Quad::Create(vertices, cuboidTopFrontRight, vec2(0.f, 0.f), cuboidTopBackRight, vec2(30.f/55.f, 0.f),
-		cuboidBottomBackRight, vec2(33.f/55.f, 1.f), cuboidBottomFrontRight, vec2(0.f, 1.f));
+	Quad::Create( vertices, cuboidTopFrontLeft, vec2( 0.f, 12.5f / 70.f ), cuboidTopFrontRight, vec2( 1.f, 12.5f / 70.f ),
+		cuboidBottomFrontRight, vec2( 1.f, 67.5f / 70.f ), cuboidBottomFrontLeft, vec2( 0.f, 67.5f / 70.f ) );				//Seitenflächen Quader
+	Quad::Create(vertices, cuboidTopFrontRight, vec2(20.f/70.f, 12.5f/70.f), cuboidTopBackRight, vec2(50.f/70.f, 12.5f/70.f),
+		cuboidBottomBackRight, vec2( 50.f / 70.f, 67.5f / 70.f ), cuboidBottomFrontRight, vec2( 20.f / 70.f, 67.5f / 70.f ) );
 	Quad::Create(vertices, cuboidTopBackRight, vec2(0.f, 0.f), cuboidTopBackLeft, vec2(1.f, 0.f),
-		cuboidBottomBackLeft, vec2(1.f, 55.f/70.f), cuboidBottomBackRight, vec2(0.f, 55.f/70.f));
-	Quad::Create(vertices, cuboidTopBackLeft, vec2(0.f, 0.f), cuboidTopFrontLeft, vec2(33.f/55.f, 0.f),
-		cuboidBottomFrontLeft, vec2(33.f/55.f, 1.f), cuboidBottomBackLeft, vec2(0.f, 1.f));
+		cuboidBottomBackLeft, vec2( 1.f, 67.5f / 70.f ), cuboidBottomBackRight, vec2( 0.f, 67.5f / 70.f ) );
+	Quad::Create( vertices, cuboidTopBackLeft, vec2( 20.f / 70.f, 12.5f / 70.f ), cuboidTopFrontLeft, vec2( 50.f / 70.f, 12.5f / 70.f ),
+		cuboidBottomFrontLeft, vec2( 50.f / 70.f, 67.5f / 70.f ), cuboidBottomBackLeft, vec2( 20.f / 70.f, 67.5f / 70.f ) );
 	Quad::Create(vertices, cuboidTopFrontLeft, vec2(0.f, 30.f/70.f), cuboidTopBackLeft, vec2(0.f, 0.f),
 		cuboidTopBackRight, vec2(1.f, 0.f), cuboidTopFrontRight, vec2(1.f, 30.f/70.f));					//Oberseite Quader
 
 
 	vertexBuffer = mgdv->CreateVertexBuffer(vertices);
 
-	texture = mgdv->GetTexture( "DiamondPlate" );
+	texture = mgdv->GetTexture( "Dummy" );
 }
 
 Geometries::Robot::Torso::~Torso()
