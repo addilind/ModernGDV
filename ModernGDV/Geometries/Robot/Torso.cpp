@@ -71,17 +71,17 @@ Geometries::Robot::Torso::Torso( ModernGDV::Driver* mgdv )
 		truncatedPyramidBottomFrontLeft, vec2( 25.f*n26, 20.f*n26 ), truncatedPyramidBottomBackLeft, vec2( n26, 20.f*n26 ) );
 	/*********************************************************************************************************************/
 	Quad::Create( vertices, cuboidBottomFrontLeft, vec2( 0.f, 0.f ), cuboidBottomFrontRight, vec2( 1.f, 0.f ),
-		cuboidBottomBackRight, vec2(1.f, 1.f), cuboidBottomBackLeft, vec2(0.f, 1.f));				//Bodenfläche Quader
+		cuboidBottomBackRight, vec2(1.f, 30.f/70.f), cuboidBottomBackLeft, vec2(0.f, 30.f/70.f));				//Bodenfläche Quader
 	Quad::Create(vertices, cuboidTopFrontLeft, vec2(0.f, 0.f), cuboidTopFrontRight, vec2(1.f, 0.f),
-		cuboidBottomFrontRight, vec2(1.f, 1.f), cuboidBottomFrontLeft, vec2(0.f, 1.f));				//Seitenflächen Quader
-	Quad::Create(vertices, cuboidTopFrontRight, vec2(0.f, 0.f), cuboidTopBackRight, vec2(1.f, 0.f),
-		cuboidBottomBackRight, vec2(1.f, 1.f), cuboidBottomFrontRight, vec2(0.f, 1.f));
+		cuboidBottomFrontRight, vec2(1.f, 55.f/70.f), cuboidBottomFrontLeft, vec2(0.f, 55.f/70.f));				//Seitenflächen Quader
+	Quad::Create(vertices, cuboidTopFrontRight, vec2(0.f, 0.f), cuboidTopBackRight, vec2(30.f/55.f, 0.f),
+		cuboidBottomBackRight, vec2(33.f/55.f, 1.f), cuboidBottomFrontRight, vec2(0.f, 1.f));
 	Quad::Create(vertices, cuboidTopBackRight, vec2(0.f, 0.f), cuboidTopBackLeft, vec2(1.f, 0.f),
-		cuboidBottomBackLeft, vec2(1.f, 1.f), cuboidBottomBackRight, vec2(0.f, 1.f));
-	Quad::Create(vertices, cuboidTopBackLeft, vec2(0.f, 0.f), cuboidTopFrontLeft, vec2(1.f, 0.f),
-		cuboidBottomFrontLeft, vec2(1.f, 1.f), cuboidBottomBackLeft, vec2(0.f, 1.f));
-	Quad::Create(vertices, cuboidTopFrontLeft, vec2(0.f, 1.f), cuboidTopBackLeft, vec2(0.f, 0.f),
-		cuboidTopBackRight, vec2(1.f, 0.f), cuboidTopFrontRight, vec2(1.f, 1.f));					//Oberseite Quader
+		cuboidBottomBackLeft, vec2(1.f, 55.f/70.f), cuboidBottomBackRight, vec2(0.f, 55.f/70.f));
+	Quad::Create(vertices, cuboidTopBackLeft, vec2(0.f, 0.f), cuboidTopFrontLeft, vec2(33.f/55.f, 0.f),
+		cuboidBottomFrontLeft, vec2(33.f/55.f, 1.f), cuboidBottomBackLeft, vec2(0.f, 1.f));
+	Quad::Create(vertices, cuboidTopFrontLeft, vec2(0.f, 30.f/70.f), cuboidTopBackLeft, vec2(0.f, 0.f),
+		cuboidTopBackRight, vec2(1.f, 0.f), cuboidTopFrontRight, vec2(1.f, 30.f/70.f));					//Oberseite Quader
 
 
 	vertexBuffer = mgdv->CreateVertexBuffer(vertices);

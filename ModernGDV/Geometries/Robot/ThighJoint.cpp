@@ -46,39 +46,39 @@ Geometries::Robot::ThighJoint::ThighJoint(ModernGDV::Driver* mgdv)
 	vec3 mCuboidTopBackRight		( Dim::THJ_IWIDTH,	+0.5f * Dim::THJ_HEIGHT, -0.5 * Dim::THJ_IDEPTH );
 
 	Quad::Create( vertices, fCuboidBottomFrontLeft, vec2( 0.f, 0.f ), fCuboidBottomFrontRight, vec2( 1.f, 0.f ),
-		fCuboidBottomBackRight, vec2( 1.f, 1.f ), fCuboidBottomBackLeft, vec2( 0.f, 1.f ) );
+		fCuboidBottomBackRight, vec2( 1.f, 5.f/18.75f ), fCuboidBottomBackLeft, vec2( 0.f, 5.f/18.75f ) );
 	Quad::Create( vertices, fCuboidTopFrontLeft, vec2( 0.f, 0.f ), fCuboidTopFrontRight, vec2( 1.f, 0.f ),
-		fCuboidBottomFrontRight, vec2( 1.f, 1.f ), fCuboidBottomFrontLeft, vec2( 0.f, 1.f ) );
-	Quad::Create( vertices, fCuboidTopFrontRight, vec2( 0.f, 0.f ), fCuboidTopBackRight, vec2( 1.f, 0.f ),
-		fCuboidBottomBackRight, vec2( 1.f, 1.f ), fCuboidBottomFrontRight, vec2( 0.f, 1.f ) );
+		fCuboidBottomFrontRight, vec2( 1.f, 10.f/18.75f ), fCuboidBottomFrontLeft, vec2( 0.f, 10.f/18.75f ) );
+	Quad::Create( vertices, fCuboidTopFrontRight, vec2( 0.f, 0.f ), fCuboidTopBackRight, vec2( 5.f/10.f, 0.f ),
+		fCuboidBottomBackRight, vec2( 5.f/10.f, 1.f ), fCuboidBottomFrontRight, vec2( 0.f, 1.f ) );
 	Quad::Create( vertices, fCuboidTopBackRight, vec2( 0.f, 0.f ), fCuboidTopBackLeft, vec2( 1.f, 0.f ),
-		fCuboidBottomBackLeft, vec2( 1.f, 1.f ), fCuboidBottomBackRight, vec2( 0.f, 1.f ) );
-	Quad::Create( vertices, fCuboidTopBackLeft, vec2( 0.f, 0.f ), fCuboidTopFrontLeft, vec2( 1.f, 0.f ),
-		fCuboidBottomFrontLeft, vec2( 1.f, 1.f ), fCuboidBottomBackLeft, vec2( 0.f, 1.f ) );
-	Quad::Create( vertices, fCuboidTopFrontLeft, vec2( 0.f, 1.f ), fCuboidTopBackLeft, vec2( 0.f, 0.f ),
-		fCuboidTopBackRight, vec2( 1.f, 0.f ), fCuboidTopFrontRight, vec2( 1.f, 1.f ) );
+		fCuboidBottomBackLeft, vec2( 1.f, 10.f/18.75f ), fCuboidBottomBackRight, vec2( 0.f, 10.f/18.75f ) );
+	Quad::Create( vertices, fCuboidTopBackLeft, vec2( 0.f, 0.f ), fCuboidTopFrontLeft, vec2( 5.f/10.f, 0.f ),
+		fCuboidBottomFrontLeft, vec2( 5.f/10.f, 1.f ), fCuboidBottomBackLeft, vec2( 0.f, 1.f ) );
+	Quad::Create( vertices, fCuboidTopFrontLeft, vec2( 0.f, 5.f/18.75f ), fCuboidTopBackLeft, vec2( 0.f, 0.f ),
+		fCuboidTopBackRight, vec2( 1.f, 0.f ), fCuboidTopFrontRight, vec2( 1.f, 5.f/18.75f ) );
 
-	Quad::Create( vertices, mCuboidBottomFrontLeft, vec2( 0.f, 0.f ), mCuboidBottomFrontRight, vec2( 1.f, 0.f ),
-		mCuboidBottomBackRight, vec2( 1.f, 1.f ), mCuboidBottomBackLeft, vec2( 0.f, 1.f ) );
+	Quad::Create( vertices, mCuboidBottomFrontLeft, vec2( 0.f, 0.f ), mCuboidBottomFrontRight, vec2( 5.f/15.f, 0.f ),
+		mCuboidBottomBackRight, vec2( 5.f/15.f, 1.f ), mCuboidBottomBackLeft, vec2( 0.f, 1.f ) );
 	Quad::Create( vertices, mCuboidTopFrontRight, vec2( 0.f, 0.f ), mCuboidTopBackRight, vec2( 1.f, 0.f ),
-		mCuboidBottomBackRight, vec2( 1.f, 1.f ), mCuboidBottomFrontRight, vec2( 0.f, 1.f ) );
+		mCuboidBottomBackRight, vec2( 1.f, 10.f/15.f ), mCuboidBottomFrontRight, vec2( 0.f, 10.f/15.f ) );
 	Quad::Create( vertices, mCuboidTopBackLeft, vec2( 0.f, 0.f ), mCuboidTopFrontLeft, vec2( 1.f, 0.f ),
-		mCuboidBottomFrontLeft, vec2( 1.f, 1.f ), mCuboidBottomBackLeft, vec2( 0.f, 1.f ) );
+		mCuboidBottomFrontLeft, vec2( 1.f, 10.f/15.f ), mCuboidBottomBackLeft, vec2( 0.f, 10.f/15.f ) );
 	Quad::Create( vertices, mCuboidTopFrontLeft, vec2( 0.f, 1.f ), mCuboidTopBackLeft, vec2( 0.f, 0.f ),
-		mCuboidTopBackRight, vec2( 1.f, 0.f ), mCuboidTopFrontRight, vec2( 1.f, 1.f ) );
+		mCuboidTopBackRight, vec2( 5.f/15.f, 0.f ), mCuboidTopFrontRight, vec2( 5.f/15.f, 1.f ) );
 
-	Quad::Create( vertices, bCuboidBottomFrontLeft, vec2( 0.f, 0.f ), bCuboidBottomFrontRight, vec2( 1.f, 0.f ),
-		bCuboidBottomBackRight, vec2( 1.f, 1.f ), bCuboidBottomBackLeft, vec2( 0.f, 1.f ) );
-	Quad::Create( vertices, bCuboidTopFrontLeft, vec2( 0.f, 0.f ), bCuboidTopFrontRight, vec2( 1.f, 0.f ),
-		bCuboidBottomFrontRight, vec2( 1.f, 1.f ), bCuboidBottomFrontLeft, vec2( 0.f, 1.f ) );
-	Quad::Create( vertices, bCuboidTopFrontRight, vec2( 0.f, 0.f ), bCuboidTopBackRight, vec2( 1.f, 0.f ),
-		bCuboidBottomBackRight, vec2( 1.f, 1.f ), bCuboidBottomFrontRight, vec2( 0.f, 1.f ) );
-	Quad::Create( vertices, bCuboidTopBackRight, vec2( 0.f, 0.f ), bCuboidTopBackLeft, vec2( 1.f, 0.f ),
-		bCuboidBottomBackLeft, vec2( 1.f, 1.f ), bCuboidBottomBackRight, vec2( 0.f, 1.f ) );
-	Quad::Create( vertices, bCuboidTopBackLeft, vec2( 0.f, 0.f ), bCuboidTopFrontLeft, vec2( 1.f, 0.f ),
-		bCuboidBottomFrontLeft, vec2( 1.f, 1.f ), bCuboidBottomBackLeft, vec2( 0.f, 1.f ) );
-	Quad::Create( vertices, bCuboidTopFrontLeft, vec2( 0.f, 1.f ), bCuboidTopBackLeft, vec2( 0.f, 0.f ),
-		bCuboidTopBackRight, vec2( 1.f, 0.f ), bCuboidTopFrontRight, vec2( 1.f, 1.f ) );
+	Quad::Create(vertices, bCuboidBottomFrontLeft, vec2(0.f, 0.f), bCuboidBottomFrontRight, vec2(1.f, 0.f),
+		bCuboidBottomBackRight, vec2(1.f, 5.f / 18.75f), bCuboidBottomBackLeft, vec2(0.f, 5.f / 18.75f));
+	Quad::Create(vertices, bCuboidTopFrontLeft, vec2(0.f, 0.f), bCuboidTopFrontRight, vec2(1.f, 0.f),
+		bCuboidBottomFrontRight, vec2(1.f, 10.f / 18.75f), bCuboidBottomFrontLeft, vec2(0.f, 10.f / 18.75f));
+	Quad::Create(vertices, bCuboidTopFrontRight, vec2(0.f, 0.f), bCuboidTopBackRight, vec2(5.f / 10.f, 0.f),
+		bCuboidBottomBackRight, vec2(5.f / 10.f, 1.f), bCuboidBottomFrontRight, vec2(0.f, 1.f));
+	Quad::Create(vertices, bCuboidTopBackRight, vec2(0.f, 0.f), bCuboidTopBackLeft, vec2(1.f, 0.f),
+		bCuboidBottomBackLeft, vec2(1.f, 10.f / 18.75f), bCuboidBottomBackRight, vec2(0.f, 10.f / 18.75f));
+	Quad::Create(vertices, bCuboidTopBackLeft, vec2(0.f, 0.f), bCuboidTopFrontLeft, vec2(5.f / 10.f, 0.f),
+		bCuboidBottomFrontLeft, vec2(5.f / 10.f, 1.f), bCuboidBottomBackLeft, vec2(0.f, 1.f));
+	Quad::Create(vertices, bCuboidTopFrontLeft, vec2(0.f, 5.f / 18.75f), bCuboidTopBackLeft, vec2(0.f, 0.f),
+		bCuboidTopBackRight, vec2(1.f, 0.f), bCuboidTopFrontRight, vec2(1.f, 5.f / 18.75f));
 
 
 	vertexBuffer = mgdv->CreateVertexBuffer(vertices);

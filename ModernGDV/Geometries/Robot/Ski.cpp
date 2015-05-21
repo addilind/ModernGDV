@@ -26,16 +26,16 @@ Geometries::Robot::Ski::Ski(ModernGDV::Driver* mgdv)
 	vec3 cuboidTopBackLeft( -0.075f, +0.0f, -1.10f );
 	vec3 cuboidTopBackRight( +0.075f, +0.0f, -1.10f );
 
-	Quad::Create(vertices, cuboidBottomFrontLeft, vec2(0.f, 0.f), cuboidBottomFrontRight, vec2(1.f, 0.f),
-		cuboidBottomBackRight, vec2(1.f, 1.f), cuboidBottomBackLeft, vec2(0.f, 1.f));				//Bodenfläche Quader
+	Quad::Create(vertices, cuboidBottomFrontLeft, vec2(0.f, 0.f), cuboidBottomFrontRight, vec2(15.f/220.f, 0.f),
+		cuboidBottomBackRight, vec2(15.f/220.f, 1.f), cuboidBottomBackLeft, vec2(0.f, 1.f));				//Bodenfläche Quader
 
 	Quad::Create(vertices, cuboidTopFrontRight, vec2(0.f, 0.f), cuboidTopBackRight, vec2(1.f, 0.f),
-		cuboidBottomBackRight, vec2(1.f, 1.f), cuboidBottomFrontRight, vec2(0.f, 1.f));				//Rechts
+		cuboidBottomBackRight, vec2(1.f, 3.f/220.f), cuboidBottomFrontRight, vec2(0.f, 3.f/220.f));				//Rechts
 	Quad::Create(vertices, cuboidTopBackLeft, vec2(0.f, 0.f), cuboidTopFrontLeft, vec2(1.f, 0.f),
-		cuboidBottomFrontLeft, vec2(1.f, 1.f), cuboidBottomBackLeft, vec2(0.f, 1.f));				//Links
+		cuboidBottomFrontLeft, vec2(1.f, 3.f/220.f), cuboidBottomBackLeft, vec2(0.f, 3.f/220.f));				//Links
 
 	Quad::Create(vertices, cuboidTopFrontLeft, vec2(0.f, 1.f), cuboidTopBackLeft, vec2(0.f, 0.f),
-		cuboidTopBackRight, vec2(1.f, 0.f), cuboidTopFrontRight, vec2(1.f, 1.f));					//Oberseite Quader
+		cuboidTopBackRight, vec2(15.f/220.f, 0.f), cuboidTopFrontRight, vec2(15.f/220.f, 1.f));					//Oberseite Quader
 
 	//Ski Spitze vorne
 	vec3 frontTipLeft(-0.035f, +0.02f, +1.25f);

@@ -33,9 +33,9 @@ MyApp::~MyApp()
 void MyApp::Update(float deltaT)
 {
 	camera.Update( deltaT );
-	/*if (glfwGetTime() > 1.)
+	if (glfwGetTime() > 1.)
 		return;
-	*/robot.SetTilt( glm::sin( glfwGetTime() )*0.4f ); //Seitenneigung
+	robot.SetTilt( glm::sin( glfwGetTime() )*0.4f ); //Seitenneigung
 	robot.SetOrientation( glm::cos( glfwGetTime() + 0.5f )*-0.9f ); //Drehung y-Achse
 	robot.SetPosition( glm::vec3( glm::sin( glfwGetTime() ) * -5.0f, 2.4f - glm::abs( glm::sin( glfwGetTime() ) )*0.25, 0 ) ); //Rechts Links
 
