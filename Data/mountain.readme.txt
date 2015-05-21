@@ -1,0 +1,2 @@
+rock texture from: http://www.textureking.com/dsc_7152/
+snow texture see snow.readme.txt

@@ -67,7 +67,7 @@ Geometries::Robot::Head::Head(ModernGDV::Driver* mgdv)
 
 	vertexBuffer = mgdv->CreateVertexBuffer(vertices);
 
-	texture = mgdv->GetTexture("kopf");
+	texture = mgdv->GetTexture("head");
 
 	
 }

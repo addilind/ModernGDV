@@ -88,6 +88,16 @@ void ModernGDV::Camera::Update( float deltaT )
 		lookAt += glm::vec3(moveSpeed * 1.f * deltaT * glm::cos(xzAngle), 0.f, moveSpeed * -1.f * deltaT * glm::sin(xzAngle));
 		dirty = true;
 	}
+	if (glfwGetKey( mgdv->GetWindow(), GLFW_KEY_LEFT_SHIFT ))
+	{
+		lookAt += glm::vec3( 0, moveSpeed * 1.f * deltaT, 0.f );
+		dirty = true;
+	}
+	if (glfwGetKey( mgdv->GetWindow(), GLFW_KEY_LEFT_CONTROL ))
+	{
+		lookAt += glm::vec3( 0, moveSpeed * -1.f * deltaT, 0.f );
+		dirty = true;
+	}
 	if (glfwGetKey( mgdv->GetWindow(), GLFW_KEY_PAGE_UP ))
 	{
 		distance -= speedZoom * deltaT;

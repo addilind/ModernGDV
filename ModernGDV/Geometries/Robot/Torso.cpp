@@ -76,7 +76,7 @@ Geometries::Robot::Torso::Torso( ModernGDV::Driver* mgdv )
 		cuboidBottomFrontRight, vec2( 1.f, 67.5f / 70.f ), cuboidBottomFrontLeft, vec2( 0.f, 67.5f / 70.f ) );				//Seitenflächen Quader
 	Quad::Create(vertices, cuboidTopFrontRight, vec2(20.f/70.f, 12.5f/70.f), cuboidTopBackRight, vec2(50.f/70.f, 12.5f/70.f),
 		cuboidBottomBackRight, vec2( 50.f / 70.f, 67.5f / 70.f ), cuboidBottomFrontRight, vec2( 20.f / 70.f, 67.5f / 70.f ) );
-	Quad::Create(vertices, cuboidTopBackRight, vec2(0.f, 0.f), cuboidTopBackLeft, vec2(1.f, 0.f),
+	Quad::Create( vertices, cuboidTopBackRight, vec2( 0.f, 12.5f / 70.f ), cuboidTopBackLeft, vec2( 1.f, 12.5f / 70.f ),
 		cuboidBottomBackLeft, vec2( 1.f, 67.5f / 70.f ), cuboidBottomBackRight, vec2( 0.f, 67.5f / 70.f ) );
 	Quad::Create( vertices, cuboidTopBackLeft, vec2( 20.f / 70.f, 12.5f / 70.f ), cuboidTopFrontLeft, vec2( 50.f / 70.f, 12.5f / 70.f ),
 		cuboidBottomFrontLeft, vec2( 50.f / 70.f, 67.5f / 70.f ), cuboidBottomBackLeft, vec2( 20.f / 70.f, 67.5f / 70.f ) );

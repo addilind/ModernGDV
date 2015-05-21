@@ -9,7 +9,7 @@
 #include <iomanip>
 
 int main( int argc, char** argv ) {
-	try {
+	/*try*/ {
 		std::cout << "ModernGDV Build " __DATE__ << std::endl; //Banner auf Konsole ausgeben
 		std::clog << std::setprecision( 4 );
 
@@ -24,7 +24,7 @@ int main( int argc, char** argv ) {
 		
 		return 0;
 	}
-	catch (std::exception& ex) {
+	/*catch (std::exception& ex) {
 		std::cerr << "\nUnhandled exception: " << ex.what() << "\n\n";
 		system( "pause" );
 		return -1;
@@ -33,5 +33,5 @@ int main( int argc, char** argv ) {
 		std::cerr << "\nUnhandled exception: Unknown exception\n\n";
 		system( "pause" );
 		return -1;
-	}
+	}*/
 }

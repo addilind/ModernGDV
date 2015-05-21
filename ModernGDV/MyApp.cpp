@@ -37,6 +37,8 @@ void MyApp::Update(float deltaT)
 {
 	camera.Update( deltaT );
 	
+	if (glfwGetKey( mgdv->GetWindow(), GLFW_KEY_1 ))
+		return;
 
 	double time = glfwGetTime();
 

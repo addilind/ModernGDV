@@ -38,7 +38,7 @@ Geometries::Robot::Foot::Foot(ModernGDV::Driver* mgdv)
 
 	vertexBuffer = mgdv->CreateVertexBuffer(vertices);
 
-	texture = mgdv->GetTexture("test");
+	texture = mgdv->GetTexture("Joint");
 }
 
 Geometries::Robot::Foot::~Foot()
