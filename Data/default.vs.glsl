@@ -6,6 +6,7 @@ in vec3 inNormal;	//Normale
 in vec2 inTexcoord; //Texturkoordinate
 
 // Eigenschaften, die ZUSÄTZLICH zur Position weitergegeben werden sollen (VertexShader MÜSSEN eine Position ausgeben, deshalb ist sie immer als Ausgabe "vordefiniert")
+// out vec4 gl_Position
 out vec2 texcoord;		//Texturkoordinate
 out vec3 position_world;//Position im Weltkoordinatensystem
 out vec3 normal_cam;	//Normale im Kamerakoordinatensystem
@@ -33,8 +34,8 @@ void main() {
 	normal_cam = normal * inNormal;
 	//Die Normale wird in das Kamerakoordinatensystem ueberfuehrt. (Siehe http://www.lighthouse3d.com/tutorials/glsl-tutorial/the-normal-matrix/ , warum nicht einfach view * world)
 
-	eyedir_cam = vec3(0,0,0) - position_cam.xyz;
-	lightdir_cam = (view * vec4( lightPos, 1.0f ) ).xyz - position_cam.xyz;
+	eyedir_cam = vec3(0,0,0) - position_cam.xyz; //Vektor, der vom Punkt zur Kamera zeigt (E)
+	lightdir_cam = (view * vec4( lightPos, 1.0f ) ).xyz - position_cam.xyz; //Vektor, der vom Punkt zum Licht zeigt (L)
 
 	texcoord = inTexcoord;
 }

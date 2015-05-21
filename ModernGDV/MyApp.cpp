@@ -33,12 +33,14 @@ MyApp::~MyApp()
 void MyApp::Update(float deltaT)
 {
 	camera.Update( deltaT );
-	robot.SetTilt( glm::sin( glfwGetTime() )*0.4f ); //Seitenneigung
+	/*if (glfwGetTime() > 1.)
+		return;
+	*/robot.SetTilt( glm::sin( glfwGetTime() )*0.4f ); //Seitenneigung
 	robot.SetOrientation( glm::cos( glfwGetTime() + 0.5f )*-0.9f ); //Drehung y-Achse
 	robot.SetPosition( glm::vec3( glm::sin( glfwGetTime() ) * -5.0f, 2.4f - glm::abs( glm::sin( glfwGetTime() ) )*0.25, 0 ) ); //Rechts Links
 
-	robot.SetLeftArm( -0.6f, -0.f, -0.9f );
-	robot.SetRightArm(-0.6f, -0.f, +0.9f);
+	robot.SetLeftArm(-0.6f, 0.5f - 0.5f*glm::sin(glfwGetTime()), -0.5f);
+	robot.SetRightArm(-0.6f, 0.5f + 0.5f*glm::sin(glfwGetTime()), -0.5f);
 
 	double timediff = 1.5;
 
@@ -48,8 +50,8 @@ void MyApp::Update(float deltaT)
 		3.80f - glm::abs( glm::sin( glfwGetTime() + timediff ) )*0.25,
 		-4.f ) );
 
-	robot2.SetLeftArm(-0.6f, -0.f, -0.9f);
-	robot2.SetRightArm(-0.6f, -0.f, +0.9f);
+	robot2.SetLeftArm(-0.6f, 0.5f - 0.5f*glm::sin(glfwGetTime() + timediff), -0.5f);
+	robot2.SetRightArm(-0.6f, 0.5f + 0.5f*glm::sin(glfwGetTime() + timediff), -0.5f);
 }
 
 void MyApp::Render(  )

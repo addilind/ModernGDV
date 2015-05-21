@@ -179,8 +179,8 @@ void Geometries::Robot::Robot::SetLeftArm( const float& rotationFront, const flo
 void Geometries::Robot::Robot::SetRightArm(const float& rotationFront, const float& rotationLateral, const float& rotationLowerArm)
 {
 	rotationRightArmFront = rotationFront;
-	rotationRightArmLateral = rotationLateral;
-	rotationRightArmLower = rotationLowerArm;
+	rotationRightArmLateral = -rotationLateral;
+	rotationRightArmLower = -rotationLowerArm;
 }
 
 void Geometries::Robot::Robot::SetTilt( const float& tilt )

@@ -47,27 +47,28 @@ Geometries::Robot::Torso::Torso( ModernGDV::Driver* mgdv )
 	vec3 cuboidTopBackLeft	( -0.5f * Dim::TOR_BCB_WIDTH, Dim::TOR_LOWEST + Dim::TOR_PYR_HEIGHT + Dim::TOR_SCB_HEIGHT + Dim::TOR_TPR_HEIGHT + Dim::TOR_BCB_HEIGHT, -0.5f * Dim::TOR_BCB_DEPTH );
 	vec3 cuboidTopBackRight	( +0.5f * Dim::TOR_BCB_WIDTH, Dim::TOR_LOWEST + Dim::TOR_PYR_HEIGHT + Dim::TOR_SCB_HEIGHT + Dim::TOR_TPR_HEIGHT + Dim::TOR_BCB_HEIGHT, -0.5f * Dim::TOR_BCB_DEPTH );
 	
+	static const float n26 = 1.f / 26.f;
 
 	Tri::Create( vertices, pyramidTop, vec2( 0.5f, 0.f ), pyramidBaseFrontLeft, vec2( 0.f, 1.f ), pyramidBaseFrontRight, vec2( 1.f, 1.f ) ); //Seitenflächen Pyramide
 	Tri::Create( vertices, pyramidTop, vec2( 0.5f, 1.f ), pyramidBaseFrontRight, vec2( 0.f, 0.f ), pyramidBaseBackRight, vec2( 1.f, 0.f ) );
 	Tri::Create( vertices, pyramidTop, vec2( 0.5f, 1.f ), pyramidBaseBackRight, vec2( 0.f, 0.f ), pyramidBaseBackLeft, vec2( 1.f, 0.f ) );
 	Tri::Create( vertices, pyramidTop, vec2( 0.5f, 1.f ), pyramidBaseBackLeft, vec2( 0.f, 0.f ), pyramidBaseFrontLeft, vec2( 1.f, 0.f ) );
 	/*********************************************************************************************************************/
-	Quad::Create( vertices, smCuboidTopFrontLeft, vec2( 0.f, 0.f ), smCuboidTopFrontRight, vec2( 1.f, 0.f ), pyramidBaseFrontRight, vec2( 1.f, 1.f ), pyramidBaseFrontLeft, vec2( 0.f, 1.f ) ); //Seitenflächen kleiner Quader
-	Quad::Create( vertices, smCuboidTopFrontRight, vec2( 0.f, 0.f ), smCuboidTopBackRight, vec2( 1.f, 0.f ), pyramidBaseBackRight, vec2( 1.f, 1.f ), pyramidBaseFrontRight, vec2( 0.f, 1.f ) );
-	Quad::Create( vertices, smCuboidTopBackRight, vec2( 0.f, 0.f ), smCuboidTopBackLeft, vec2( 1.f, 0.f ), pyramidBaseBackLeft, vec2( 1.f, 1.f ), pyramidBaseBackRight, vec2( 0.f, 1.f ) );
-	Quad::Create( vertices, smCuboidTopBackLeft, vec2( 0.f, 0.f ), smCuboidTopFrontLeft, vec2( 1.f, 0.f ), pyramidBaseFrontLeft, vec2( 1.f, 1.f ), pyramidBaseBackLeft, vec2( 0.f, 1.f ) );
+	Quad::Create( vertices, smCuboidTopFrontLeft, vec2( 0.f, 0.f ), smCuboidTopFrontRight, vec2( 1.f, 0.f ), pyramidBaseFrontRight, vec2( 1.f, 0.75f ), pyramidBaseFrontLeft, vec2( 0.f, 0.75f ) ); //Seitenflächen kleiner Quader
+	Quad::Create(vertices, smCuboidTopFrontRight, vec2(0.f, 0.f), smCuboidTopBackRight, vec2(1.f, 0.f), pyramidBaseBackRight, vec2(1.f, 0.75f), pyramidBaseFrontRight, vec2(0.f, 0.75f));
+	Quad::Create(vertices, smCuboidTopBackRight, vec2(0.f, 0.f), smCuboidTopBackLeft, vec2(1.f, 0.f), pyramidBaseBackLeft, vec2(1.f, 0.75f), pyramidBaseBackRight, vec2(0.f, 0.75f));
+	Quad::Create(vertices, smCuboidTopBackLeft, vec2(0.f, 0.f), smCuboidTopFrontLeft, vec2(1.f, 0.f), pyramidBaseFrontLeft, vec2(1.f, 0.75f), pyramidBaseBackLeft, vec2(0.f, 0.75f));
 	/*********************************************************************************************************************/
 	Quad::Create( vertices, truncatedPyramidBottomFrontLeft, vec2( 0.f, 0.f ), truncatedPyramidBottomFrontRight, vec2( 1.f, 0.f ),
-		truncatedPyramidBottomBackRight, vec2( 1.f, 1.f ), truncatedPyramidBottomBackLeft, vec2( 0.f, 1.f ) );		//Bodenfläche Pyramidenstumpf
+		truncatedPyramidBottomBackRight, vec2( 1.f, 24.f/40.f ), truncatedPyramidBottomBackLeft, vec2( 0.f, 24.f/40.f ) );		//Bodenfläche Pyramidenstumpf
 	Quad::Create( vertices, truncatedPyramidTopFrontLeft, vec2( 0.f, 0.f ), truncatedPyramidTopFrontRight, vec2( 1.f, 0.f ),
-		truncatedPyramidBottomFrontRight, vec2( 1.f, 1.f ), truncatedPyramidBottomFrontLeft, vec2( 0.f, 1.f ) );	//Seitenflächen Pyramidenstumpf
+		truncatedPyramidBottomFrontRight, vec2( 0.9f, 0.4f ), truncatedPyramidBottomFrontLeft, vec2( 0.1f, 0.4f ) );	//Seitenflächen Pyramidenstumpf
 	Quad::Create( vertices, truncatedPyramidTopFrontRight, vec2( 0.f, 0.f ), truncatedPyramidTopBackRight, vec2( 1.f, 0.f ),
-		truncatedPyramidBottomBackRight, vec2( 1.f, 1.f ), truncatedPyramidBottomFrontRight, vec2( 0.f, 1.f ) );
+		truncatedPyramidBottomBackRight, vec2( 25.f* n26, 20.f * n26 ), truncatedPyramidBottomFrontRight, vec2( n26, 20.f*n26 ) );
 	Quad::Create( vertices, truncatedPyramidTopBackRight, vec2( 0.f, 0.f ), truncatedPyramidTopBackLeft, vec2( 1.f, 0.f ),
-		truncatedPyramidBottomBackLeft, vec2( 1.f, 1.f ), truncatedPyramidBottomBackRight, vec2( 0.f, 1.f ) );
+		truncatedPyramidBottomBackLeft, vec2( 0.9f, 0.4f ), truncatedPyramidBottomBackRight, vec2( 0.1f, 0.4f ) );
 	Quad::Create( vertices, truncatedPyramidTopBackLeft, vec2( 0.f, 0.f ), truncatedPyramidTopFrontLeft, vec2( 1.f, 0.f ),
-		truncatedPyramidBottomFrontLeft, vec2( 1.f, 1.f ), truncatedPyramidBottomBackLeft, vec2( 0.f, 1.f ) );
+		truncatedPyramidBottomFrontLeft, vec2( 25.f*n26, 20.f*n26 ), truncatedPyramidBottomBackLeft, vec2( n26, 20.f*n26 ) );
 	/*********************************************************************************************************************/
 	Quad::Create( vertices, cuboidBottomFrontLeft, vec2( 0.f, 0.f ), cuboidBottomFrontRight, vec2( 1.f, 0.f ),
 		cuboidBottomBackRight, vec2(1.f, 1.f), cuboidBottomBackLeft, vec2(0.f, 1.f));				//Bodenfläche Quader
