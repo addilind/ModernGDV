@@ -3,7 +3,7 @@
 
 Geometries::Robot::Robot::Robot( ModernGDV::Driver* mgdv )
 	: torso( mgdv ), thigh( mgdv ), shank( mgdv ), foot( mgdv ), shoulderJoint( mgdv ), thighJoint( mgdv ), head( mgdv ), neck( mgdv ), ski( mgdv ),
-	maxLegLength(0.8f), frontTilt(0.2f)
+	maxLegLength(0.8f), frontTilt(0.5f)
 {
 	this->mgdv = mgdv;
 }
@@ -186,21 +186,21 @@ void Geometries::Robot::Robot::SetRightArm(const float& rotationFront, const flo
 void Geometries::Robot::Robot::SetTilt( const float& tilt )
 {
 	this->tilt = -tilt;
-	float heightOuterThigh = maxLegLength * glm::cos( 1.1f * glm::abs( tilt ) ); //Hˆhe von ‰uﬂerer H¸fte
+	float heightOuterThigh = maxLegLength * glm::cos( 1.3f * glm::abs( tilt ) ); //Hˆhe von ‰uﬂerer H¸fte
 	float xDiffTigh = 0.5f * Dim::TOR_SCB_WIDTH + Dim::THJ_THIGH_LOC; 
 	originHeight = heightOuterThigh - xDiffTigh * glm::sin( glm::abs( tilt ) );
 	float heightInnerThigh = originHeight - xDiffTigh * glm::sin( glm::abs( tilt ) );
-	float lengthInnerLeg = heightInnerThigh / glm::cos( 0.9 * glm::abs( tilt ) );
+	float lengthInnerLeg = heightInnerThigh / glm::cos( 0.3 * glm::abs( tilt ) );
 
 	if (tilt > 0)
 	{ //Nach rechts neigen
-		SetLeftLeg( maxLegLength, 0, 1.1f * glm::abs( tilt ), +0.17f ); //Auﬂen
-		SetRightLeg( lengthInnerLeg, 0, 0.9f * glm::abs( tilt ), +0.17f ); //Innen
+		SetLeftLeg( maxLegLength, 0.5f, 0.3f * glm::abs( tilt ), -0.27f ); //Auﬂen
+		SetRightLeg( lengthInnerLeg, 0.5f, -0.3f * glm::abs( tilt ), -0.27f ); //Innen
 	}
 	else
 	{
-		SetRightLeg( maxLegLength, 0, -1.1f * glm::abs( tilt ), +0.17f ); //Auﬂen
-		SetLeftLeg( lengthInnerLeg, 0, -0.9f * glm::abs( tilt ), +0.17f ); //Innen
+		SetRightLeg( maxLegLength, 0.5f, -0.3f * glm::abs( tilt ), -0.27f ); //Auﬂen
+		SetLeftLeg( lengthInnerLeg, 0.5f, 0.3f * glm::abs( tilt ), -0.27f ); //Innen
 	}
 
 }

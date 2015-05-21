@@ -14,14 +14,15 @@ class MyApp : public ModernGDV::App
 private:
 	ModernGDV::Driver* mgdv;
 
-	Geometries::Robot::Robot robot;
-	Geometries::Robot::Robot robot2;
+	std::vector<Geometries::Robot::Robot> robots;
 	ModernGDV::Camera camera;
 	GLuint lampvb;
 	ModernGDV::Textures::Texture* lamptex;
 	Geometries::Terrain terrain;
+	Geometries::Terrain lowsegterrain;
 	Geometries::TerrainSet terrain_slope;
-	//Geometries::TerrainSet terrain_bgmountain;
+	Geometries::TerrainSet terrain_bgmountain;
+	Geometries::TerrainSet terrain_glacier;
 
 public:
 	MyApp( std::vector<std::string> commandline, ModernGDV::Driver* mgdv );
@@ -31,6 +32,7 @@ public:
 	virtual void Render(  ) override;
 private:
 	void drawSlope();
+	void drawSceneryTerrain();
 };
 
 #endif

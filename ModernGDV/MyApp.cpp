@@ -2,12 +2,15 @@
 #include "Geometries/Primitives/Quad.h"
 
 using Geometries::Primitives::Quad;
+static const size_t ROBOTCOUNT = 12U;
 
 MyApp::MyApp( std::vector<std::string> commandline, ModernGDV::Driver* mgdv )
-	: mgdv(mgdv), robot(mgdv), robot2(mgdv), camera(mgdv), terrain(mgdv, 320U),
-	terrain_slope("snow", "hmap", 200.f, mgdv) //von -200 bis +200 ist immer Terrain sichtbar(4Segmente a 100), selbst wenn das letzte Segment gerade springt
+	: mgdv(mgdv), robots(ROBOTCOUNT, Geometries::Robot::Robot(mgdv)), camera(mgdv), terrain(mgdv, 320U), lowsegterrain(mgdv, 256),
+	terrain_slope("snow", "hmap", 200.f, mgdv), //von -200 bis +200 ist immer Terrain sichtbar(4Segmente a 100), selbst wenn das letzte Segment gerade springt
+	terrain_bgmountain("Mountain", "MountainHMap", 550.f, mgdv),
+	terrain_glacier( "Snow", "MountainHMap", 550.f, mgdv )
 {
-	mgdv->SetProjectionOptions(45.0f, 500.f);
+	mgdv->SetProjectionOptions(45.0f, 600.f);
 
 	mgdv->SetApp( this );
 
@@ -33,25 +36,20 @@ MyApp::~MyApp()
 void MyApp::Update(float deltaT)
 {
 	camera.Update( deltaT );
-	if (glfwGetTime() > 1.)
-		return;
-	robot.SetTilt( glm::sin( glfwGetTime() )*0.4f ); //Seitenneigung
-	robot.SetOrientation( glm::cos( glfwGetTime() + 0.5f )*-0.9f ); //Drehung y-Achse
-	robot.SetPosition( glm::vec3( glm::sin( glfwGetTime() ) * -5.0f, 2.4f - glm::abs( glm::sin( glfwGetTime() ) )*0.25, 0 ) ); //Rechts Links
+	
 
-	robot.SetLeftArm(-0.6f, 0.5f - 0.5f*glm::sin(glfwGetTime()), -0.5f);
-	robot.SetRightArm(-0.6f, 0.5f + 0.5f*glm::sin(glfwGetTime()), -0.5f);
+	double time = glfwGetTime();
 
-	double timediff = 1.5;
+	for (size_t i = 0U; i < ROBOTCOUNT; ++i){
+		robots[i].SetTilt( glm::sin( time )*0.4f ); //Seitenneigung
+		robots[i].SetOrientation( glm::cos( time + 0.5f )*-0.9f ); //Drehung y-Achse
+		robots[i].SetPosition( glm::vec3( glm::sin( time ) * -5.0f, 2.37f - glm::abs( glm::sin( time ) )*0.25f + 1.3f * i, -4.f * i ) ); //Rechts Links
 
-	robot2.SetTilt( glm::sin( glfwGetTime() + timediff )*0.4f );
-	robot2.SetOrientation( glm::cos( glfwGetTime() + timediff + 0.5f )*-0.9f );
-	robot2.SetPosition( glm::vec3( glm::sin( glfwGetTime() + timediff ) * -5.0f,
-		3.80f - glm::abs( glm::sin( glfwGetTime() + timediff ) )*0.25,
-		-4.f ) );
+		robots[i].SetLeftArm( -0.6f, 0.5f - 0.5f*glm::sin( time ), -0.5f );
+		robots[i].SetRightArm( -0.6f, 0.5f + 0.5f*glm::sin( time ), -0.5f );
 
-	robot2.SetLeftArm(-0.6f, 0.5f - 0.5f*glm::sin(glfwGetTime() + timediff), -0.5f);
-	robot2.SetRightArm(-0.6f, 0.5f + 0.5f*glm::sin(glfwGetTime() + timediff), -0.5f);
+		time += 1.5;
+	}
 }
 
 void MyApp::Render(  )
@@ -60,9 +58,10 @@ void MyApp::Render(  )
 	mgdv->ShaderLib.SetLight(glm::vec3(1.f*glm::sin(glfwGetTime() / 3.f), 5.3f, 1.f*glm::cos(glfwGetTime() / 3.f)), glm::vec3(0.0f, 0.f, 1.f), 1.f, 0.3f);
 
 	drawSlope();
-	
-	robot.Render();
-	robot2.Render();
+	drawSceneryTerrain();
+
+	for (size_t i = 0U; i < ROBOTCOUNT; ++i)
+		robots[i].Render();
 
 	glDisable( GL_CULL_FACE ); //Lampe ist nicht immer korrekt
 	glBindBuffer( GL_ARRAY_BUFFER, lampvb );
@@ -91,4 +90,35 @@ void MyApp::drawSlope()
 		mgdv->ShaderLib.SetModel( pieceTransform );
 		terrain.Render(terrain_slope);
 	}
+}
+
+void MyApp::drawSceneryTerrain()
+{
+	mgdv->ShaderLib.SetModel( glm::scale(
+		glm::translate(
+		glm::mat4(),
+		glm::vec3( 400, -250.f, 400 ) ),
+		glm::vec3( 300.f, 300.f, 300.f ) ) );
+
+	lowsegterrain.Render( terrain_bgmountain );
+
+	mgdv->ShaderLib.SetModel( glm::scale(
+		glm::rotate(
+		glm::translate(
+		glm::mat4(),
+		glm::vec3( -350, -230.f, 400 ) ),
+		-1.5f, glm::vec3( 0, 1, 0 ) ),
+		glm::vec3( 200.f, 320.f, 200.f ) ) );
+
+	lowsegterrain.Render( terrain_bgmountain );
+
+	mgdv->ShaderLib.SetModel( glm::scale(
+		glm::rotate(
+		glm::translate(
+		glm::mat4(),
+		glm::vec3( 0, +20.f, -400 ) ),
+		1.7f, glm::vec3( 0, 1, 0 ) ),
+		glm::vec3( 200.f, 130.f, 200.f ) ) );
+
+	lowsegterrain.Render( terrain_glacier );
 }
