@@ -39,7 +39,7 @@ Geometries::Robot::Thigh::Thigh(ModernGDV::Driver* mgdv)
 
 	vertexBuffer = mgdv->CreateVertexBuffer(vertices);
 
-	texture = mgdv->GetTexture("test");
+	texture = mgdv->GetTexture("Warn");
 
 	
 }

@@ -86,7 +86,7 @@ Geometries::Robot::Torso::Torso( ModernGDV::Driver* mgdv )
 
 	vertexBuffer = mgdv->CreateVertexBuffer(vertices);
 
-	texture = mgdv->GetTexture( "blubb" );
+	texture = mgdv->GetTexture( "DiamondPlate" );
 }
 
 Geometries::Robot::Torso::~Torso()
