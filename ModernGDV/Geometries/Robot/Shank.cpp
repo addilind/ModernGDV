@@ -69,7 +69,7 @@ Geometries::Robot::Shank::Shank(ModernGDV::Driver* mgdv)
 
 	vertexBuffer = mgdv->CreateVertexBuffer(vertices);
 
-	texture = mgdv->GetTexture("Dummy");
+	texture = mgdv->GetTexture( "DiamondPlate" );
 }
 
 Geometries::Robot::Shank::~Shank()
