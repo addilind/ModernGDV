@@ -24,6 +24,10 @@ private:
 	Geometries::TerrainSet terrain_bgmountain;
 	Geometries::TerrainSet terrain_glacier;
 
+	float leadTilt;
+	float leadOrient;
+	float leadPos;
+
 public:
 	MyApp( std::vector<std::string> commandline, ModernGDV::Driver* mgdv );
 	virtual ~MyApp();
@@ -33,6 +37,7 @@ public:
 private:
 	void drawSlope();
 	void drawSceneryTerrain();
+	void updateLead(float deltaT);
 };
 
 #endif

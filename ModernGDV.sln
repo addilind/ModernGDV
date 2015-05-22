@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ModernGDV", "ModernGDV\ModernGDV.vcxproj", "{002AE15C-DA4E-4DE8-9CA7-43BF61F18535}"
 EndProject
@@ -9,14 +9,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{B1DDCF0F-6
 	ProjectSection(SolutionItems) = preProject
 		Data\default.fs.glsl = Data\default.fs.glsl
 		Data\default.vs.glsl = Data\default.vs.glsl
+		Data\Dummy.dds = Data\Dummy.dds
+		Data\head.dds = Data\head.dds
 		Data\hmap.dds = Data\hmap.dds
-		Data\kopf.dds = Data\kopf.dds
+		Data\Joint.dds = Data\Joint.dds
 		Data\lamp.dds = Data\lamp.dds
+		Data\mountain.dds = Data\mountain.dds
+		Data\mountainHMap.dds = Data\mountainHMap.dds
 		Data\skybox.dds = Data\skybox.dds
 		Data\snow.dds = Data\snow.dds
 		Data\terrain.fs.glsl = Data\terrain.fs.glsl
 		Data\terrain.vs.glsl = Data\terrain.vs.glsl
-		Data\test.dds = Data\test.dds
+		Data\Warn.dds = Data\Warn.dds
 	EndProjectSection
 EndProject
 Global
