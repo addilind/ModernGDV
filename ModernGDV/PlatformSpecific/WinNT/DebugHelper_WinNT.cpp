@@ -21,7 +21,7 @@ LONG WINAPI Crash( PEXCEPTION_POINTERS ex )
 		MINIDUMP_TYPE mdt = MiniDumpNormal;
 
 		BOOL result = MiniDumpWriteDump( GetCurrentProcess(), GetCurrentProcessId(),
-			hFile, mdt, (ex != nullptr) ? &mdei : 0, 0, 0 );
+			hFile, mdt, (ex != nullptr) ? &mdei : 0, nullptr, nullptr );
 
 		if (result)
 			std::cerr << "Crash. Wrote MiniDump to moderngdv.dmp" << std::endl;
@@ -37,7 +37,7 @@ LONG WINAPI Crash( PEXCEPTION_POINTERS ex )
 	return EXCEPTION_CONTINUE_SEARCH;
 }
 
-void PlattformSpecific::RegisterExceptionHandler()
+void PlatformSpecific::RegisterExceptionHandler()
 {
 	SetUnhandledExceptionFilter( Crash );
 }

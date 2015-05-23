@@ -1,6 +1,6 @@
 #pragma once
 
-namespace PlattformSpecific
+namespace PlatformSpecific
 {
 	void RegisterExceptionHandler();
 }
