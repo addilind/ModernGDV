@@ -14,7 +14,6 @@ Geometries::Robot::Robot::~Robot()
 
 void Geometries::Robot::Robot::Render(  )
 {
-
 	glm::mat4 transform =
 		glm::rotate(
 			glm::rotate(

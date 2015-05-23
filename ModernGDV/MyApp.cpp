@@ -8,7 +8,8 @@ MyApp::MyApp( std::vector<std::string> commandline, ModernGDV::Driver* mgdv )
 	: mgdv(mgdv), robots(ROBOTCOUNT, Geometries::Robot::Robot(mgdv)), camera(mgdv), terrain(mgdv, 320U), lowsegterrain(mgdv, 256),
 	terrain_slope("snow", "hmap", 200.f, mgdv), //von -200 bis +200 ist immer Terrain sichtbar(4Segmente a 100), selbst wenn das letzte Segment gerade springt
 	terrain_bgmountain("Mountain", "MountainHMap", 550.f, mgdv),
-	terrain_glacier( "Snow", "MountainHMap", 550.f, mgdv )
+	terrain_glacier( "Snow", "MountainHMap", 550.f, mgdv ),
+	leadTilt(0.f), leadOrient(0.f), leadPos(0.f)
 {
 	mgdv->SetProjectionOptions(45.0f, 600.f);
 
@@ -42,7 +43,16 @@ void MyApp::Update(float deltaT)
 
 	double time = glfwGetTime();
 
-	for (size_t i = 0U; i < ROBOTCOUNT; ++i){
+	updateLead(deltaT);
+
+	robots[0].SetTilt(leadTilt*0.4f); //Seitenneigung
+	robots[0].SetOrientation(leadOrient*0.9f); //Drehung y-Achse
+	robots[0].SetPosition(glm::vec3(leadPos * -5.0f, 2.37f - glm::abs(leadPos)*0.25f + 1.3f * 0, -4.f * 0)); //Rechts Links
+
+	robots[0].SetLeftArm(-0.6f, 0.5f - 0.5f*leadTilt, -0.5f);
+	robots[0].SetRightArm(-0.6f, 0.5f + 0.5f*leadTilt, -0.5f);
+
+	for (size_t i = 1U; i < ROBOTCOUNT; ++i){
 		robots[i].SetTilt( glm::sin( time )*0.4f ); //Seitenneigung
 		robots[i].SetOrientation( glm::cos( time + 0.5f )*-0.9f ); //Drehung y-Achse
 		robots[i].SetPosition( glm::vec3( glm::sin( time ) * -5.0f, 2.37f - glm::abs( glm::sin( time ) )*0.25f + 1.3f * i, -4.f * i ) ); //Rechts Links
@@ -123,4 +133,29 @@ void MyApp::drawSceneryTerrain()
 		glm::vec3( 200.f, 130.f, 200.f ) ) );
 
 	lowsegterrain.Render( terrain_glacier );
+}
+
+void MyApp::updateLead(float deltaT){
+	float targetTilt = 0.f;
+	if (glfwGetKey(mgdv->GetWindow(), GLFW_KEY_J))
+		targetTilt = 1.f;
+	if (glfwGetKey(mgdv->GetWindow(), GLFW_KEY_L))
+		targetTilt = -1.f;
+
+	if (leadTilt < targetTilt)
+		leadTilt += glm::min(deltaT, targetTilt - leadTilt);
+	else if (leadTilt > targetTilt)
+		leadTilt -= glm::min(deltaT, leadTilt - targetTilt );
+
+	leadOrient += deltaT * 0.5f * leadTilt;
+	if (leadOrient < -1.f)
+		leadOrient = -1.f;
+	else if (leadOrient > 1.f)
+		leadOrient = 1.f;
+
+	leadPos -= deltaT * 0.5f * leadOrient;
+	if (leadPos < -3.f)
+		leadPos = -3.f;
+	else if (leadPos > 3.f)
+		leadPos = 3.f;
 }
