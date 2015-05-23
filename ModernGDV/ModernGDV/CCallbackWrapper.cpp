@@ -13,6 +13,11 @@ void ModernGDV::Callbacks::glfwKeyCallback(GLFWwindow* window, int key, int scan
 	static_cast<Driver*>(glfwGetWindowUserPointer( window ))->KeyEvent( window, key, scancode, action, mods );
 }
 
+void ModernGDV::Callbacks::glfwErrorCallback(int error, const char* description)
+{
+	Log( "GLFW", std::string( description ) + " - " + std::to_string( error ) );
+}
+
 void APIENTRY ModernGDV::Callbacks::oglDebugMessage(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *userParam)
 {
 	if (id == GL_INVALID_OPERATION)

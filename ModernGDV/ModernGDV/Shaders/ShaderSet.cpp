@@ -12,6 +12,7 @@ ModernGDV::Shaders::ShaderSet::ShaderSet( ShaderLibrary* lib, const std::string&
 	shaderUniformDiffuseTextureSampler(999U), shaderUniformSunDirection( 999U ), shaderUniformSunColor( 999U ),
 	shaderUniformHeightTextureSampler(999U), shaderUniformSegmentSize(999U), shaderUniformFadeDist(999U)
 {
+	Log( "SHDR", "Loading shader set ", name );
 	createShaders();
 	createShaderProgram();
 	createVertexArray();
@@ -190,10 +191,10 @@ void ModernGDV::Shaders::ShaderSet::createShaders()
 		glGetShaderiv( vertexShader, GL_INFO_LOG_LENGTH, &infoLogLength );
 		if (infoLogLength < 1)
 			throw std::runtime_error( "Unable to compile VS, no error message" );
-		std::vector<char> vertexShaderErrorMessage( infoLogLength + 4 );
-		vertexShaderErrorMessage[0] = 'V'; vertexShaderErrorMessage[1] = 'S'; vertexShaderErrorMessage[2] = ':'; vertexShaderErrorMessage[3] = ' ';
-		glGetShaderInfoLog( vertexShader, infoLogLength, nullptr, &vertexShaderErrorMessage[4] );
-		throw std::runtime_error( &vertexShaderErrorMessage[0] );
+		std::vector<char> vertexShaderErrorMessage( infoLogLength );
+		glGetShaderInfoLog( vertexShader, infoLogLength, nullptr, &vertexShaderErrorMessage[0] );
+		Log( "SHDR", "\tError compiling Vertex shader: ", std::string( &vertexShaderErrorMessage[0] ) );
+		throw std::runtime_error( "Unable to compile VS" );
 	}
 
 	glGetShaderiv( fragmentShader, GL_COMPILE_STATUS, &result );
@@ -202,10 +203,10 @@ void ModernGDV::Shaders::ShaderSet::createShaders()
 		glGetShaderiv( fragmentShader, GL_INFO_LOG_LENGTH, &infoLogLength );
 		if (infoLogLength < 1)
 			throw std::runtime_error( "Unable to compile FS, no error message" );
-		std::vector<char> fragmentShaderErrorMessage( infoLogLength + 4 );
-		fragmentShaderErrorMessage[0] = 'F'; fragmentShaderErrorMessage[1] = 'S'; fragmentShaderErrorMessage[2] = ':'; fragmentShaderErrorMessage[3] = ' ';
-		glGetShaderInfoLog( fragmentShader, infoLogLength, nullptr, &fragmentShaderErrorMessage[4] );
-		throw std::runtime_error( &fragmentShaderErrorMessage[0] );
+		std::vector<char> fragmentShaderErrorMessage( infoLogLength );
+		glGetShaderInfoLog( fragmentShader, infoLogLength, nullptr, &fragmentShaderErrorMessage[0] );
+		Log( "SHDR", "\tError compiling Fragment shader: ", std::string( &fragmentShaderErrorMessage[0] ) );
+		throw std::runtime_error( "Unable to compile FS" );
 	}
 }
 
@@ -227,7 +228,8 @@ void ModernGDV::Shaders::ShaderSet::createShaderProgram()
 			throw std::runtime_error( "Unable to link program, no error message" );
 		std::vector<char> shaderProgramErrorMessage( infoLogLength );
 		glGetProgramInfoLog( shaderProgram, infoLogLength, nullptr, &shaderProgramErrorMessage[0] );
-		throw std::runtime_error( &shaderProgramErrorMessage[0] );
+		Log( "SHDR", "\tError linking shader program: ", std::string( &shaderProgramErrorMessage[0] ) );
+		throw std::runtime_error( "Error linking shader program" );
 	}
 	glUseProgram( shaderProgram );
 }
@@ -242,6 +244,7 @@ void ModernGDV::Shaders::ShaderSet::loadActiveUniforms()
 {
 	GLint total = -1;
 	glGetProgramiv( shaderProgram, GL_ACTIVE_UNIFORMS, &total );
+	Log( "SHDR", "\tLoading active shader uniforms / ", std::to_string(total) );
 	for (GLuint i = 0U; static_cast<GLint>(i)<total; ++i)  {
 		GLint nameLength = -1;
 		GLint size = -1;
@@ -285,7 +288,6 @@ void ModernGDV::Shaders::ShaderSet::loadActiveUniforms()
 		else if (name == "fadeDistance")
 			shaderUniformFadeDist = location;
 		else
-			std::cout << "Warn: Unknown shader uniform '" << name << "'!" << std::endl;
-		
+			Log( "SHDR", "\tUnknown shader uniform ", name );
 	}
 }

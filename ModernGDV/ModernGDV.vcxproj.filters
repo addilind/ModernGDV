@@ -90,6 +90,9 @@
     <ClCompile Include="Geometries\TerrainSet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PlattformSpecific\WinNT\DebugHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyApp.h">
@@ -177,6 +180,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Geometries\TerrainSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlattformSpecific\DebugHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

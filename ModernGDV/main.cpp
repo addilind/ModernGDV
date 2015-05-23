@@ -7,9 +7,12 @@
 #include "ModernGDV/ModernGDV.h"
 #include "MyApp.h"
 #include <iomanip>
+#include "PlattformSpecific/DebugHelper.h"
 
 int main( int argc, char** argv ) {
 	try{
+		PlattformSpecific::RegisterExceptionHandler();
+
 		std::cout << "ModernGDV Build " __DATE__ << std::endl; //Banner auf Konsole ausgeben
 		std::clog << std::setprecision( 4 );
 

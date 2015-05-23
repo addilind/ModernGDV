@@ -14,4 +14,5 @@
 namespace ModernGDV
 {
 	void Log( const std::string& source, const std::string& message );
+	void Log( const std::string& source, const std::string& messageA, const std::string& messageB );
 }

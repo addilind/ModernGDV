@@ -63,7 +63,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3d.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3d.lib;opengl32.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
@@ -85,7 +85,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
     </Link>
@@ -114,6 +114,7 @@
     <ClCompile Include="Geometries\Robot\Ski.cpp" />
     <ClCompile Include="Geometries\Terrain.cpp" />
     <ClCompile Include="Geometries\TerrainSet.cpp" />
+    <ClCompile Include="PlattformSpecific\WinNT\DebugHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Geometries\Robot\Dimensions.h" />
@@ -145,6 +146,7 @@
     <ClInclude Include="Geometries\Robot\Neck.h" />
     <ClInclude Include="Geometries\Robot\Ski.h" />
     <ClInclude Include="Geometries\TerrainSet.h" />
+    <ClInclude Include="PlattformSpecific\DebugHelper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

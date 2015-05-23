@@ -12,6 +12,8 @@ ModernGDV::Driver::Driver()
 	textureCache(), app( nullptr ),
 	debugWireframe(false)
 {
+	glfwSetErrorCallback( Callbacks::glfwErrorCallback );
+
 	if (!glfwInit()) //GLFW Initialisieren
 		throw std::runtime_error( "Cannot initialize GLFW" );
 
@@ -132,25 +134,33 @@ GLuint ModernGDV::Driver::CreateVertexBuffer( const std::vector<ModernGDV::Verte
 void ModernGDV::Driver::createWindow()
 {
 	glfwWindowHint( GLFW_SAMPLES, 4 ); // 4x Antialiasing
-	glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, 3 ); //OpenGL-Version 3.3 verwenden
-	glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 3 );
+	glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, 3 ); //OpenGL-Version 3.2 verwenden
+	glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 2 );
 	glfwWindowHint( GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE );
 #ifdef _DEBUG
 	glfwWindowHint( GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE );
 #endif
 	window = glfwCreateWindow( 1024, 768, "GDV: Bastian Kreuzer (734877), Adrian Mueller (734922)", nullptr, nullptr ); //Fenster erstellen
+	if (window == nullptr)
+		throw std::runtime_error( "Cannot create window - is your graphics card driver current?" );
+	
 	glfwSetWindowUserPointer( window, this );
 	glfwSetFramebufferSizeCallback( window, Callbacks::glfwFramebufferSizeCallback );
 	glfwSetKeyCallback( window, Callbacks::glfwKeyCallback );
-
-	if (!window)
-		throw std::runtime_error( "Cannot create window" );
 
 	glfwMakeContextCurrent( window ); //Fenster für alle zukünftigen OpenGL-Aufrufe als Ziel setzen
 	if (ogl_LoadFunctions() == ogl_LOAD_FAILED)
 		throw std::runtime_error( "ERROR: Unable to load required OpenGL-Functions" );
 
+	Log( "DRVR", "Context info:" );
+	Log( "DRVR", "\tVer:", std::string( reinterpret_cast<const char*>(glGetString( GL_VERSION )) ) );
+	Log( "DRVR", "\tVen:", std::string( reinterpret_cast<const char*>(glGetString( GL_VENDOR )) ) );
+	Log( "DRVR", "\tRen:", std::string( reinterpret_cast<const char*>(glGetString( GL_RENDERER )) ) );
+	Log( "DRVR", "\tSLV:", std::string( reinterpret_cast<const char*>(glGetString( GL_SHADING_LANGUAGE_VERSION )) ) );
+
+#ifdef _DEBUG
 	glEnable( GL_DEBUG_OUTPUT_SYNCHRONOUS_ARB );
+#endif
 	glDebugMessageCallbackARB( &Callbacks::oglDebugMessage, this );
 }
 
@@ -175,5 +185,10 @@ void ModernGDV::Driver::deinit()
 
 void ModernGDV::Log( const std::string& source, const std::string& message )
 {
-	std::async( [source, message]()->void{ std::clog << glfwGetTime() << "[" << source << "]: " << message << "\n"; } );
+	Log( source, message, "" );
 }
+void ModernGDV::Log( const std::string& source, const std::string& messageA, const std::string& messageB)
+{
+	/*std::async( [source, message]()->void{*/ std::clog << glfwGetTime() << "[" << source << "]: " << messageA << messageB << std::endl; // } );
+}
+
