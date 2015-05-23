@@ -9,7 +9,7 @@ using glm::vec2;
 
 
 Geometries::Robot::ShoulderJoint::ShoulderJoint( ModernGDV::Driver* mgdv )
-	: vertexBuffer( 0U ), mgdv( mgdv ), texture( nullptr )
+	: instanceCounter( new size_t( 1U ) ), vertexBuffer( 0U ), mgdv( mgdv ), texture( nullptr )
 {
 	std::vector<Vertex> vertices;
 
@@ -38,17 +38,26 @@ Geometries::Robot::ShoulderJoint::ShoulderJoint( ModernGDV::Driver* mgdv )
 	Quad::Create(vertices, cuboidTopFrontLeft, vec2(0.f, 7.5f/15.f), cuboidTopBackLeft, vec2(0.f, 0.f),
 		cuboidTopBackRight, vec2(1.f, 0.f), cuboidTopFrontRight, vec2(1.f, 7.5f/15.f));					//Oberseite Quader
 
-
 	vertexBuffer = mgdv->CreateVertexBuffer(vertices);
 
 	texture = mgdv->GetTexture("Joint");
+}
 
-
+Geometries::Robot::ShoulderJoint::ShoulderJoint( const ShoulderJoint& source )
+	: instanceCounter( source.instanceCounter ), vertexBuffer( source.vertexBuffer ), mgdv( source.mgdv ), texture( source.texture )
+{
+	++*instanceCounter;
 }
 
 Geometries::Robot::ShoulderJoint::~ShoulderJoint()
 {
+	--*instanceCounter;
+	if (*instanceCounter > 0U)
+		return;
 
+	ModernGDV::Log( "GEOM", "Destructing ShoulderJoint" );
+	glDeleteBuffers( 1, &vertexBuffer );
+	delete instanceCounter;
 }
 
 void Geometries::Robot::ShoulderJoint::Render()

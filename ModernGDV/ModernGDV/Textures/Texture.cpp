@@ -25,7 +25,7 @@ ModernGDV::Textures::Texture::Texture(const std::string& filename) :
 	unsigned int bufsize = header.MipMapCount > 1 ? header.PitchOrLinearSize * 2 : header.PitchOrLinearSize;
 	std::vector<char> imageData( bufsize ); //char* imageData = new char[bufsize];
 	file.read( &imageData[0], bufsize ); //Maximal bufsize byte aus der Datei in den Vektor einlesen
-	auto byteRead = file.gcount(); //Gelesene byte abfragen, auto -> C++11 automatische Wahl des Typs 
+	auto byteRead = static_cast<unsigned int>(file.gcount()); //Gelesene byte abfragen, auto -> C++11 automatische Wahl des Typs 
 	imageData.resize( byteRead ); //Überflüssig reservierten Speicher freigeben + Wert zur BufferOverflow-Überprüfung setzen
 
 	file.close();
@@ -91,6 +91,7 @@ ModernGDV::Textures::Texture::~Texture()
 	*instanceCounter = *instanceCounter - 1;
 	if (*instanceCounter > 0)
 		return;
+	delete instanceCounter;
 	glDeleteTextures( 1, &glID );
 	glID = 0;
 }

@@ -58,6 +58,7 @@ namespace Geometries
 
 		public:
 			explicit Robot( ModernGDV::Driver* mgdv );
+			Robot( const Robot& source );
 			~Robot();
 
 			void Render();

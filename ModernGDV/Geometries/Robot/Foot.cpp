@@ -10,7 +10,7 @@ using glm::vec2;
 
 
 Geometries::Robot::Foot::Foot(ModernGDV::Driver* mgdv)
-: vertexBuffer(0U), mgdv(mgdv), texture(nullptr)
+: instanceCounter(new size_t(1U)), vertexBuffer(0U), mgdv(mgdv), texture(nullptr)
 {
 	std::vector<Vertex> vertices;
 
@@ -41,9 +41,21 @@ Geometries::Robot::Foot::Foot(ModernGDV::Driver* mgdv)
 	texture = mgdv->GetTexture("Joint");
 }
 
+Geometries::Robot::Foot::Foot(const Foot& source)
+	: instanceCounter( source.instanceCounter ), vertexBuffer( source.vertexBuffer ), mgdv( source.mgdv ), texture( source.texture )
+{
+	++*instanceCounter;
+}
+
 Geometries::Robot::Foot::~Foot()
 {
+	--*instanceCounter;
+	if (*instanceCounter > 0U)
+		return;
 
+	ModernGDV::Log( "GEOM", "Destructing Foot" );
+	glDeleteBuffers( 1, &vertexBuffer );
+	delete instanceCounter;
 }
 
 void Geometries::Robot::Foot::Render()

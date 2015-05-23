@@ -10,7 +10,7 @@ using glm::vec2;
 
 
 Geometries::Robot::ThighJoint::ThighJoint(ModernGDV::Driver* mgdv)
-: mgdv(mgdv), vertexBuffer(0U), texture(nullptr)
+	: instanceCounter( new size_t( 1U ) ), vertexBuffer( 0U ), mgdv( mgdv ), texture( nullptr )
 {
 	std::vector<Vertex> vertices;
 
@@ -80,17 +80,26 @@ Geometries::Robot::ThighJoint::ThighJoint(ModernGDV::Driver* mgdv)
 	Quad::Create(vertices, bCuboidTopFrontLeft, vec2(0.f, 5.f / 18.75f), bCuboidTopBackLeft, vec2(0.f, 0.f),
 		bCuboidTopBackRight, vec2(1.f, 0.f), bCuboidTopFrontRight, vec2(1.f, 5.f / 18.75f));
 
-
 	vertexBuffer = mgdv->CreateVertexBuffer(vertices);
 
 	texture = mgdv->GetTexture("Joint");
+}
 
-
+Geometries::Robot::ThighJoint::ThighJoint( const ThighJoint& source )
+	: instanceCounter( source.instanceCounter ), vertexBuffer( source.vertexBuffer ), mgdv( source.mgdv ), texture( source.texture )
+{
+	++*instanceCounter;
 }
 
 Geometries::Robot::ThighJoint::~ThighJoint()
 {
+	--*instanceCounter;
+	if (*instanceCounter > 0U)
+		return;
 
+	ModernGDV::Log( "GEOM", "Destructing ThighJoint" );
+	glDeleteBuffers( 1, &vertexBuffer );
+	delete instanceCounter;
 }
 
 void Geometries::Robot::ThighJoint::Render()

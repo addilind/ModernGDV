@@ -12,11 +12,14 @@ namespace Geometries
 	{
 		class Torso {
 		private:
+			size_t* instanceCounter;
+
 			ModernGDV::Driver* mgdv;
 			GLuint vertexBuffer;
 			ModernGDV::Textures::Texture* texture;
 		public:
-			Torso( ModernGDV::Driver* mgdv );
+			explicit Torso( ModernGDV::Driver* mgdv );
+			Torso( const Torso& source );
 			~Torso();
 
 			void Render();

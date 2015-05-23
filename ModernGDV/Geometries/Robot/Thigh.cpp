@@ -10,7 +10,7 @@ using glm::vec2;
 
 
 Geometries::Robot::Thigh::Thigh(ModernGDV::Driver* mgdv)
-	: vertexBuffer( 0U ), mgdv( mgdv ), texture( nullptr )
+	: instanceCounter( new size_t( 1U ) ), vertexBuffer( 0U ), mgdv( mgdv ), texture( nullptr )
 {
 	std::vector<Vertex> vertices;
 
@@ -40,13 +40,23 @@ Geometries::Robot::Thigh::Thigh(ModernGDV::Driver* mgdv)
 	vertexBuffer = mgdv->CreateVertexBuffer(vertices);
 
 	texture = mgdv->GetTexture("Warn");
+}
 
-	
+Geometries::Robot::Thigh::Thigh( const Thigh& source )
+	: instanceCounter( source.instanceCounter ), vertexBuffer( source.vertexBuffer ), mgdv( source.mgdv ), texture( source.texture )
+{
+	++*instanceCounter;
 }
 
 Geometries::Robot::Thigh::~Thigh()
 {
+	--*instanceCounter;
+	if (*instanceCounter > 0U)
+		return;
 
+	ModernGDV::Log( "GEOM", "Destructing Thigh" );
+	glDeleteBuffers( 1, &vertexBuffer );
+	delete instanceCounter;
 }
 
 void Geometries::Robot::Thigh::Render()

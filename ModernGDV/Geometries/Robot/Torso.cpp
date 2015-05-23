@@ -11,7 +11,7 @@ using glm::vec3;
 using glm::vec2;
 
 Geometries::Robot::Torso::Torso( ModernGDV::Driver* mgdv )
-	: mgdv(mgdv), vertexBuffer(0U), texture(nullptr)
+	: instanceCounter( new size_t( 1U ) ), mgdv( mgdv ), vertexBuffer( 0U ), texture( nullptr )
 {
 	std::vector<Vertex> vertices;
 
@@ -83,15 +83,26 @@ Geometries::Robot::Torso::Torso( ModernGDV::Driver* mgdv )
 	Quad::Create(vertices, cuboidTopFrontLeft, vec2(0.f, 30.f/70.f), cuboidTopBackLeft, vec2(0.f, 0.f),
 		cuboidTopBackRight, vec2(1.f, 0.f), cuboidTopFrontRight, vec2(1.f, 30.f/70.f));					//Oberseite Quader
 
-
 	vertexBuffer = mgdv->CreateVertexBuffer(vertices);
 
 	texture = mgdv->GetTexture( "Dummy" );
 }
 
+Geometries::Robot::Torso::Torso( const Torso& source )
+	: instanceCounter( source.instanceCounter ), vertexBuffer( source.vertexBuffer ), mgdv( source.mgdv ), texture( source.texture )
+{
+	++*instanceCounter;
+}
+
 Geometries::Robot::Torso::~Torso()
 {
+	--*instanceCounter;
+	if (*instanceCounter > 0U)
+		return;
 
+	ModernGDV::Log( "GEOM", "Destructing Torso" );
+	glDeleteBuffers( 1, &vertexBuffer );
+	delete instanceCounter;
 }
 
 void Geometries::Robot::Torso::Render()

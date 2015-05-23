@@ -2,10 +2,15 @@
 #include "Dimensions.h"
 
 Geometries::Robot::Robot::Robot( ModernGDV::Driver* mgdv )
-	: torso( mgdv ), thigh( mgdv ), shank( mgdv ), foot( mgdv ), shoulderJoint( mgdv ), thighJoint( mgdv ), head( mgdv ), neck( mgdv ), ski( mgdv ),
-	maxLegLength(0.8f), frontTilt(0.5f)
+	: frontTilt(0.5f), maxLegLength(0.8f), torso( mgdv ), thigh( mgdv ), shank( mgdv ), foot( mgdv ), shoulderJoint( mgdv ), thighJoint( mgdv ), head( mgdv ),
+	neck(mgdv), ski(mgdv), mgdv(mgdv)
 {
-	this->mgdv = mgdv;
+}
+
+Geometries::Robot::Robot::Robot(const Robot& source)
+	: frontTilt(source.frontTilt), maxLegLength(source.maxLegLength), torso(source.torso), thigh(source.thigh), shank(source.shank), foot(source.foot),
+	shoulderJoint( source.shoulderJoint ), thighJoint( source.thighJoint ), head( source.head ), neck( source.neck ), ski( source.ski ), mgdv( source.mgdv )
+{
 }
 
 Geometries::Robot::Robot::~Robot()
@@ -189,7 +194,7 @@ void Geometries::Robot::Robot::SetTilt( const float& tilt )
 	float xDiffTigh = 0.5f * Dim::TOR_SCB_WIDTH + Dim::THJ_THIGH_LOC; 
 	originHeight = heightOuterThigh - xDiffTigh * glm::sin( glm::abs( tilt ) );
 	float heightInnerThigh = originHeight - xDiffTigh * glm::sin( glm::abs( tilt ) );
-	float lengthInnerLeg = heightInnerThigh / glm::cos( 0.3 * glm::abs( tilt ) );
+	float lengthInnerLeg = heightInnerThigh / glm::cos( 0.3f * glm::abs( tilt ) );
 
 	if (tilt > 0)
 	{ //Nach rechts neigen

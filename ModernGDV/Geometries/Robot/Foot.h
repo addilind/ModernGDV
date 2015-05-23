@@ -12,11 +12,14 @@ namespace Geometries
 	{
 		class Foot {
 		private:
+			size_t* instanceCounter;
+
 			GLuint vertexBuffer;
 			ModernGDV::Driver* mgdv;
 			ModernGDV::Textures::Texture* texture;
 		public:
 			Foot( ModernGDV::Driver* mgdv );
+			Foot( const Foot& source );
 			~Foot();
 
 			void Render();

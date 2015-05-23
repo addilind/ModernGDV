@@ -12,11 +12,14 @@ namespace Geometries
 	{
 		class Shank {
 		private:
+			size_t* instanceCounter;
+
 			GLuint vertexBuffer;
 			ModernGDV::Driver* mgdv;
 			ModernGDV::Textures::Texture* texture;
 		public:
-			Shank( ModernGDV::Driver* mgdv );
+			explicit Shank( ModernGDV::Driver* mgdv );
+			Shank( const Shank& source );
 			~Shank();
 
 			void Render();

@@ -12,11 +12,14 @@ namespace Geometries
 	{
 		class Ski {
 		private:
+			size_t* instanceCounter;
+
 			GLuint vertexBuffer;
 			ModernGDV::Driver* mgdv;
 			ModernGDV::Textures::Texture* texture;
 		public:
-			Ski(ModernGDV::Driver* mgdv);
+			explicit Ski( ModernGDV::Driver* mgdv );
+			Ski(const Ski& source);
 			~Ski();
 
 			void Render();

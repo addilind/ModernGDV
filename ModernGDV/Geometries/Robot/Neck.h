@@ -12,11 +12,14 @@ namespace Geometries
 	{
 		class Neck {
 		private:
+			size_t* instanceCounter;
+
 			GLuint vertexBuffer;
 			ModernGDV::Driver* mgdv;
 			ModernGDV::Textures::Texture* texture;
 		public:
-			Neck(ModernGDV::Driver* mgdv);
+			explicit Neck( ModernGDV::Driver* mgdv );
+			Neck(const Neck& source);
 			~Neck();
 
 			void Render();

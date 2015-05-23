@@ -10,7 +10,7 @@ using glm::vec2;
 
 
 Geometries::Robot::Shank::Shank(ModernGDV::Driver* mgdv)
-	: vertexBuffer( 0U ), mgdv( mgdv ), texture( nullptr )
+	: instanceCounter( new size_t( 1U ) ), vertexBuffer( 0U ), mgdv( mgdv ), texture( nullptr )
 {
 	std::vector<Vertex> vertices;
 
@@ -72,9 +72,21 @@ Geometries::Robot::Shank::Shank(ModernGDV::Driver* mgdv)
 	texture = mgdv->GetTexture( "Dummy" );
 }
 
+Geometries::Robot::Shank::Shank( const Shank& source )
+	: instanceCounter( source.instanceCounter ), vertexBuffer( source.vertexBuffer ), mgdv( source.mgdv ), texture( source.texture )
+{
+	++*instanceCounter;
+}
+
 Geometries::Robot::Shank::~Shank()
 {
+	--*instanceCounter;
+	if (*instanceCounter > 0U)
+		return;
 
+	ModernGDV::Log( "GEOM", "Destructing Shank" );
+	glDeleteBuffers( 1, &vertexBuffer );
+	delete instanceCounter;
 }
 
 void Geometries::Robot::Shank::Render()

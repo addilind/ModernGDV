@@ -66,8 +66,6 @@ void ModernGDV::Driver::Run()
 
 void ModernGDV::Driver::SetApp( App* application )
 {
-	if (application == nullptr)
-		throw std::logic_error( "Passed invalid app pointer" );
 	app = application;
 }
 
@@ -153,10 +151,10 @@ void ModernGDV::Driver::createWindow()
 		throw std::runtime_error( "ERROR: Unable to load required OpenGL-Functions" );
 
 	Log( "DRVR", "Context info:" );
-	Log( "DRVR", "\tVer:", std::string( reinterpret_cast<const char*>(glGetString( GL_VERSION )) ) );
-	Log( "DRVR", "\tVen:", std::string( reinterpret_cast<const char*>(glGetString( GL_VENDOR )) ) );
-	Log( "DRVR", "\tRen:", std::string( reinterpret_cast<const char*>(glGetString( GL_RENDERER )) ) );
-	Log( "DRVR", "\tSLV:", std::string( reinterpret_cast<const char*>(glGetString( GL_SHADING_LANGUAGE_VERSION )) ) );
+	Log( "DRVR", "\tVer: ", std::string( reinterpret_cast<const char*>(glGetString( GL_VERSION )) ) );
+	Log( "DRVR", "\tVen: ", std::string( reinterpret_cast<const char*>(glGetString( GL_VENDOR )) ) );
+	Log( "DRVR", "\tRen: ", std::string( reinterpret_cast<const char*>(glGetString( GL_RENDERER )) ) );
+	Log( "DRVR", "\tSLV: ", std::string( reinterpret_cast<const char*>(glGetString( GL_SHADING_LANGUAGE_VERSION )) ) );
 
 #ifdef _DEBUG
 	glEnable( GL_DEBUG_OUTPUT_SYNCHRONOUS_ARB );
@@ -189,6 +187,6 @@ void ModernGDV::Log( const std::string& source, const std::string& message )
 }
 void ModernGDV::Log( const std::string& source, const std::string& messageA, const std::string& messageB)
 {
-	/*std::async( [source, message]()->void{*/ std::clog << glfwGetTime() << "[" << source << "]: " << messageA << messageB << std::endl; // } );
+	/*std::async( [source, message]()->void{*/ std::clog << glfwGetTime() << " [" << source << "]: " << messageA << messageB << std::endl; // } );
 }
 

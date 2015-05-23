@@ -12,11 +12,14 @@ namespace Geometries
 	{
 		class Head {
 		private:
+			size_t* instanceCounter;
+
 			GLuint vertexBuffer;
 			ModernGDV::Driver* mgdv;
 			ModernGDV::Textures::Texture* texture;
 		public:
-			Head( ModernGDV::Driver* mgdv );
+			explicit Head( ModernGDV::Driver* mgdv );
+			Head( const Head& source );
 			~Head();
 
 			void Render();

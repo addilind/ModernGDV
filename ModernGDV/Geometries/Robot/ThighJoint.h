@@ -12,11 +12,14 @@ namespace Geometries
 	{
 		class ThighJoint {
 		private:
+			size_t* instanceCounter;
+
 			GLuint vertexBuffer;
 			ModernGDV::Driver* mgdv;
 			ModernGDV::Textures::Texture* texture;
 		public:
-			ThighJoint(ModernGDV::Driver* mgdv);
+			explicit ThighJoint(ModernGDV::Driver* mgdv);
+			ThighJoint(const ThighJoint& source);
 			~ThighJoint();
 
 			void Render();

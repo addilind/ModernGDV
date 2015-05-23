@@ -12,11 +12,14 @@ namespace Geometries
 	{
 		class ShoulderJoint {
 		private:
+			size_t* instanceCounter;
+
 			GLuint vertexBuffer;
 			ModernGDV::Driver* mgdv;
 			ModernGDV::Textures::Texture* texture;
 		public:
-			ShoulderJoint( ModernGDV::Driver* mgdv );
+			explicit ShoulderJoint( ModernGDV::Driver* mgdv );
+			ShoulderJoint( const ShoulderJoint& source );
 			~ShoulderJoint();
 
 			void Render();

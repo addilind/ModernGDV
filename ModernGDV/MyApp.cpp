@@ -41,7 +41,7 @@ void MyApp::Update(float deltaT)
 	if (glfwGetKey( mgdv->GetWindow(), GLFW_KEY_1 ))
 		return;
 
-	double time = glfwGetTime();
+	float time = static_cast<float>(glfwGetTime());
 
 	updateLead(deltaT);
 

@@ -14,7 +14,7 @@ int main( int argc, char** argv ) {
 		PlattformSpecific::RegisterExceptionHandler();
 
 		std::cout << "ModernGDV Build " __DATE__ << std::endl; //Banner auf Konsole ausgeben
-		std::clog << std::setprecision( 4 );
+		std::clog << std::fixed << std::setprecision( 4 );
 
 		//Kommandozeilenparameter in vector lesen
 		std::vector<std::string> commandline;
@@ -22,8 +22,11 @@ int main( int argc, char** argv ) {
 			commandline.push_back( std::string( argv[i] ) );
 
 		ModernGDV::Driver mgdv;
-		MyApp myApp( commandline, &mgdv );
-		mgdv.Run();
+		{
+			MyApp myApp( commandline, &mgdv );
+			mgdv.Run();
+			mgdv.SetApp( nullptr );
+		}
 		
 		return 0;
 	}

@@ -12,11 +12,14 @@ namespace Geometries
 	{
 		class Thigh {
 		private:
+			size_t* instanceCounter;
+
 			GLuint vertexBuffer;
 			ModernGDV::Driver* mgdv;
 			ModernGDV::Textures::Texture* texture;
 		public:
-			Thigh( ModernGDV::Driver* mgdv );
+			explicit Thigh( ModernGDV::Driver* mgdv );
+			Thigh( const Thigh& source );
 			~Thigh();
 
 			void Render();

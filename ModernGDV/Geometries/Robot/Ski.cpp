@@ -11,7 +11,7 @@ using glm::vec2;
 
 
 Geometries::Robot::Ski::Ski(ModernGDV::Driver* mgdv)
-: mgdv(mgdv), vertexBuffer(0U), texture(0U)
+	: instanceCounter( new size_t( 1U ) ), vertexBuffer( 0U ), mgdv( mgdv ), texture( nullptr )
 {
 	std::vector<Vertex> vertices;
 
@@ -65,9 +65,21 @@ Geometries::Robot::Ski::Ski(ModernGDV::Driver* mgdv)
 	texture = mgdv->GetTexture("Warn");
 }
 
+Geometries::Robot::Ski::Ski( const Ski& source )
+	: instanceCounter( source.instanceCounter ), vertexBuffer( source.vertexBuffer ), mgdv( source.mgdv ), texture( source.texture )
+{
+	++*instanceCounter;
+}
+
 Geometries::Robot::Ski::~Ski()
 {
+	--*instanceCounter;
+	if (*instanceCounter > 0U)
+		return;
 
+	ModernGDV::Log( "GEOM", "Destructing Ski" );
+	glDeleteBuffers( 1, &vertexBuffer );
+	delete instanceCounter;
 }
 
 void Geometries::Robot::Ski::Render()

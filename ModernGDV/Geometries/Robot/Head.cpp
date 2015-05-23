@@ -9,7 +9,7 @@ using glm::vec2;
 
 
 Geometries::Robot::Head::Head(ModernGDV::Driver* mgdv)
-	: vertexBuffer( 0U ), mgdv( mgdv ), texture( nullptr )
+	: instanceCounter( new size_t( 1U ) ), vertexBuffer( 0U ), mgdv( mgdv ), texture( nullptr )
 {
 	std::vector<Vertex> vertices;
 	//Kopf
@@ -68,13 +68,23 @@ Geometries::Robot::Head::Head(ModernGDV::Driver* mgdv)
 	vertexBuffer = mgdv->CreateVertexBuffer(vertices);
 
 	texture = mgdv->GetTexture("head");
+}
 
-	
+Geometries::Robot::Head::Head( const Head& source )
+	: instanceCounter( source.instanceCounter ), vertexBuffer( source.vertexBuffer ), mgdv( source.mgdv ), texture( source.texture )
+{
+	++*instanceCounter;
 }
 
 Geometries::Robot::Head::~Head()
 {
+	--*instanceCounter;
+	if (*instanceCounter > 0U)
+		return;
 
+	ModernGDV::Log( "GEOM", "Destructing Head" );
+	glDeleteBuffers( 1, &vertexBuffer );
+	delete instanceCounter;
 }
 
 void Geometries::Robot::Head::Render()
