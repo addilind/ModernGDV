@@ -1,9 +1,8 @@
 #version 330
 
 // Eigenschaften, die ein Eingabe-Vertex aufweisen soll
-in vec3 inPosition;	//Position
-//in vec3 inNormal;	//Normale
-in vec2 inTexcoord; //Texturkoordinate
+layout(location = 0) in vec3 inPosition;	//Position
+layout(location = 1) in vec2 inTexcoord;	//Texturkoordinate
 
 // Eigenschaften, die ZUSÄTZLICH zur Position weitergegeben werden sollen (VertexShader MÜSSEN eine Position ausgeben, deshalb ist sie immer als Ausgabe "vordefiniert")
 out vec2 texcoord;		//Texturkoordinate
