@@ -22,15 +22,9 @@ namespace Geometries
 				vertices.push_back( ModernGDV::Vertex( posC.x, posC.y, posC.z, normal.x, normal.y, normal.z, uvC.x, uvC.y ) );
 			}
 
-			static inline void Draw( uint16_t indexA, uint16_t indexB, uint16_t indexC )
-			{
-				uint16_t indices[3] = { indexA, indexB, indexC };
-				glDrawElements( GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, indices );
-			}
-
 			static inline unsigned char Draw( unsigned char startIndex )
 			{
-				Draw( startIndex, startIndex + 1U, startIndex + 2U );
+				glDrawArrays( GL_TRIANGLES, startIndex, 3U );
 				return startIndex + 3U;
 			}
 		};
