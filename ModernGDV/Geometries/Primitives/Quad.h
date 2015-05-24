@@ -28,19 +28,13 @@ namespace Geometries
 				glm::vec3 normalMid = normalA + normalB; //doppelt so lang, Mittel zwischen den zwei Normalen
 				vertices.push_back( ModernGDV::Vertex( posA.x, posA.y, posA.z, normalA.x, normalA.y, normalA.z, uvA.x, uvA.y ) );
 				vertices.push_back( ModernGDV::Vertex( posB.x, posB.y, posB.z, normalMid.x, normalMid.y, normalMid.z, uvB.x, uvB.y ) );
-				vertices.push_back( ModernGDV::Vertex( posC.x, posC.y, posC.z, normalB.x, normalB.y, normalB.z, uvC.x, uvC.y ) );
 				vertices.push_back( ModernGDV::Vertex( posD.x, posD.y, posD.z, normalMid.x, normalMid.y, normalMid.z, uvD.x, uvD.y ) );
-			}
-
-			static inline void Draw( uint16_t indexA, uint16_t indexB, uint16_t indexC, uint16_t indexD )
-			{
-				uint16_t indices[4] = { indexA, indexB, indexD, indexC };
-				glDrawElements( GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_SHORT, indices );
+				vertices.push_back( ModernGDV::Vertex( posC.x, posC.y, posC.z, normalB.x, normalB.y, normalB.z, uvC.x, uvC.y ) );
 			}
 
 			static inline unsigned char Draw( uint16_t startIndex )
 			{
-				Draw( startIndex, startIndex + 1U, startIndex + 2U, startIndex + 3U );
+				glDrawArrays( GL_TRIANGLE_STRIP, startIndex, 4U );
 				return startIndex + 4U;
 			}
 		};
