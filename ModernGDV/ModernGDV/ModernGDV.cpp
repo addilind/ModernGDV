@@ -131,24 +131,32 @@ GLuint ModernGDV::Driver::CreateVertexBuffer( const std::vector<ModernGDV::Verte
 
 void ModernGDV::Driver::createWindow()
 {
-	glfwWindowHint( GLFW_SAMPLES, 4 ); // 4x Antialiasing
-	glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, 3 ); //OpenGL-Version 3.2 verwenden
-	glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 2 );
+	glfwWindowHint( GLFW_SAMPLES, 8 ); // 8x Antialiasing
+	glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, 3 ); //OpenGL-Version 3.3 verwenden
+	glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 3 );
 	glfwWindowHint( GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE );
 #ifdef _DEBUG
 	glfwWindowHint( GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE );
 #endif
 	window = glfwCreateWindow( 1024, 768, "GDV: Bastian Kreuzer (734877), Adrian Mueller (734922)", nullptr, nullptr ); //Fenster erstellen
 	if (window == nullptr)
-		throw std::runtime_error( "Cannot create window - is your graphics card driver current?" );
+	{
+		Log( "DRVR", "Cannot create OpenGL 3.3 window, trying 3.1..." );
+		glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 1 );
+		glfwWindowHint( GLFW_OPENGL_PROFILE, 0 );
+		window = glfwCreateWindow( 1024, 768, "GDV: Bastian Kreuzer (734877), Adrian Mueller (734922)", nullptr, nullptr ); //Fenster erstellen
+		if (window == nullptr)
+			throw std::runtime_error( "Cannot create window - is your graphics card driver current?" );
+		
+	}
+	glfwMakeContextCurrent( window ); //Fenster für alle zukünftigen OpenGL-Aufrufe als Ziel setzen
+
+	if (ogl_LoadFunctions() == ogl_LOAD_FAILED)
+		throw std::runtime_error( "ERROR: Unable to load required OpenGL-Functions" );
 	
 	glfwSetWindowUserPointer( window, this );
 	glfwSetFramebufferSizeCallback( window, Callbacks::glfwFramebufferSizeCallback );
 	glfwSetKeyCallback( window, Callbacks::glfwKeyCallback );
-
-	glfwMakeContextCurrent( window ); //Fenster für alle zukünftigen OpenGL-Aufrufe als Ziel setzen
-	if (ogl_LoadFunctions() == ogl_LOAD_FAILED)
-		throw std::runtime_error( "ERROR: Unable to load required OpenGL-Functions" );
 
 	Log( "DRVR", "Context info:" );
 	Log( "DRVR", "\tVer: ", std::string( reinterpret_cast<const char*>(glGetString( GL_VERSION )) ) );
@@ -187,6 +195,6 @@ void ModernGDV::Log( const std::string& source, const std::string& message )
 }
 void ModernGDV::Log( const std::string& source, const std::string& messageA, const std::string& messageB)
 {
-	/*std::async( [source, message]()->void{*/ std::clog << glfwGetTime() << " [" << source << "]: " << messageA << messageB << std::endl; // } );
+	/*std::async( [source, messageA, messageB]()->void{*/ std::clog << glfwGetTime() << " [" << source << "]: " << messageA << messageB << std::endl; // } );
 }
 
