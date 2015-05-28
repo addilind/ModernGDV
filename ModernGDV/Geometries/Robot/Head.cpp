@@ -23,6 +23,7 @@ Geometries::Robot::Head::Head(ModernGDV::Driver* mgdv)
 	vec3 cuboidTopBackLeft(-0.12f, +0.25f, -0.12f);
 	vec3 cuboidTopBackRight(+0.12f, +0.25f, -0.12f);
 
+	//Texturwerte aus Skizze entnommen
 	Quad::Create(vertices, cuboidBottomFrontLeft, vec2(0.f, 1.f), cuboidBottomFrontRight, vec2(0.25f, 1.f),
 		cuboidBottomBackRight, vec2(0.25f, 0.75f), cuboidBottomBackLeft, vec2(0.f, 0.75f));				//Bodenfläche Quader
 	
@@ -38,7 +39,7 @@ Geometries::Robot::Head::Head(ModernGDV::Driver* mgdv)
 	Quad::Create(vertices, cuboidTopFrontLeft, vec2(0.5f, 0.5f), cuboidTopBackLeft, vec2(0.5f, 0.25f),
 		cuboidTopBackRight, vec2(0.75f, 0.25f), cuboidTopFrontRight, vec2(0.75f, 0.5f));					//Oberseite Quader
 
-	//Kinn
+	//Kinn  Texturwerte aus Skizze entnommen
 	vec3 kcuboidBottomFrontLeft(-0.09f, -0.095f, +0.11f);
 	vec3 kcuboidBottomFrontRight(+0.09f, -0.095f, +0.11f);
 	vec3 kcuboidBottomBackLeft(-0.09f, -0.095f, +0.025f);

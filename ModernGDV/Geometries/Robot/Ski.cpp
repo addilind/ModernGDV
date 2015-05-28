@@ -26,6 +26,7 @@ Geometries::Robot::Ski::Ski(ModernGDV::Driver* mgdv)
 	vec3 cuboidTopBackLeft( -0.075f, +0.0f, -1.10f );
 	vec3 cuboidTopBackRight( +0.075f, +0.0f, -1.10f );
 
+	//Texturwerte aus Skizze entnommen
 	Quad::Create( vertices, cuboidBottomFrontLeft, vec2( 205.f / 220.f, 0.f ), cuboidBottomFrontRight, vec2( 1.f, 0.f ),
 		cuboidBottomBackRight, vec2( 1.f, 1.f ), cuboidBottomBackLeft, vec2( 205.f / 220.f, 1.f ) );				//Bodenfläche Quader
 
