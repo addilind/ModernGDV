@@ -193,8 +193,9 @@ void ModernGDV::Log( const std::string& source, const std::string& message )
 {
 	Log( source, message, "" );
 }
+
 void ModernGDV::Log( const std::string& source, const std::string& messageA, const std::string& messageB)
-{
+{ //Auskommentieren, um thread nicht bei vielen Logs auszubremsen
 	/*std::async( [source, messageA, messageB]()->void{*/ std::clog << glfwGetTime() << " [" << source << "]: " << messageA << messageB << std::endl; // } );
 }
 
