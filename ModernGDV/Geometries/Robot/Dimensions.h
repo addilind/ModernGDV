@@ -2,6 +2,10 @@ namespace Geometries
 {
 	namespace Robot
 	{
+		/* Nicht ganz vollständige Übertragung von Magic Numbers,
+		 * die von Designskizzen abgelesen wurden,
+		 * in Konstanten
+		 */
 		namespace Dim
 		{
 			//TORSO
