@@ -27,6 +27,12 @@ private:
 	float leadTilt;
 	float leadOrient;
 	float leadPos;
+	float terrainProgress;
+
+	bool freezeRobots;
+	bool freezeTerrain;
+	bool showLight;
+	float lightPower;
 
 public:
 	MyApp( std::vector<std::string> commandline, ModernGDV::Driver* mgdv );
@@ -34,10 +40,12 @@ public:
 
 	virtual void Update( float deltaT ) override;
 	virtual void Render(  ) override;
+	virtual void KeyEvent( GLFWwindow* window, int key, int scancode, int action, int mods ) override;
 private:
 	void drawSlope();
 	void drawSceneryTerrain();
 	void updateLead(float deltaT);
+	void drawLightIndicator();
 };
 
 #endif

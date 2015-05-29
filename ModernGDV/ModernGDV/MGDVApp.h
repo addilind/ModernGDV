@@ -12,5 +12,6 @@ namespace ModernGDV {
 
 		virtual void Update( float deltaT ) = 0;
 		virtual void Render(  ) = 0;
+		virtual void KeyEvent( GLFWwindow* window, int key, int scancode, int action, int mods ) = 0;
 	};
 }

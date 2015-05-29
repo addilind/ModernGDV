@@ -30,6 +30,16 @@ void ModernGDV::Camera::Render()
 	mgdv->ShaderLib.SetSun( sunDirectionCam, sunColor );
 }
 
+glm::vec3 ModernGDV::Camera::GetLocation()
+{
+	return location;
+}
+
+glm::vec3 ModernGDV::Camera::GetLookAt()
+{
+	return lookAt;
+}
+
 void ModernGDV::Camera::Update( float deltaT )
 {
 	const float twopi = glm::two_pi<float>();

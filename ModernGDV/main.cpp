@@ -9,11 +9,31 @@
 #include <iomanip>
 #include "PlatformSpecific/DebugHelper.h"
 
+void printManual()
+{
+	std::cout << "W; S\t\tKamera vorwaerts, rueckwaerts bewegen\n"
+		 "A; D\t\tKamera nach rechts, nach links bewegen\n"
+		 "Shift; Strg\tKamera auf / ab bewegen\n"
+		 "Pfeiltasten \tKamera drehen\n"
+		 "Bild hoch\tHeranzoomen\n"
+		 "Bild runter\tHerauszoomen\n"
+		 "1\t\tTransformationen der Roboter nicht aktualisieren\n"
+		 "2\t\tPiste nicht weiterschieben\n"
+		 "3\t\tWireframe - Ansicht umschalten\n"
+		 "4\t\tShader neu laden\n"
+		 "5\t\tLampe im LookAt - Punkt zeichnen\n"
+		 "6\t\tLampe schwaecher machen (aktueller Wert in Konsole)\n"
+		 "7\t\tLampe stärker machen\n"
+		 "J; L\t\tVordersten Roboter nach rechts bzw. nach links neigen\n" << std::endl;
+}
+
 int main( int argc, char** argv ) {
 	try{
 		PlatformSpecific::RegisterExceptionHandler();
 
 		std::cout << "ModernGDV Build " __DATE__ << std::endl; //Banner auf Konsole ausgeben
+		printManual();
+
 		std::clog << std::fixed << std::setprecision( 4 );
 
 		//Kommandozeilenparameter in vector lesen

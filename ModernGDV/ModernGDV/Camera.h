@@ -30,6 +30,8 @@ namespace ModernGDV
 
 		void Update( float deltaT );
 		void Render( );
+		glm::vec3 GetLocation();
+		glm::vec3 GetLookAt();
 	private:
 		void updateViewMat();
 	};

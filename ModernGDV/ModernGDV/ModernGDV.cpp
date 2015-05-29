@@ -82,18 +82,19 @@ void ModernGDV::Driver::KeyEvent(GLFWwindow* window, int key, int scancode, int 
 	{
 		switch (key)
 		{
-		case GLFW_KEY_F2:
+		case GLFW_KEY_3:
 			debugWireframe = !debugWireframe;
 			if (debugWireframe)
 				glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 			else
 				glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 			break;
-		case GLFW_KEY_F5:
+		case GLFW_KEY_4:
 			ShaderLib.ReloadShaders();
 			break;
 		}
 	}
+	app->KeyEvent( window, key, scancode, action, mods );
 }
 
 GLFWwindow* ModernGDV::Driver::GetWindow()
