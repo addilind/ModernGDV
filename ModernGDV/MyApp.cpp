@@ -74,17 +74,6 @@ void MyApp::Render(  )
 
 	for (size_t i = 0U; i < ROBOTCOUNT; ++i)
 		robots[i].Render();
-
-	glDisable( GL_CULL_FACE ); //Lampe ist nicht immer korrekt
-	glBindBuffer( GL_ARRAY_BUFFER, lampvb );
-	ModernGDV::Vertex::SetLayout();
-	mgdv->ShaderLib.SetDiffuseTex( lamptex );
-	mgdv->ShaderLib.SetModel( glm::translate( glm::mat4(), glm::vec3( 1.f*glm::sin( glfwGetTime() / 3.f ), 5.3f, 1.f*glm::cos( glfwGetTime() / 3.f ) ) ) );
-	mgdv->ShaderLib.SetLight( glm::vec3( 0 ), glm::vec3( 1, 1, 1 ), 0.f, 1.f );//Dont light
-	mgdv->ShaderLib.SetSpecularProperties( glm::vec3( 0 ), 1.f );
-	Quad::Draw( 0U );
-	Quad::Draw( 4U );
-	ModernGDV::Vertex::ResetLayout();
 }
 
 void MyApp::drawSlope()
